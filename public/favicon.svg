@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Phone outline -->
+  <rect x="25" y="10" width="50" height="80" rx="5" fill="none" stroke="#2563eb" stroke-width="4"/>
+  
+  <!-- Screen -->
+  <rect x="30" y="20" width="40" height="55" rx="2" fill="#2563eb" opacity="0.1"/>
+  
+  <!-- Code symbols -->
+  <text x="38" y="45" font-family="monospace" font-size="12" fill="#2563eb">&lt;/&gt;</text>
+  
+  <!-- Home button -->
+  <circle cx="50" cy="82" r="4" fill="#2563eb"/>
+  
+  <!-- Speaker -->
+  <rect x="45" y="15" width="10" height="2" rx="1" fill="#2563eb"/>
+</svg>

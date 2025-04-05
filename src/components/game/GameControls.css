@@ -1,0 +1,39 @@
+/* Mobile touch controls styles */
+.touch-controls {
+    touch-action: manipulation; /* Prevents browser handling of touch gestures */
+    position: fixed;
+    z-index: 40;
+}
+
+.touch-controls button {
+    user-select: none; /* Prevents text selection */
+    -webkit-tap-highlight-color: transparent; /* Removes tap highlight on iOS */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition:
+        transform 0.1s,
+        opacity 0.1s;
+}
+
+.touch-controls button:active {
+    transform: scale(0.95);
+    opacity: 0.9;
+}
+
+/* Touch controls positioning */
+.touch-controls {
+    bottom: 24px;
+    right: 16px;
+}
+
+.touch-controls button {
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+    font-size: 1.25rem !important;
+}
+
+/* Hide controls on non-touch devices */
+@media (pointer: fine) {
+    .touch-controls {
+        display: none;
+    }
+}

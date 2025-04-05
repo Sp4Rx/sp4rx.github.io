@@ -1,0 +1,71 @@
+/* Food animations for the snake game */
+
+/* Base food styling */
+.game-food {
+    position: absolute;
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    transform-origin: center;
+    pointer-events: none;
+    border-radius: 50%;
+    /* Use tailwind primary color */
+    color: #b7df2a; /* Ensure visible color */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+    background: transparent;
+    opacity: 1; /* Ensure it's visible at load */
+    animation: blink 2s infinite ease-in-out;
+}
+
+/* Ripple glow using pseudo-element */
+.game-food::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: currentColor;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    animation: ripple 3s infinite ease-in-out;
+}
+
+/* Blinking animation */
+@keyframes blink {
+    0% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+/* Circular ripple animation */
+@keyframes ripple {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Dark mode boost */
+.dark .game-food {
+    filter: brightness(1.2);
+}
