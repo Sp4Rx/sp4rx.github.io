@@ -147,9 +147,9 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
 
       <ResumeSection title="Stack Overflow">
         <div className="flex justify-center my-2">
-          <a href="https://stackoverflow.com/users/123456/username" target="_blank" rel="noopener noreferrer">
+          <a href="https://stackoverflow.com/users/4768512/sp4rx" target="_blank" rel="noopener noreferrer">
             <img
-              src="https://stackoverflow.com/users/flair/123456.png"
+              src="https://stackoverflow.com/users/flair/4768512.png"
               width="208"
               height="58"
               alt="Stack Overflow profile for Username"

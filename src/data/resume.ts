@@ -1,30 +1,40 @@
 export const resumeData = {
   basics: {
-    name: "Alex Parker",
-    label: "Mobile Developer",
-    email: "alex.parker@example.com",
-    phone: "(555) 123-4567",
-    url: "https://alexparker.dev",
-    summary: "Passionate mobile developer with 7+ years of experience creating engaging applications for iOS and Android platforms. Expert in React Native and Flutter development with a focus on creating seamless user experiences and high-performance applications.",
+    name: "Suvajit Sarkar",
+    label: "Software Engineer",
+    email: "hello@suvajit.in",
+    phone: "",
+    url: "about.me/suvajit",
+    summary: "Developer with 8 years of experience working with Flutter, Firebase, Figma, Dio, Bloc, Riverpod, Java, Kotlin, React Native. I have developed successful apps that have touched millions of people. Proficient in Python and experienced with AWS.\n\nIn addition to mobile and backend development, I have a growing expertise in AI-driven content generation. I actively work with ComfyUI, Stable Diffusion, Flux.1 and AI-based image/video generation. I also experiment with LLMs (Gemini API) for automation and creative workflows.",
     location: {
-      city: "San Francisco",
-      region: "CA",
+      region: "West Bengal",
+      city: "Krishnanagar",
     },
     profiles: [
       {
         network: "GitHub",
-        username: "alexdevparker",
-        url: "https://github.com/alexdevparker"
+        username: "sp4rx",
+        url: "https://github.com/sp4rx"
       },
       {
         network: "LinkedIn",
-        username: "alexparker",
-        url: "https://linkedin.com/in/alexparker"
+        username: "heysuvajit",
+        url: "https://linkedin.com/in/heysuvajit"
       },
       {
         network: "Twitter",
-        username: "@alexdevparker",
-        url: "https://twitter.com/alexdevparker"
+        username: "@heysuvajit",
+        url: "https://twitter.com/heysuvajit"
+      },
+      {
+        network: "Telegram",
+        username: "heysuvajit",
+        url: "https://telegram.me/heysuvajit"
+      },
+      {
+        network: "Stack Overflow",
+        username: "4768512/sp4rx",
+        url: "https://stackoverflow.com/users/4768512/sp4rx"
       }
     ]
   },
@@ -34,12 +44,8 @@ export const resumeData = {
       items: [
         {
           name: "Flutter & Dart",
-          level: 95,
-          keywords: [
-            "Cross-platform development",
-            "State management",
-            "UI/UX design",
-          ]
+          level: 90,
+          keywords: ["Flutter", "Dart", "Firebase", "Figma", "Dio", "Bloc", "Riverpod"]
         },
         {
           name: "React Native",
@@ -48,6 +54,10 @@ export const resumeData = {
         {
           name: "Kotlin",
           level: 60
+        },
+        {
+          name: "Java",
+          level: 80
         }
       ]
     },
@@ -57,10 +67,6 @@ export const resumeData = {
         {
           name: "React JS",
           level: 50
-        },
-        {
-          name: "JavaScript/TypeScript",
-          level: 90
         }
       ]
     },
@@ -70,10 +76,6 @@ export const resumeData = {
         {
           name: "Python",
           level: 60
-        },
-        {
-          name: "Java",
-          level: 80
         },
         {
           name: "AWS",
@@ -91,10 +93,6 @@ export const resumeData = {
         {
           name: "Jenkins/Github Actions",
           level: 50
-        },
-        {
-          name: "Codemagic",
-          level: 90
         }
       ]
     },
@@ -106,7 +104,7 @@ export const resumeData = {
           level: 50
         },
         {
-          name: "AI Image & Video Generation",
+          name: "AI Image & Video Generation (Gen-2, SD, OpenAI)",
           level: 50
         },
         {
@@ -118,93 +116,103 @@ export const resumeData = {
   ],
   work: [
     {
-      company: "TechMobile Inc.",
-      position: "Senior Mobile Developer",
-      website: "https://techmobile.com",
-      startDate: "2022-01",
-      endDate: "Present",
-      summary: "Leading the development of cross-platform mobile applications used by millions of users worldwide.",
+      company: "Tailorbird",
+      position: "Senior Full Stack Developer",
+      website: "https://www.tailorbird.com/",
+      startDate: "2023-06",
+      endDate: "2024-01",
+      summary: "Worked on AI-powered multifamily renovation platform.",
       highlights: [
-        "Architected and developed a React Native application that increased user engagement by 45%",
-        "Led a team of 5 developers in releasing 12 app updates with 99.8% crash-free sessions",
-        "Implemented CI/CD pipelines reducing deployment time by 70%"
+        "Setting up the foundation of the Flutter app architecture using Bloc, GraphQL, Hive",
+        "Implemented Forge Viewer for viewing Revit models of buildings/projects",
+        "Created architecture for PDF generation used for report generation",
+        "Contributed to APIs and Flutter app features"
       ],
-      technologies: ["React Native", "TypeScript", "Redux", "Firebase", "Jest"]
+      technologies: ["Flutter", "Bloc", "GraphQL", "Hive", "Python"]
     },
     {
-      company: "AppWave Solutions",
-      position: "Mobile Developer",
-      website: "https://appwave.io",
-      startDate: "2019-03",
-      endDate: "2021-12",
-      summary: "Developed innovative mobile solutions for enterprises across various industries.",
+      company: "Tranzact",
+      position: "Software Engineer",
+      website: "https://letstranzact.com/",
+      startDate: "2022-06",
+      endDate: "2023-02",
+      summary: "Worked as Flutter developer digitizing SME manufacturers.",
       highlights: [
-        "Built and maintained 6 production mobile applications using Flutter",
-        "Reduced app load time by 40% through code optimization and caching strategies",
-        "Integrated complex payment systems and authentication flows"
+        "Restructured the app using Riverpod",
+        "Maintained crash-free users at 99%",
+        "Implemented push notifications using MoEngage with A/B testing",
+        "Set up separate prod and dev environments",
+        "Managed a small team"
       ],
-      technologies: ["Flutter", "Dart", "Firebase", "REST APIs", "GraphQL"]
+      technologies: ["Flutter", "Riverpod", "MoEngage"]
     },
     {
-      company: "Digital Craftsmen",
-      position: "Junior Developer",
-      website: "https://digitalcraftsmen.co",
-      startDate: "2017-06",
-      endDate: "2019-02",
-      summary: "Started career developing web and mobile applications for small businesses.",
+      company: "Vedantu",
+      position: "Software Engineer",
+      website: "https://www.vedantu.com/",
+      startDate: "2020-08",
+      endDate: "2022-05",
+      summary: "Worked on growth team for online education platform.",
       highlights: [
-        "Developed responsive websites and basic mobile apps for 15+ clients",
-        "Assisted in creating the company's internal component library",
-        "Recognized as 'Rookie of the Year' for exceptional code quality"
+        "Implemented live video streaming and socket communication",
+        "Written Jenkins scripts in groovy for building android apk",
+        "Dockerized FE project for development and QA",
+        "Contributed to website using React and Next.js"
       ],
-      technologies: ["JavaScript", "HTML", "CSS", "React", "Node.js"]
+      technologies: ["React Native", "Jenkins", "Docker", "React", "Next.js"]
+    },
+    {
+      company: "Bounce",
+      position: "Software Engineer",
+      website: "https://play.google.com/store/apps/details?id=com.metrobikes.app",
+      startDate: "2020-02",
+      endDate: "2020-07",
+      summary: "Worked on rental scooter & bike service app.",
+      highlights: [
+        "Worked on consumer side features",
+        "Developed Hawkeye project (Bounce Hero App)",
+        "Implemented Sentry for crash reporting"
+      ],
+      technologies: ["Flutter", "Sentry"]
+    },
+    {
+      company: "Leher.ai Pvt. Ltd",
+      position: "SDE II",
+      website: "https://play.google.com/store/apps/details?id=com.leher",
+      startDate: "2019-01",
+      endDate: "2020-02",
+      summary: "Worked on video discussion social platform.",
+      highlights: [
+        "Boosted app stability to 98% from 75% within 20 days",
+        "Implemented Dagger",
+        "Built full-screen video feed",
+        "Rewrote whole app in Flutter for v4.0"
+      ],
+      technologies: ["Android", "MVP", "Dagger", "Flutter"]
     }
   ],
   projects: [
     {
-      name: "FitTracker Pro",
-      description: "A comprehensive fitness tracking app with real-time workout analysis and nutrition planning.",
+      name: "8-Bit Resume",
+      description: "An interactive 8-bit themed resume game that combines retro gaming with professional portfolio presentation. At its core, it features a classic snake game where you control a colorful snake that grows longer as it collects food, while avoiding self-collision. The game seamlessly integrates with your professional portfolio - the snake's movements and interactions create an engaging way to navigate through your experience, skills, and achievements. Experience a unique way of showcasing professional experience through a nostalgic pixel art interface.",
       highlights: [
-        "1M+ downloads on App Store and Google Play",
-        "Featured in 'Apps We Love' section on App Store",
-        "Integrates with popular fitness wearables"
+        "Snake game mechanics",
+        "Dynamic portfolio data",
+        "Pixel art retro design",
       ],
-      url: "https://fittrackerapp.com",
-      githubUrl: "https://github.com/alexdevparker/fittracker",
-      technologies: ["React Native", "Redux", "Firebase", "HealthKit"]
+      url: "https://suvajit.in",
+      githubUrl: "https://github.com/Sp4Rx/sp4rx.github.io",
+      technologies: ["React", "Vite"]
     },
-    {
-      name: "CityExplorer AR",
-      description: "Augmented reality city guide that helps tourists discover hidden gems and historical facts.",
-      highlights: [
-        "Uses AR to overlay information on landmarks",
-        "Works offline with downloadable city packages",
-        "Localized in 12 languages"
-      ],
-      url: "https://cityexplorer-ar.com",
-      githubUrl: "https://github.com/alexdevparker/cityexplorer",
-      technologies: ["Flutter", "ARCore", "ARKit", "Google Maps API"]
-    },
-    {
-      name: "SecureWallet",
-      description: "Cryptocurrency wallet app with enhanced security features and real-time market data.",
-      highlights: [
-        "Implemented biometric authentication and encryption",
-        "Real-time price alerts and portfolio tracking",
-        "Supports 50+ cryptocurrencies"
-      ],
-      url: "https://securewallet.app",
-      technologies: ["React Native", "Web3.js", "Biometrics API", "CryptoCompare API"]
-    }
   ],
   education: [
     {
-      institution: "Stanford University",
-      area: "Computer Science",
+      institution: "St. Thomas' College of Engineering and Technology, Kolkata",
+      area: "Computer Science & Engineering",
+      gpa: "8.2",
       studyType: "Bachelor's",
-      startDate: "2013-09",
-      endDate: "2017-05",
-      gpa: "3.8",
+      startDate: "2013-06",
+      endDate: "2016-06",
       courses: [
         "Mobile Application Development",
         "Human-Computer Interaction",
@@ -215,30 +223,26 @@ export const resumeData = {
   ],
   languages: [
     {
-      language: "English",
+      language: "Bengali",
       fluency: "Native"
     },
     {
-      language: "Spanish",
+      language: "English",
       fluency: "Professional"
     },
     {
-      language: "Mandarin Chinese",
-      fluency: "Elementary"
+      language: "Hindi",
+      fluency: "Professional"
     }
   ],
   interests: [
     {
-      name: "Game Development",
-      keywords: ["Indie Games", "Game Jams", "Pixel Art"]
+      name: "Gaming",
+      keywords: ["Steam"]
     },
     {
-      name: "Music Production",
-      keywords: ["Electronic Music", "DAW", "Synthesizers"]
-    },
-    {
-      name: "Outdoor Activities",
-      keywords: ["Hiking", "Rock Climbing", "Photography"]
+      name: "Youtube",
+      keywords: ["Content Creation"]
     }
   ]
 };
