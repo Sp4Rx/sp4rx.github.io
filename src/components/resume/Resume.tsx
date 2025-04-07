@@ -44,7 +44,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-3xl md:text-4xl font-pixel mb-2">{basics.name}</h1>
-          <p className="text-lg text-muted-foreground">{basics.label}</p>
+          <p className="text-lg text-muted-foreground">{basics.designation}</p>
         </div>
         <div className="flex items-center space-x-2">
           <Button

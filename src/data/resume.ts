@@ -1,7 +1,22 @@
 export const resumeData = {
+  meta: {
+    author: "Sp4Rx",
+    keywords: "resume, pixel art, game, portfolio, interactive, Sp4Rx, heySuvajit, suvajit, suvajit sarkar, suvajit.in, suvajit.in/resume",
+    themeColor: "#000000",
+    og: {
+      type: "website",
+      image: "https://github.com/sp4rx.png",
+      url: "https://suvajit.in"
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@heySuvajit",
+      image: "https://github.com/sp4rx.png"
+    }
+  },
   basics: {
     name: "Suvajit Sarkar",
-    label: "Software Engineer",
+    designation: "Software Engineer",
     email: "hello@suvajit.in",
     phone: "+91 981 151 4646",
     showPhoneNumber: false,
