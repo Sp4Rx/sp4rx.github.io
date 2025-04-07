@@ -4,7 +4,6 @@ import { useIsMobile } from '../../hooks/use-mobile';
 import { resumeData } from '../../data/resume';
 import './GameControls.css';
 import './FoodAnimations.css';
-import useDebounce from '@/lib/debounce';
 
 // Constant for minimum snake length
 const MINIMUM_LENGTH = 4;
@@ -178,13 +177,59 @@ const GameEngine: React.FC<GameEngineProps> = ({
     );
   };
 
-  // Create debounced direction change function at component level
-  const debouncedKeyPressDirectionChange = useDebounce((newDirection: Direction) => {
-    if (gameStateRef.current === 'PLAYING' && !isOppositeDirection(directionRef.current, newDirection)) {
-      setDirection(newDirection);
-      setNextDirection(newDirection);
+  // Direction queue to handle rapid direction changes
+  const directionQueueRef = useRef<Direction[]>([]);
+
+  // Process the direction queue and apply valid changes based on movement axis
+  const processDirectionQueue = useCallback(() => {
+    if (directionQueueRef.current.length === 0) return;
+
+    const currentDirection = directionRef.current;
+    let validDirection = currentDirection;
+    const currentSnake = snakeRef.current;
+    const head = currentSnake[0];
+    const neck = currentSnake[1];
+
+    // Determine current movement axis and direction
+    const isMovingHorizontally = head.y === neck.y;
+    const isMovingVertically = head.x === neck.x;
+    const isDecreasingX = isMovingHorizontally && head.x < neck.x;
+    const isDecreasingY = isMovingVertically && head.y < neck.y;
+
+    // Process each direction in the queue sequentially
+    while (directionQueueRef.current.length > 0) {
+      const nextDirection = directionQueueRef.current.shift()!;
+      // Skip opposite directions
+      if (isOppositeDirection(validDirection, nextDirection)) continue;
+
+      // Validate direction based on current movement axis
+      if (isMovingHorizontally) {
+        if (isDecreasingX && nextDirection === 'RIGHT') continue;
+        if (!isDecreasingX && nextDirection === 'LEFT') continue;
+      } else if (isMovingVertically) {
+        if (isDecreasingY && nextDirection === 'DOWN') continue;
+        if (!isDecreasingY && nextDirection === 'UP') continue;
+      }
+
+      validDirection = nextDirection;
     }
-  }, 50);
+
+    // Only update if direction actually changed
+    if (validDirection !== currentDirection) {
+      setDirection(validDirection);
+      setNextDirection(validDirection);
+    }
+  }, []);
+
+  // Handle direction changes for keyboard input
+  const handleKeyPressDirectionChange = (newDirection: Direction) => {
+    if (gameStateRef.current === 'PLAYING') {
+      // Add new direction to queue
+      directionQueueRef.current.push(newDirection);
+      // Process the queue to apply valid changes
+      processDirectionQueue();
+    }
+  };
 
   // Handle keyboard input
   useEffect(() => {
@@ -219,7 +264,7 @@ const GameEngine: React.FC<GameEngineProps> = ({
             break;
         }
         if (newDirection) {
-          debouncedKeyPressDirectionChange(newDirection);
+          handleKeyPressDirectionChange(newDirection);
         }
       }
 
@@ -291,22 +336,22 @@ const GameEngine: React.FC<GameEngineProps> = ({
       const xDiff = touchStart.x - currentPosition.x;
       const yDiff = touchStart.y - currentPosition.y;
 
-      // Only change direction if the drag distance is significant
-      if (Math.abs(xDiff) > 15 || Math.abs(yDiff) > 15) {
+      // Only change direction if the drag distance is significant but not too large
+      if ((Math.abs(xDiff) > 10 && Math.abs(xDiff) < 100) || (Math.abs(yDiff) > 10 && Math.abs(yDiff) < 100)) {
         // Determine if horizontal or vertical movement is dominant
         if (Math.abs(xDiff) > Math.abs(yDiff)) {
           // Horizontal drag
           if (xDiff > 0) {
-            debouncedDirectionChange('LEFT');
+            handleTouchDirectionChange('LEFT');
           } else {
-            debouncedDirectionChange('RIGHT');
+            handleTouchDirectionChange('RIGHT');
           }
         } else {
           // Vertical drag
           if (yDiff > 0) {
-            debouncedDirectionChange('UP');
+            handleTouchDirectionChange('UP');
           } else {
-            debouncedDirectionChange('DOWN');
+            handleTouchDirectionChange('DOWN');
           }
         }
 
@@ -336,16 +381,16 @@ const GameEngine: React.FC<GameEngineProps> = ({
       if (Math.abs(xDiff) > Math.abs(yDiff)) {
         // Horizontal swipe
         if (xDiff > 10) {
-          debouncedDirectionChange('LEFT');
+          handleTouchDirectionChange('LEFT');
         } else if (xDiff < -10) {
-          debouncedDirectionChange('RIGHT');
+          handleTouchDirectionChange('RIGHT');
         }
       } else {
         // Vertical swipe
         if (yDiff > 10) {
-          debouncedDirectionChange('UP');
+          handleTouchDirectionChange('UP');
         } else if (yDiff < -10) {
-          debouncedDirectionChange('DOWN');
+          handleTouchDirectionChange('DOWN');
         }
       }
     }
@@ -384,9 +429,24 @@ const GameEngine: React.FC<GameEngineProps> = ({
     }
   };
 
-  const debouncedDirectionChange = useDebounce((direction: Direction) => {
-    handleDirectionChange(direction);
-  }, 50);
+  const handleTouchDirectionChange = (direction: Direction) => {
+    if (gameStateRef.current === 'AUTO') {
+      setGameState('PLAYING');
+      onGameStateChange('PLAYING');
+      setShowMessage(false);
+      setTimeout(() => {
+        setMessage(isMobile ? 'Tap here to pause' : 'Press SPACE to pause');
+        setShowMessage(true);
+      }, 500);
+    }
+
+    if (gameStateRef.current === 'PLAYING') {
+      // Add new direction to queue instead of immediately changing direction
+      directionQueueRef.current.push(direction);
+      // Process the queue to apply valid changes
+      processDirectionQueue();
+    }
+  };
 
 
   // Handle pause/resume from touch controls - now primarily handled by the clickable message
@@ -861,7 +921,7 @@ const GameEngine: React.FC<GameEngineProps> = ({
           <div className="col-start-2 col-span-1">
             <button
               className="w-16 h-16 bg-primary/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-2xl"
-              onTouchStart={() => debouncedDirectionChange('UP')}
+              onTouchStart={() => handleTouchDirectionChange('UP')}
             >
               ↑
             </button>
@@ -871,7 +931,7 @@ const GameEngine: React.FC<GameEngineProps> = ({
           <div className="col-span-1">
             <button
               className="w-16 h-16 bg-primary/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-2xl"
-              onTouchStart={() => debouncedDirectionChange('LEFT')}
+              onTouchStart={() => handleTouchDirectionChange('LEFT')}
             >
               ←
             </button>
@@ -883,7 +943,7 @@ const GameEngine: React.FC<GameEngineProps> = ({
           <div className="col-span-1">
             <button
               className="w-16 h-16 bg-primary/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-2xl"
-              onTouchStart={() => debouncedDirectionChange('RIGHT')}
+              onTouchStart={() => handleTouchDirectionChange('RIGHT')}
             >
               →
             </button>
@@ -893,7 +953,7 @@ const GameEngine: React.FC<GameEngineProps> = ({
           <div className="col-start-2 col-span-1">
             <button
               className="w-16 h-16 bg-primary/80 backdrop-blur-sm rounded-full flex items-center justify-center text-white text-2xl"
-              onTouchStart={() => debouncedDirectionChange('DOWN')}
+              onTouchStart={() => handleTouchDirectionChange('DOWN')}
             >
               ↓
             </button>
