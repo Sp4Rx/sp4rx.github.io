@@ -3,7 +3,6 @@
 /* Base food styling */
 .game-food {
     position: absolute;
-    z-index: 40;
     display: flex;
     justify-content: center;
     align-items: center;

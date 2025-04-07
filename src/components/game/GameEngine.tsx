@@ -775,7 +775,7 @@ const GameEngine: React.FC<GameEngineProps> = ({
       foodElement.className = 'game-food';
       foodElement.style.width = `${cellSize}px`;
       foodElement.style.height = `${cellSize}px`;
-      foodElement.style.zIndex = '40'; // Ensure it's above all UI elements including message box
+      foodElement.style.zIndex = '5'; // Set z-index to be below resume content (z-index: 10) but above game area (z-index: -10)
       foodElement.textContent = foodSymbols[foodTypeRef.current];
 
       // Add the food element to the document
