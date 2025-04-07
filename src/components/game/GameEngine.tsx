@@ -278,7 +278,7 @@ const GameEngine: React.FC<GameEngineProps> = ({
           onGameStateChange('PAUSED');
           setShowMessage(false);
           setTimeout(() => {
-            setMessage(isMobile ? 'Game Paused - Tap to resume' : 'Game Paused - Press SPACE to resume');
+            setMessage(isMobile ? 'Tap here to resume' : 'Press SPACE to resume');
             setShowMessage(true);
           }, 500);
         } else if (gameStateRef.current === 'PAUSED') {
