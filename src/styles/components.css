@@ -71,15 +71,4 @@
     .shadow-pixel-dark {
         @apply shadow-[4px_4px_0_rgba(255,255,255,0.3)];
     }
-
-    /* Touch Device Adjustments */
-    @media (pointer: coarse) {
-        .resume-content {
-            @apply mb-24 pb-10;
-        }
-
-        .help-icon {
-            @apply bottom-4 right-4;
-        }
-    }
 }

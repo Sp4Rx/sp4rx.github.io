@@ -156,17 +156,6 @@
     @apply fixed bottom-4 right-4 w-10 h-10 bg-primary text-white flex items-center justify-center text-xl z-50 cursor-pointer hover:bg-primary/90 transition-colors font-pixel shadow-pixel dark:shadow-pixel-dark pixel-box p-0;
   }
 
-  /* Touch device adjustments */
-  @media (pointer: coarse) {
-    .resume-content {
-      @apply mb-24 pb-10;
-    }
-
-    .help-icon {
-      @apply bottom-4 right-4;
-    }
-  }
-
   .shadow-pixel {
     @apply shadow-[4px_4px_0_rgba(0,0,0,0.8)];
   }
