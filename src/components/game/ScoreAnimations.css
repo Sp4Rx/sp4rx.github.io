@@ -1,0 +1,84 @@
+/* Score animations for the snake game */
+
+/* Base score deduction animation styling */
+.score-deduction {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    font-family: "Press Start 2P", monospace;
+    transform-origin: center;
+    pointer-events: none;
+    /* More pixelated appearance for 8-bit theme */
+    image-rendering: pixelated;
+    /* Use red color for score deduction */
+    color: #ff4d4d;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.7);
+    background: transparent;
+    opacity: 1;
+    animation: scoreFloat 1.5s forwards ease-out;
+    z-index: 100; /* Above game layer */
+}
+
+/* Pixelated ripple effect using pseudo-element */
+.score-deduction::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    box-shadow:
+        1px 1px 0 0 currentColor,
+        -1px -1px 0 0 currentColor,
+        1px -1px 0 0 currentColor,
+        -1px 1px 0 0 currentColor,
+        2px 2px 0 0 currentColor,
+        -2px -2px 0 0 currentColor,
+        2px -2px 0 0 currentColor,
+        -2px 2px 0 0 currentColor;
+    transform: translate(-50%, -50%);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: -1;
+    animation: pixelRipple 1.5s forwards steps(4);
+}
+
+/* Float up and fade out animation */
+@keyframes scoreFloat {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    80% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+}
+
+/* Pixel ripple animation */
+@keyframes pixelRipple {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0.3;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(3);
+        opacity: 0;
+    }
+}
+
+/* Dark mode styling */
+.dark .score-deduction {
+    color: #ff6b6b;
+    filter: brightness(1.2);
+}

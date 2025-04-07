@@ -4,6 +4,7 @@ import { useIsMobile } from '../../hooks/use-mobile';
 import { resumeData } from '../../data/resume';
 import './GameControls.css';
 import './FoodAnimations.css';
+import './ScoreAnimations.css';
 
 // Constant for minimum snake length
 const MINIMUM_LENGTH = 4;
@@ -155,8 +156,49 @@ const GameEngine: React.FC<GameEngineProps> = ({
       if (foodElement) {
         foodElement.remove();
       }
+
+      // Also remove any score deduction elements that might be left
+      const scoreElements = document.querySelectorAll('.score-deduction');
+      scoreElements.forEach(el => el.remove());
     };
   }, []);
+
+  // Function to show score deduction animation
+  const showScoreDeductionAnimation = (position: Point, deduction: number) => {
+    // First, remove any existing score deduction elements to ensure only one shows at a time
+    const existingElements = document.querySelectorAll('.score-deduction');
+    existingElements.forEach(el => el.remove());
+
+    // Ensure deduction is at least 1 and doesn't exceed actual score
+    const actualDeduction = Math.max(1, Math.min(deduction, Math.max(0, snakeRef.current.length - MINIMUM_LENGTH)));
+
+    // Create score deduction element
+    const scoreElement = document.createElement('div');
+    scoreElement.className = 'score-deduction';
+    scoreElement.textContent = `-${actualDeduction}`;
+
+    // Position the element near the snake head
+    const pixelPosition = {
+      x: position.x * cellSize + (Math.random() * 10 - 5), // Add slight randomness
+      y: position.y * cellSize + (Math.random() * 10 - 5)
+    };
+
+    scoreElement.style.left = `${pixelPosition.x}px`;
+    scoreElement.style.top = `${pixelPosition.y}px`;
+
+    // Add to DOM
+    const gameContainer = canvasRef.current?.parentElement;
+    if (gameContainer) {
+      gameContainer.appendChild(scoreElement);
+
+      // Remove element after animation completes
+      setTimeout(() => {
+        if (scoreElement.parentNode) {
+          scoreElement.parentNode.removeChild(scoreElement);
+        }
+      }, 1500); // Match animation duration
+    }
+  };
 
   // Prevent scrolling when using arrow keys
   useEffect(() => {
@@ -682,6 +724,9 @@ const GameEngine: React.FC<GameEngineProps> = ({
       // In AUTO mode, we should avoid collisions entirely by using getAutoDirection
       // But if a collision happens anyway, handle it gracefully
       if (currentGameState === 'PLAYING') {
+        // Calculate current score before collision
+        const currentScore = currentSnake.length - MINIMUM_LENGTH;
+
         // If collision occurs and trimming would keep snake at or above MINIMUM_LENGTH,
         // then trim from collision index onward
         if (collisionIndex >= MINIMUM_LENGTH) {
@@ -690,7 +735,21 @@ const GameEngine: React.FC<GameEngineProps> = ({
           // Otherwise, keep at least MINIMUM_LENGTH segments
           newSnake = [newHead, ...currentSnake.slice(0, MINIMUM_LENGTH - 1)];
         }
-        setScore(Math.max(0, newSnake.length - MINIMUM_LENGTH));
+
+        // Calculate new score after collision
+        const newScore = Math.max(0, newSnake.length - MINIMUM_LENGTH);
+        // Calculate actual score deduction
+        const scoreDeduction = Math.max(0, currentScore - newScore);
+
+        // Only show animation if there was an actual score deduction
+        if (scoreDeduction > 0) {
+          // Show score deduction animation near the collision point or head
+          const animationPosition = collisionIndex >= MINIMUM_LENGTH ?
+            currentSnake[collisionIndex] : currentSnake[0];
+          showScoreDeductionAnimation(animationPosition, scoreDeduction);
+        }
+
+        setScore(newScore);
       } else {
         // In AUTO mode, try to avoid the collision by changing direction
         // This should rarely happen with improved getAutoDirection
