@@ -7,6 +7,7 @@ import './FoodAnimations.css';
 
 // Constant for minimum snake length
 const MINIMUM_LENGTH = 4;
+const snakeSpeed = 10; // Speed in moves per second
 
 // Types
 export type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
@@ -82,8 +83,10 @@ const GameEngine: React.FC<GameEngineProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [showControls, setShowControls] = useState(isMobile);
 
-  const lastRenderTimeRef = useRef(0);
+  const lastRenderTimeRef = useRef(performance.now());
+  const accumulatedTimeRef = useRef(0);
   const directionRef = useRef(direction);
+  const movementInterval = 1000 / snakeSpeed; // Time between snake movements in ms
   const nextDirectionRef = useRef(nextDirection);
   const gameStateRef = useRef(gameState);
   const snakeRef = useRef(snake);
@@ -636,18 +639,128 @@ const GameEngine: React.FC<GameEngineProps> = ({
 
   // Main game loop
   useEffect(() => {
+    const moveSnake = () => {
+      const currentSnake = snakeRef.current;
+      const currentDirection = directionRef.current;
+      const currentGridWidth = gridWidthRef.current;
+      const currentGridHeight = gridHeightRef.current;
+
+      let newHead: Point;
+      switch (currentDirection) {
+        case 'UP':
+          newHead = { x: currentSnake[0].x, y: (currentSnake[0].y - 1 + currentGridHeight) % currentGridHeight };
+          break;
+        case 'DOWN':
+          newHead = { x: currentSnake[0].x, y: (currentSnake[0].y + 1) % currentGridHeight };
+          break;
+        case 'LEFT':
+          newHead = { x: (currentSnake[0].x - 1 + currentGridWidth) % currentGridWidth, y: currentSnake[0].y };
+          break;
+        case 'RIGHT':
+        default:
+          newHead = { x: (currentSnake[0].x + 1) % currentGridWidth, y: currentSnake[0].y };
+          break;
+      }
+
+      // Check for self-collision
+      const collisionIndex = checkSelfCollision(newHead, currentSnake);
+      let newSnake: Point[];
+
+      if (collisionIndex !== -1) {
+        if (collisionIndex >= MINIMUM_LENGTH) {
+          newSnake = [newHead, ...currentSnake.slice(0, collisionIndex)];
+        } else {
+          newSnake = [newHead, ...currentSnake.slice(0, MINIMUM_LENGTH - 1)];
+        }
+        setScore(Math.max(0, newSnake.length - MINIMUM_LENGTH));
+      } else {
+        newSnake = [newHead, ...currentSnake];
+        if (newHead.x === foodRef.current.x && newHead.y === foodRef.current.y) {
+          if (gameStateRef.current === 'PLAYING') {
+            updateScore();
+            setScore(newSnake.length - MINIMUM_LENGTH);
+          } else {
+            setFood(generateFood());
+            newSnake.pop();
+          }
+        } else {
+          newSnake.pop();
+        }
+      }
+
+      setSnake(newSnake);
+      snakeRef.current = newSnake;
+
+      // Random direction change in AUTO mode
+      if (gameStateRef.current === 'AUTO' || gameStateRef.current === 'PAUSED') {
+        // More intelligent food-seeking behavior
+        const head = currentSnake[0];
+        const food = foodRef.current;
+
+        // Calculate distance to food
+        const dx = food.x - head.x;
+        const dy = food.y - head.y;
+
+        // 70% chance to move towards food, 30% random movement
+        if (Math.random() < 0.7) {
+          // Prefer direction that reduces distance to food
+          if (Math.abs(dx) > Math.abs(dy)) {
+            const newDirection = dx > 0 ? 'RIGHT' : 'LEFT';
+            if (!isOppositeDirection(currentDirection, newDirection)) {
+              setDirection(newDirection);
+            }
+          } else {
+            const newDirection = dy > 0 ? 'DOWN' : 'UP';
+            if (!isOppositeDirection(currentDirection, newDirection)) {
+              setDirection(newDirection);
+            }
+          }
+        } else if (Math.random() < 0.3) {
+          // Random direction change (less frequent than before)
+          const directions: Direction[] = ['UP', 'DOWN', 'LEFT', 'RIGHT'];
+          const newDirection = directions[Math.floor(Math.random() * directions.length)];
+          if (!isOppositeDirection(currentDirection, newDirection)) {
+            setDirection(newDirection);
+          }
+        }
+      }
+    };
+
     const gameLoop = (timestamp: number) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
+      // Calculate delta time for frame rate independent movement
       const deltaTime = timestamp - lastRenderTimeRef.current;
+      lastRenderTimeRef.current = timestamp;
+
+      // Accumulate time for movement updates
+      accumulatedTimeRef.current += deltaTime;
+
+      // Only update snake position when enough time has passed
+      while (accumulatedTimeRef.current >= movementInterval) {
+        accumulatedTimeRef.current -= movementInterval;
+        moveSnake();
+      }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const gameLoopExecution = (deltaTime: number) => {
         const currentGameState = gameStateRef.current;
         const currentSnake = snakeRef.current;
+
+        // Accumulate time between moves
+        const timeBetweenMoves = 1000 / snakeSpeed; // Convert to milliseconds
+        accumulatedTimeRef.current += deltaTime;
+
+        // Only move when enough time has passed
+        if (accumulatedTimeRef.current < timeBetweenMoves) {
+          return;
+        }
+
+        // Reset accumulated time and move
+        accumulatedTimeRef.current = 0;
 
         // Apply direction change if not opposite
         if (nextDirectionRef.current && !isOppositeDirection(directionRef.current, nextDirectionRef.current)) {
