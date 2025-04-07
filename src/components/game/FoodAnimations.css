@@ -16,6 +16,7 @@
     background: transparent;
     opacity: 1; /* Ensure it's visible at load */
     animation: blink 2s infinite ease-in-out;
+    z-index: var(--game-layer-z-index);
 }
 
 /* Ripple glow using pseudo-element */

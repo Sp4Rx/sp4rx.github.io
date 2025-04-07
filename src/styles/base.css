@@ -6,6 +6,8 @@
 
 @layer base {
     :root {
+        /* Game Layer */
+        --game-layer-z-index: -10; /* z-index value for the game layer */
         /* Theme Colors */
         --background: 240 10% 97%;
         --foreground: 240 10% 10%;
