@@ -3,7 +3,7 @@ export const resumeData = {
     name: "Suvajit Sarkar",
     label: "Software Engineer",
     email: "hello@suvajit.in",
-    phone: "",
+    phone: "+91 981 151 4646",
     url: "about.me/suvajit",
     summary: "Developer with 8 years of experience working with Flutter, Firebase, Figma, Dio, Bloc, Riverpod, Java, Kotlin, React Native. I have developed successful apps that have touched millions of people. Proficient in Python and experienced with AWS.\n\nIn addition to mobile and backend development, I have a growing expertise in AI-driven content generation. I actively work with ComfyUI, Stable Diffusion, Flux.1 and AI-based image/video generation. I also experiment with LLMs (Gemini API) for automation and creative workflows.",
     location: {
@@ -199,6 +199,28 @@ export const resumeData = {
       githubUrl: "https://github.com/Sp4Rx/sp4rx.github.io",
       technologies: ["React", "Vite"]
     },
+    {
+      
+      name: "ComfyUI",
+      description: "ComfyUI is an open-source and modular node-based graphical user interface for Stable Diffusion. It allows you to create and share custom workflows by connecting different nodes together.",
+      highlights: [
+        "Node-based UI",
+        "Customizable workflows",
+        "Modular architecture",
+      ],
+      url: "https://suvajit.in",
+      technologies: ["Python", "PyTorch", "Stable Diffusion"]
+    },
+    {
+      name: "Flux.1",
+      description: "Flux.1 is an AI-driven content generation platform that leverages the power of AI to generate high-quality images and videos. It provides a user-friendly interface for creating and customizing prompts, and then generates images and videos based on those prompts.",
+      highlights: [
+        "AI-driven content generation",
+        "User-friendly interface",
+        "Customizable prompts",
+      ],
+      technologies: ["Python", "AI", "Image Generation"]
+    }
   ],
   education: [
     {
