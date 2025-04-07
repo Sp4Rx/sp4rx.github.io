@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ExternalLinkIcon, GithubIcon, ImageIcon } from 'lucide-react';
+import { ExternalLinkIcon, GithubIcon, ImageIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
 interface ProjectCardProps {
   name: string;
@@ -9,7 +9,7 @@ interface ProjectCardProps {
   technologies: string[];
   url?: string;
   githubUrl?: string;
-  imageUrl?: string;
+  images?: string[];
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -19,8 +19,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   technologies,
   url,
   githubUrl,
-  imageUrl
+  images = []
 }) => {
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
   return (
     <div className="bg-card/50 p-4 rounded-lg border border-border">
       <div className="flex justify-between items-start mb-2">
@@ -31,7 +40,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:text-primary/80 flex items-center gap-1 text-xs"
+              className="text-primary hover:text-primary/80 flex items-center gap-1 text-xs font-pixel"
               title="Visit Demo"
             >
               <ExternalLinkIcon className="h-4 w-4" />
@@ -43,7 +52,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:text-primary/80 flex items-center gap-1 text-xs"
+              className="text-primary hover:text-primary/80 flex items-center gap-1 text-xs font-pixel"
               title="View Source Code"
             >
               <GithubIcon className="h-4 w-4" />
@@ -54,13 +63,39 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       </div>
       <p className="text-sm mb-2">{description}</p>
 
-      {imageUrl && (
-        <div className="mb-3 border border-border rounded overflow-hidden">
+      {images && images.length > 0 && (
+        <div className="mb-3 border border-border rounded overflow-hidden relative">
           <img
-            src={imageUrl}
+            src={images[currentImageIndex]}
             alt={`Screenshot of ${name}`}
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-cover aspect-video"
           />
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-1 top-1/2 -translate-y-1/2 bg-black/50 p-1 rounded-full hover:bg-black/70 transition-colors"
+                aria-label="Previous image"
+              >
+                <ChevronLeftIcon className="h-4 w-4 text-white" />
+              </button>
+              <button
+                onClick={handleNextImage}
+                className="absolute right-1 top-1/2 -translate-y-1/2 bg-black/50 p-1 rounded-full hover:bg-black/70 transition-colors"
+                aria-label="Next image"
+              >
+                <ChevronRightIcon className="h-4 w-4 text-white" />
+              </button>
+              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-1">
+                {images.map((_, index) => (
+                  <span
+                    key={index}
+                    className={`h-1.5 w-1.5 rounded-full ${index === currentImageIndex ? 'bg-white' : 'bg-white/50'}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
 

@@ -200,10 +200,15 @@ export const resumeData = {
       ],
       url: "https://suvajit.in",
       githubUrl: "https://github.com/Sp4Rx/sp4rx.github.io",
-      technologies: ["React", "Vite"]
+      technologies: ["React", "Vite"],
+      images: [
+        "https://placehold.co/600x400/4f46e5/ffffff?text=8-Bit+Resume+Screenshot",
+        "https://placehold.co/600x400/3b82f6/ffffff?text=Game+Interface",
+        "https://placehold.co/600x400/10b981/ffffff?text=Resume+View",
+        "https://placehold.co/600x400/f59e0b/ffffff?text=Mobile+Responsive"
+      ]
     },
     {
-
       name: "ComfyUI",
       description: "ComfyUI is an open-source and modular node-based graphical user interface for Stable Diffusion. It allows you to create and share custom workflows by connecting different nodes together.",
       highlights: [
@@ -212,7 +217,12 @@ export const resumeData = {
         "Modular architecture",
       ],
       url: "https://suvajit.in",
-      technologies: ["Python", "PyTorch", "Stable Diffusion"]
+      technologies: ["Python", "PyTorch", "Stable Diffusion"],
+      images: [
+        "https://placehold.co/600x400/6d28d9/ffffff?text=ComfyUI+Interface",
+        "https://placehold.co/600x400/8b5cf6/ffffff?text=Node+Editor",
+        "https://placehold.co/600x400/ec4899/ffffff?text=Generated+Image"
+      ]
     },
     {
       name: "Flux.1",
@@ -222,7 +232,13 @@ export const resumeData = {
         "User-friendly interface",
         "Customizable prompts",
       ],
-      technologies: ["Python", "AI", "Image Generation"]
+      technologies: ["Python", "AI", "Image Generation"],
+      images: [
+        "https://placehold.co/600x400/dc2626/ffffff?text=Flux.1+Dashboard",
+        "https://placehold.co/600x400/ea580c/ffffff?text=Image+Generator",
+        "https://placehold.co/600x400/84cc16/ffffff?text=Video+Output",
+        "https://placehold.co/600x400/06b6d4/ffffff?text=Prompt+Editor"
+      ]
     }
   ],
   education: [

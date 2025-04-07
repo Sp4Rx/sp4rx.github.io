@@ -120,27 +120,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
         </div>
       </div>
 
-      <ResumeSection title="Skills">
-        {skills.map((skillGroup, groupIndex) => (
-          <div key={groupIndex} className="mb-6 last:mb-0">
-            <h3 className="text-lg font-semibold mb-3">{skillGroup.group}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
-              {[...skillGroup.items]
-                .sort((a, b) => b.level - a.level) // Sort by level in descending order
-                .map((skill, index) => (
-                  <SkillBar
-                    key={index}
-                    name={skill.name}
-                    level={skill.level}
-                    keywords={skill.keywords}
-                  />
-                ))}
-            </div>
-          </div>
-        ))}
-      </ResumeSection>
-
-      <ResumeSection title="Experience">
+      <ResumeSection title="Experience" className="pixel-section">
         {work.map((job, index) => (
           <WorkEntry
             key={index}
@@ -156,7 +136,27 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
         ))}
       </ResumeSection>
 
-      <ResumeSection title="Projects">
+      <ResumeSection title="Skills" className="pixel-section">
+        {skills.map((skillGroup, groupIndex) => (
+          <div key={groupIndex} className="mb-4 last:mb-0">
+            <h3 className="text-sm font-semibold mb-2 px-1 bg-secondary/30 rounded-sm inline-block retro-label">{skillGroup.group}</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-3 gap-y-2">
+              {[...skillGroup.items]
+                .sort((a, b) => b.level - a.level) // Sort by level in descending order
+                .map((skill, index) => (
+                  <SkillBar
+                    key={index}
+                    name={skill.name}
+                    level={skill.level}
+                    keywords={skill.keywords}
+                  />
+                ))}
+            </div>
+          </div>
+        ))}
+      </ResumeSection>
+
+      <ResumeSection title="Projects" className="pixel-section">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {projects.map((project, index) => (
             <ProjectCard
@@ -167,12 +167,13 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
               highlights={project.highlights}
               technologies={project.technologies}
               githubUrl={project.githubUrl}
+              images={project.images}
             />
           ))}
         </div>
       </ResumeSection>
 
-      <ResumeSection title="Education">
+      <ResumeSection title="Education" className="pixel-section">
         {education.map((edu, index) => (
           <div key={index} className="mb-4 last:mb-0">
             <div className="flex flex-col md:flex-row md:items-center justify-between">
@@ -207,7 +208,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
       </ResumeSection>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <ResumeSection title="Languages">
+        <ResumeSection title="Languages" className="pixel-section">
           <div className="flex flex-wrap gap-2">
             {languages.map((lang, index) => (
               <div key={index} className="bg-secondary/50 px-3 py-2 rounded-md flex items-center gap-2">
@@ -218,7 +219,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
           </div>
         </ResumeSection>
 
-        <ResumeSection title="Interests">
+        <ResumeSection title="Interests" className="pixel-section">
           {interests.map((interest, index) => (
             <div key={index} className="mb-4 last:mb-0">
               <h4 className="font-medium">{interest.name}</h4>
