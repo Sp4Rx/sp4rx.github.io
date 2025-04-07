@@ -1,6 +1,7 @@
 
-import React from 'react';
+import React, { useState, useEffect, useRef, TouchEvent } from 'react';
 import { ExternalLinkIcon, GithubIcon, ImageIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import { useIsMobile } from '../../hooks/use-mobile';
 
 interface ProjectCardProps {
   name: string;
@@ -21,7 +22,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   githubUrl,
   images = []
 }) => {
-  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const isMobile = useIsMobile();
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  // Minimum swipe distance (in px) to register as swipe
+  const minSwipeDistance = 50;
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -29,6 +37,34 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
   const handleNextImage = () => {
     setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  // Touch event handlers for swipe detection
+  const handleTouchStart = (e: TouchEvent) => {
+    setTouchEnd(null); // Reset touchEnd
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && images.length > 1) {
+      handleNextImage();
+    } else if (isRightSwipe && images.length > 1) {
+      handlePrevImage();
+    }
+
+    // Reset values
+    setTouchStart(null);
+    setTouchEnd(null);
   };
   return (
     <div className="bg-card/50 p-4 rounded-lg border border-border">
@@ -64,12 +100,21 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       <p className="text-sm mb-2">{description}</p>
 
       {images && images.length > 0 && (
-        <div className="mb-3 border border-border rounded overflow-hidden relative">
-          <img
-            src={images[currentImageIndex]}
-            alt={`Screenshot of ${name}`}
-            className="w-full h-auto object-cover aspect-video"
-          />
+        <div
+          ref={carouselRef}
+          className="mb-3 border border-border rounded overflow-hidden relative select-none"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="carousel-container transition-transform duration-300 ease-in-out">
+            <img
+              src={images[currentImageIndex]}
+              alt={`Screenshot of ${name}`}
+              className="w-full h-auto object-cover aspect-video"
+              draggable="false"
+            />
+          </div>
           {images.length > 1 && (
             <>
               <button
