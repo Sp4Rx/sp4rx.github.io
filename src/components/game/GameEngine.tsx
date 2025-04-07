@@ -724,32 +724,24 @@ const GameEngine: React.FC<GameEngineProps> = ({
       // In AUTO mode, we should avoid collisions entirely by using getAutoDirection
       // But if a collision happens anyway, handle it gracefully
       if (currentGameState === 'PLAYING') {
-        // Calculate current score before collision
-        const currentScore = currentSnake.length - MINIMUM_LENGTH;
-
         // If collision occurs and trimming would keep snake at or above MINIMUM_LENGTH,
         // then trim from collision index onward
         if (collisionIndex >= MINIMUM_LENGTH) {
+          // Calculate how many segments will be lost
+          const segmentsLost = currentSnake.length - collisionIndex;
+          // Show score deduction animation near the collision point
+          showScoreDeductionAnimation(currentSnake[collisionIndex], segmentsLost);
+
           newSnake = [newHead, ...currentSnake.slice(0, collisionIndex)];
         } else {
           // Otherwise, keep at least MINIMUM_LENGTH segments
+          const segmentsLost = currentSnake.length - (MINIMUM_LENGTH - 1);
+          // Show score deduction animation near the head
+          showScoreDeductionAnimation(currentSnake[0], segmentsLost);
+
           newSnake = [newHead, ...currentSnake.slice(0, MINIMUM_LENGTH - 1)];
         }
-
-        // Calculate new score after collision
-        const newScore = Math.max(0, newSnake.length - MINIMUM_LENGTH);
-        // Calculate actual score deduction
-        const scoreDeduction = Math.max(0, currentScore - newScore);
-
-        // Only show animation if there was an actual score deduction
-        if (scoreDeduction > 0) {
-          // Show score deduction animation near the collision point or head
-          const animationPosition = collisionIndex >= MINIMUM_LENGTH ?
-            currentSnake[collisionIndex] : currentSnake[0];
-          showScoreDeductionAnimation(animationPosition, scoreDeduction);
-        }
-
-        setScore(newScore);
+        setScore(Math.max(0, newSnake.length - MINIMUM_LENGTH));
       } else {
         // In AUTO mode, try to avoid the collision by changing direction
         // This should rarely happen with improved getAutoDirection
