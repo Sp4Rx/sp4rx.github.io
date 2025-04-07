@@ -19,11 +19,12 @@ const SkillBar: React.FC<SkillBarProps> = ({ name, level, keywords }) => {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-3">
       <div className="flex items-center justify-between mb-1">
         <span className="text-sm font-medium">{name}</span>
+        <span className="text-xs text-muted-foreground">{level}%</span>
       </div>
-      <div className="retro-progress">
+      <div className="retro-progress h-2">
         <div
           className={`retro-progress-fill ${getColor()}`}
           style={{ width: `${level}%` }}
@@ -34,7 +35,7 @@ const SkillBar: React.FC<SkillBarProps> = ({ name, level, keywords }) => {
           {keywords.map((keyword, index) => (
             <span
               key={index}
-              className="text-xs bg-secondary px-2 py-1 rounded text-secondary-foreground"
+              className="text-xs bg-secondary px-1.5 py-0.5 rounded text-secondary-foreground"
             >
               {keyword}
             </span>

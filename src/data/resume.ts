@@ -4,12 +4,15 @@ export const resumeData = {
     label: "Software Engineer",
     email: "hello@suvajit.in",
     phone: "+91 981 151 4646",
+    showPhoneNumber: false,
     url: "about.me/suvajit",
     summary: "Developer with 8 years of experience working with Flutter, Firebase, Figma, Dio, Bloc, Riverpod, Java, Kotlin, React Native. I have developed successful apps that have touched millions of people. Proficient in Python and experienced with AWS.\n\nIn addition to mobile and backend development, I have a growing expertise in AI-driven content generation. I actively work with ComfyUI, Stable Diffusion, Flux.1 and AI-based image/video generation. I also experiment with LLMs (Gemini API) for automation and creative workflows.",
     location: {
       region: "West Bengal",
       city: "Krishnanagar",
     },
+    stackOverflowId: "4768512",
+    stackOverflowUsername: "sp4rx",
     profiles: [
       {
         network: "GitHub",
@@ -22,9 +25,9 @@ export const resumeData = {
         url: "https://linkedin.com/in/heysuvajit"
       },
       {
-        network: "Twitter",
+        network: "x",
         username: "@heysuvajit",
-        url: "https://twitter.com/heysuvajit"
+        url: "https://x.com/heysuvajit"
       },
       {
         network: "Telegram",
@@ -200,7 +203,7 @@ export const resumeData = {
       technologies: ["React", "Vite"]
     },
     {
-      
+
       name: "ComfyUI",
       description: "ComfyUI is an open-source and modular node-based graphical user interface for Stable Diffusion. It allows you to create and share custom workflows by connecting different nodes together.",
       highlights: [
@@ -226,16 +229,11 @@ export const resumeData = {
     {
       institution: "St. Thomas' College of Engineering and Technology, Kolkata",
       area: "Computer Science & Engineering",
-      gpa: "8.2",
+      gpa: "",
       studyType: "Bachelor's",
       startDate: "2013-06",
       endDate: "2016-06",
-      courses: [
-        "Mobile Application Development",
-        "Human-Computer Interaction",
-        "Algorithms and Data Structures",
-        "Database Systems"
-      ]
+      courses: []
     }
   ],
   languages: [
@@ -255,11 +253,23 @@ export const resumeData = {
   interests: [
     {
       name: "Gaming",
-      keywords: ["Steam"]
+      keywords: ["Steam"],
+      links: [
+        {
+          name: "Steam Profile",
+          url: "https://steamcommunity.com/id/suvajit"
+        }
+      ]
     },
     {
       name: "Youtube",
-      keywords: ["Content Creation"]
+      keywords: ["Content Creation"],
+      links: [
+        {
+          name: "YouTube Channel",
+          url: "https://youtube.com/@_sp4rx_"
+        }
+      ]
     }
   ]
 };

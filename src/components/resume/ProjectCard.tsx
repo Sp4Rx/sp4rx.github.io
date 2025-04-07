@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ExternalLinkIcon, GithubIcon } from 'lucide-react';
+import { ExternalLinkIcon, GithubIcon, ImageIcon } from 'lucide-react';
 
 interface ProjectCardProps {
   name: string;
@@ -9,6 +9,7 @@ interface ProjectCardProps {
   technologies: string[];
   url?: string;
   githubUrl?: string;
+  imageUrl?: string;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -17,7 +18,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   highlights,
   technologies,
   url,
-  githubUrl
+  githubUrl,
+  imageUrl
 }) => {
   return (
     <div className="bg-card/50 p-4 rounded-lg border border-border">
@@ -25,7 +27,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         <h3 className="font-semibold text-lg">{name}</h3>
         <div className="flex gap-2">
           {url && (
-            <a 
+            <a
               href={url}
               target="_blank"
               rel="noopener noreferrer"
@@ -37,7 +39,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             </a>
           )}
           {githubUrl && (
-            <a 
+            <a
               href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -51,6 +53,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
       </div>
       <p className="text-sm mb-2">{description}</p>
+
+      {imageUrl && (
+        <div className="mb-3 border border-border rounded overflow-hidden">
+          <img
+            src={imageUrl}
+            alt={`Screenshot of ${name}`}
+            className="w-full h-auto object-cover"
+          />
+        </div>
+      )}
+
       <div className="mb-3">
         <div className="text-xs text-muted-foreground mb-1 font-medium">Highlights:</div>
         <ul className="list-disc pl-4 text-xs space-y-1">

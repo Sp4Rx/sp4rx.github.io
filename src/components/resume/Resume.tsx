@@ -7,7 +7,7 @@ import ProjectCard from './ProjectCard';
 import { resumeData } from '@/data/resume';
 import { useTheme } from '../ThemeProvider';
 import { Button } from '@/components/ui/button';
-import { DownloadIcon } from 'lucide-react';
+import { DownloadIcon, ExternalLinkIcon } from 'lucide-react';
 import { generateResumePDF } from '@/lib/pdfGenerator';
 import { toast } from 'sonner';
 
@@ -71,26 +71,51 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
               {basics.email}
             </a>
           </p>
-          <p>
-            <span className="font-semibold">Phone: </span>
-            {basics.phone}
-          </p>
+          {basics.showPhoneNumber && (
+            <p>
+              <span className="font-semibold">Phone: </span>
+              <a href={`tel:${basics.phone.replace(/\s+/g, '')}`} className="text-primary hover:underline">
+                {basics.phone}
+              </a>
+            </p>
+          )}
           <p>
             <span className="font-semibold">Location: </span>
             {basics.location.city}, {basics.location.region}
           </p>
-          <div className="flex gap-3 mt-3">
+          <div className="flex flex-wrap gap-2 mt-3">
             {basics.profiles.map((profile, index) => (
               <a
                 key={index}
                 href={profile.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="hover:opacity-80 transition-opacity"
               >
-                {profile.network}
+                <img
+                  src={`https://img.shields.io/badge/${profile.network}-${profile.username}-6c5ce7?style=flat-square&logo=${profile.network.toLowerCase()}&logoColor=white&labelColor=555555`}
+                  alt={`${profile.network} - ${profile.username}`}
+                  className="h-6 pixel-badge"
+                />
               </a>
             ))}
+          </div>
+
+          {/* Stack Overflow Flare */}
+          <div className="mt-4">
+            <a href={`https://stackoverflow.com/users/${basics.stackOverflowId}/${basics.stackOverflowUsername}`} target="_blank" rel="noopener noreferrer">
+              <img
+                src={`https://stackoverflow.com/users/flair/${basics.stackOverflowId}.png`}
+                width="208"
+                height="58"
+                alt={`Stack Overflow profile for ${basics.stackOverflowUsername}`}
+                title={`Stack Overflow profile for ${basics.stackOverflowUsername}`}
+                className="border border-border rounded"
+              />
+            </a>
+            <p className="text-xs text-muted-foreground mt-1">
+              Visit my Stack Overflow profile to see my contributions
+            </p>
           </div>
         </div>
       </div>
@@ -99,15 +124,17 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
         {skills.map((skillGroup, groupIndex) => (
           <div key={groupIndex} className="mb-6 last:mb-0">
             <h3 className="text-lg font-semibold mb-3">{skillGroup.group}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-              {skillGroup.items.map((skill, index) => (
-                <SkillBar
-                  key={index}
-                  name={skill.name}
-                  level={skill.level}
-                  keywords={skill.keywords}
-                />
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
+              {[...skillGroup.items]
+                .sort((a, b) => b.level - a.level) // Sort by level in descending order
+                .map((skill, index) => (
+                  <SkillBar
+                    key={index}
+                    name={skill.name}
+                    level={skill.level}
+                    keywords={skill.keywords}
+                  />
+                ))}
             </div>
           </div>
         ))}
@@ -145,68 +172,57 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
         </div>
       </ResumeSection>
 
-      <ResumeSection title="Stack Overflow">
-        <div className="flex justify-center my-2">
-          <a href="https://stackoverflow.com/users/4768512/sp4rx" target="_blank" rel="noopener noreferrer">
-            <img
-              src="https://stackoverflow.com/users/flair/4768512.png"
-              width="208"
-              height="58"
-              alt="Stack Overflow profile for Username"
-              title="Stack Overflow profile for Username"
-              className="border border-border rounded"
-            />
-          </a>
-        </div>
-        <p className="text-xs text-center text-muted-foreground mt-1">
-          Visit my Stack Overflow profile to see my contributions
-        </p>
-      </ResumeSection>
-
       <ResumeSection title="Education">
         {education.map((edu, index) => (
           <div key={index} className="mb-4 last:mb-0">
             <div className="flex flex-col md:flex-row md:items-center justify-between">
               <h3 className="font-semibold">{edu.institution}</h3>
-              <div className="text-sm font-mono">
-                {new Date(edu.startDate).getFullYear()} – {new Date(edu.endDate).getFullYear()}
-              </div>
+              {edu.startDate && edu.endDate && (
+                <div className="text-sm font-mono">
+                  {new Date(edu.startDate).getFullYear()} – {new Date(edu.endDate).getFullYear()}
+                </div>
+              )}
             </div>
             <p className="text-md">
-              {edu.studyType} in {edu.area} (GPA: {edu.gpa})
+              {edu.studyType && `${edu.studyType} in `}{edu.area}
+              {edu.gpa && ` (GPA: ${edu.gpa})`}
             </p>
-            <div className="mt-2">
-              <p className="text-sm font-medium mb-1">Relevant Courses:</p>
-              <div className="flex flex-wrap gap-1">
-                {edu.courses.map((course, courseIndex) => (
-                  <span
-                    key={courseIndex}
-                    className="text-xs bg-secondary px-2 py-1 rounded text-secondary-foreground"
-                  >
-                    {course}
-                  </span>
-                ))}
+            {edu.courses && edu.courses.length > 0 && (
+              <div className="mt-2">
+                <p className="text-sm font-medium mb-1">Relevant Courses:</p>
+                <div className="flex flex-wrap gap-1">
+                  {edu.courses.map((course, courseIndex) => (
+                    <span
+                      key={courseIndex}
+                      className="text-xs bg-secondary px-2 py-1 rounded text-secondary-foreground"
+                    >
+                      {course}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         ))}
       </ResumeSection>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ResumeSection title="Languages">
-          {languages.map((lang, index) => (
-            <div key={index} className="flex justify-between mb-2 last:mb-0">
-              <span>{lang.language}</span>
-              <span className="text-muted-foreground">{lang.fluency}</span>
-            </div>
-          ))}
+          <div className="flex flex-wrap gap-2">
+            {languages.map((lang, index) => (
+              <div key={index} className="bg-secondary/50 px-3 py-2 rounded-md flex items-center gap-2">
+                <span className="font-medium">{lang.language}</span>
+                <span className="text-xs px-2 py-1 bg-primary/20 text-primary rounded">{lang.fluency}</span>
+              </div>
+            ))}
+          </div>
         </ResumeSection>
 
         <ResumeSection title="Interests">
           {interests.map((interest, index) => (
-            <div key={index} className="mb-3 last:mb-0">
+            <div key={index} className="mb-4 last:mb-0">
               <h4 className="font-medium">{interest.name}</h4>
-              <div className="flex flex-wrap gap-1 mt-1">
+              <div className="flex flex-wrap gap-1 mt-1 mb-1">
                 {interest.keywords.map((keyword, keywordIndex) => (
                   <span
                     key={keywordIndex}
@@ -216,6 +232,22 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
                   </span>
                 ))}
               </div>
+              {interest.links && interest.links.length > 0 && (
+                <div className="mt-1">
+                  {interest.links.map((link, linkIndex) => (
+                    <a
+                      key={linkIndex}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-primary hover:underline flex items-center gap-1"
+                    >
+                      <ExternalLinkIcon className="h-3 w-3" />
+                      {link.name}
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </ResumeSection>

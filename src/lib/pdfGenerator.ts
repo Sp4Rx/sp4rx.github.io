@@ -123,7 +123,7 @@ export const generateResumePDF = async (data: ResumeData): Promise<void> => {
       doc.setFontSize(10);
       doc.setTextColor(colors.text);
       doc.text(`Email: ${data.basics.email}`, pageWidth - 90, 25);
-      doc.text(`Phone: ${data.basics.phone}`, pageWidth - 90, 30);
+      doc.text(`Phone: ${data.basics.phone}`, pageWidth - 90, 30); // Always show phone in PDF
       doc.text(`Location: ${data.basics.location.city}, ${data.basics.location.region}`, pageWidth - 90, 35);
 
       // Summary section with colored background
