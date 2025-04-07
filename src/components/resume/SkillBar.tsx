@@ -10,10 +10,12 @@ interface SkillBarProps {
 const SkillBar: React.FC<SkillBarProps> = ({ name, level, keywords }) => {
   // Determine color based on skill level using professional colors
   const getColor = () => {
-    if (level >= 90) return 'bg-blue-600';
-    if (level >= 80) return 'bg-blue-500';
-    if (level >= 70) return 'bg-indigo-500';
-    return 'bg-purple-500';
+    if (level >= 90) return 'bg-violet-500';
+    if (level >= 80) return 'bg-indigo-500';
+    if (level >= 70) return 'bg-blue-500';
+    if (level >= 60) return 'bg-sky-500';
+    if (level >= 50) return 'bg-cyan-500';
+    return 'bg-amber-500';
   };
 
   return (
