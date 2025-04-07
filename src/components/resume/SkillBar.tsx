@@ -22,7 +22,6 @@ const SkillBar: React.FC<SkillBarProps> = ({ name, level, keywords }) => {
     <div className="mb-4">
       <div className="flex items-center justify-between mb-1">
         <span className="text-sm font-medium">{name}</span>
-        <span className="text-xs font-mono">{level}%</span>
       </div>
       <div className="retro-progress">
         <div
