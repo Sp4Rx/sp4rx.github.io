@@ -8,7 +8,6 @@ import { resumeData } from '@/data/resume';
 import { useTheme } from '../ThemeProvider';
 import { Button } from '@/components/ui/button';
 import { DownloadIcon, ExternalLinkIcon } from 'lucide-react';
-import { generateResumePDF } from '@/lib/pdfGenerator';
 import { toast } from 'sonner';
 
 interface ResumeProps {
@@ -21,15 +20,20 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const { basics, skills, work, projects, education, languages, interests } = resumeData;
 
-  const handleDownloadResume = async () => {
+  const handleDownloadResume = () => {
     try {
       setIsGenerating(true);
-      toast.info("Generating PDF...");
-      await generateResumePDF(resumeData);
-      toast.success("PDF generated successfully!");
+      // Fetch the pre-generated PDF from public directory
+      const link = document.createElement('a');
+      link.href = '/resume.pdf';
+      link.download = `${basics.name.replace(/\s+/g, '_')}_Resume.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      toast.success("Resume downloaded successfully!");
     } catch (error) {
-      console.error("Error generating PDF:", error);
-      toast.error("Failed to generate PDF. Please try again.");
+      console.error("Error downloading PDF:", error);
+      toast.error("Failed to download PDF. Please try again.");
     } finally {
       setIsGenerating(false);
     }
