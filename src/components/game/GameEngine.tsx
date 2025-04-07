@@ -181,8 +181,6 @@ const GameEngine: React.FC<GameEngineProps> = ({
   // Create debounced direction change function at component level
   const debouncedKeyPressDirectionChange = useDebounce((newDirection: Direction) => {
     if (gameStateRef.current === 'PLAYING' && !isOppositeDirection(directionRef.current, newDirection)) {
-      console.log('Changing direction:', newDirection);
-
       setDirection(newDirection);
       setNextDirection(newDirection);
     }
