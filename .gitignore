@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#og tag images
+public/images/og-image.png
+public/images/twitter-image.png
