@@ -540,6 +540,33 @@ const GameEngine: React.FC<GameEngineProps> = ({
     return -1;
   }, []);
 
+  // Calculate new head position based on current direction
+  const calculateNewHead = useCallback((head: Point, direction: Direction): Point => {
+    const currentGridWidth = gridWidthRef.current;
+    const currentGridHeight = gridHeightRef.current;
+
+    switch (direction) {
+      case 'UP':
+        return { x: head.x, y: (head.y - 1 + currentGridHeight) % currentGridHeight };
+      case 'DOWN':
+        return { x: head.x, y: (head.y + 1) % currentGridHeight };
+      case 'LEFT':
+        return { x: (head.x - 1 + currentGridWidth) % currentGridWidth, y: head.y };
+      case 'RIGHT':
+      default:
+        return { x: (head.x + 1) % currentGridWidth, y: head.y };
+    }
+  }, []);
+
+  // Check if a move would result in collision
+  const wouldCollide = useCallback((newPos: Point, snake: Point[], excludeTail: boolean = true): boolean => {
+    return snake.some((segment, i) => {
+      // Optionally exclude the tail since it will move out of the way
+      if (excludeTail && i === snake.length - 1) return false;
+      return segment.x === newPos.x && segment.y === newPos.y;
+    });
+  }, []);
+
   // Update score when snake eats food
   const updateScore = useCallback(() => {
     if (gameStateRef.current === 'PLAYING') {
@@ -587,17 +614,6 @@ const GameEngine: React.FC<GameEngineProps> = ({
 
   // Get auto direction towards food while avoiding self-collision
   const getAutoDirection = useCallback((head: Point, food: Point, currentDirection: Direction): Direction => {
-    // Use refs to get the most current grid dimensions
-    const currentGridWidth = gridWidthRef.current;
-    const currentGridHeight = gridHeightRef.current;
-
-    const distances = {
-      UP: { x: head.x, y: (head.y - 1 + currentGridHeight) % currentGridHeight },
-      DOWN: { x: head.x, y: (head.y + 1) % currentGridHeight },
-      LEFT: { x: (head.x - 1 + currentGridWidth) % currentGridWidth, y: head.y },
-      RIGHT: { x: (head.x + 1) % currentGridWidth, y: head.y }
-    };
-
     const oppositeDirections = {
       UP: 'DOWN',
       DOWN: 'UP',
@@ -605,126 +621,127 @@ const GameEngine: React.FC<GameEngineProps> = ({
       RIGHT: 'LEFT'
     };
 
-    const invalidDirection = oppositeDirections[currentDirection];
-    const validDirections = (Object.keys(distances) as Direction[]).filter(dir => {
-      if (dir === invalidDirection) return false;
-      const newPos = distances[dir];
-      const wouldCollide = snakeRef.current.some((segment, i) => {
-        if (i === snakeRef.current.length - 1) return false;
-        return segment.x === newPos.x && segment.y === newPos.y;
-      });
-      return !wouldCollide;
+    // Get all possible directions excluding the opposite of current direction
+    const possibleDirections: Direction[] = (['UP', 'DOWN', 'LEFT', 'RIGHT'] as Direction[]).filter(
+      dir => dir !== oppositeDirections[currentDirection]
+    );
+
+    // Calculate new positions for each possible direction
+    const directionData = possibleDirections.map(dir => {
+      const newPos = calculateNewHead(head, dir);
+      const wouldCollideWithSelf = wouldCollide(newPos, snakeRef.current);
+      const distance = Math.abs(newPos.x - food.x) + Math.abs(newPos.y - food.y);
+
+      return {
+        direction: dir,
+        position: newPos,
+        score: -distance, // Negative because we want to sort highest (closest) first
+        safe: !wouldCollideWithSelf
+      };
     });
 
-    if (validDirections.length === 0) {
+    // Filter to only safe directions
+    const safeDirections = directionData.filter(data => data.safe);
+
+    // If no safe directions, try to find the least dangerous one
+    // (this helps prevent getting stuck in AUTO mode)
+    if (safeDirections.length === 0) {
+      // If we're in a tight spot, just continue in current direction
+      // This might lead to collision but prevents freezing
       return currentDirection;
     }
 
     incrementAutoMoveTimer();
 
-    const directionScores = validDirections.map(dir => {
-      const newPos = distances[dir];
-      const distance = Math.abs(newPos.x - food.x) + Math.abs(newPos.y - food.y);
-      return { direction: dir, score: -distance };
-    });
+    // Sort by score (closest to food first)
+    safeDirections.sort((a, b) => b.score - a.score);
 
-    directionScores.sort((a, b) => b.score - a.score);
-
+    // 85% of the time go towards food, 15% random movement for unpredictability
     if (Math.random() < 0.15) {
-      return validDirections[Math.floor(Math.random() * validDirections.length)];
+      return safeDirections[Math.floor(Math.random() * safeDirections.length)].direction;
     }
 
-    return directionScores[0].direction;
-  }, [incrementAutoMoveTimer]);
+    return safeDirections[0].direction;
+  }, [calculateNewHead, wouldCollide, incrementAutoMoveTimer]);
 
-  // Main game loop
-  useEffect(() => {
-    const moveSnake = () => {
-      const currentSnake = snakeRef.current;
-      const currentDirection = directionRef.current;
-      const currentGridWidth = gridWidthRef.current;
-      const currentGridHeight = gridHeightRef.current;
+  // Centralized function to handle snake movement logic
+  const moveSnake = useCallback(() => {
+    const currentSnake = snakeRef.current;
+    const currentDirection = directionRef.current;
+    const currentGameState = gameStateRef.current;
 
-      let newHead: Point;
-      switch (currentDirection) {
-        case 'UP':
-          newHead = { x: currentSnake[0].x, y: (currentSnake[0].y - 1 + currentGridHeight) % currentGridHeight };
-          break;
-        case 'DOWN':
-          newHead = { x: currentSnake[0].x, y: (currentSnake[0].y + 1) % currentGridHeight };
-          break;
-        case 'LEFT':
-          newHead = { x: (currentSnake[0].x - 1 + currentGridWidth) % currentGridWidth, y: currentSnake[0].y };
-          break;
-        case 'RIGHT':
-        default:
-          newHead = { x: (currentSnake[0].x + 1) % currentGridWidth, y: currentSnake[0].y };
-          break;
-      }
+    // Calculate new head position based on current direction
+    const newHead = calculateNewHead(currentSnake[0], currentDirection);
 
-      // Check for self-collision
-      const collisionIndex = checkSelfCollision(newHead, currentSnake);
-      let newSnake: Point[];
+    // Check for self-collision
+    const collisionIndex = checkSelfCollision(newHead, currentSnake);
+    let newSnake: Point[];
 
-      if (collisionIndex !== -1) {
+    // Handle collision differently based on game state
+    if (collisionIndex !== -1) {
+      // In AUTO mode, we should avoid collisions entirely by using getAutoDirection
+      // But if a collision happens anyway, handle it gracefully
+      if (currentGameState === 'PLAYING') {
+        // If collision occurs and trimming would keep snake at or above MINIMUM_LENGTH,
+        // then trim from collision index onward
         if (collisionIndex >= MINIMUM_LENGTH) {
           newSnake = [newHead, ...currentSnake.slice(0, collisionIndex)];
         } else {
+          // Otherwise, keep at least MINIMUM_LENGTH segments
           newSnake = [newHead, ...currentSnake.slice(0, MINIMUM_LENGTH - 1)];
         }
         setScore(Math.max(0, newSnake.length - MINIMUM_LENGTH));
       } else {
-        newSnake = [newHead, ...currentSnake];
-        if (newHead.x === foodRef.current.x && newHead.y === foodRef.current.y) {
-          if (gameStateRef.current === 'PLAYING') {
-            updateScore();
-            setScore(newSnake.length - MINIMUM_LENGTH);
-          } else {
-            setFood(generateFood());
-            newSnake.pop();
-          }
+        // In AUTO mode, try to avoid the collision by changing direction
+        // This should rarely happen with improved getAutoDirection
+        const safeDirection = getAutoDirection(currentSnake[0], foodRef.current, currentDirection);
+        const safeHead = calculateNewHead(currentSnake[0], safeDirection);
+
+        // If we found a safe direction, use it
+        if (!wouldCollide(safeHead, currentSnake)) {
+          newSnake = [safeHead, ...currentSnake];
+          newSnake.pop(); // Remove tail to maintain length
+          setDirection(safeDirection);
+          directionRef.current = safeDirection;
         } else {
-          newSnake.pop();
+          // If all directions lead to collision, just continue and accept the trim
+          newSnake = [newHead, ...currentSnake.slice(0, MINIMUM_LENGTH - 1)];
         }
       }
+    } else {
+      // No collision, proceed normally
+      newSnake = [newHead, ...currentSnake];
 
-      setSnake(newSnake);
-      snakeRef.current = newSnake;
-
-      // Random direction change in AUTO mode
-      if (gameStateRef.current === 'AUTO' || gameStateRef.current === 'PAUSED') {
-        // More intelligent food-seeking behavior
-        const head = currentSnake[0];
-        const food = foodRef.current;
-
-        // Calculate distance to food
-        const dx = food.x - head.x;
-        const dy = food.y - head.y;
-
-        // 70% chance to move towards food, 30% random movement
-        if (Math.random() < 0.7) {
-          // Prefer direction that reduces distance to food
-          if (Math.abs(dx) > Math.abs(dy)) {
-            const newDirection = dx > 0 ? 'RIGHT' : 'LEFT';
-            if (!isOppositeDirection(currentDirection, newDirection)) {
-              setDirection(newDirection);
-            }
-          } else {
-            const newDirection = dy > 0 ? 'DOWN' : 'UP';
-            if (!isOppositeDirection(currentDirection, newDirection)) {
-              setDirection(newDirection);
-            }
-          }
-        } else if (Math.random() < 0.3) {
-          // Random direction change (less frequent than before)
-          const directions: Direction[] = ['UP', 'DOWN', 'LEFT', 'RIGHT'];
-          const newDirection = directions[Math.floor(Math.random() * directions.length)];
-          if (!isOppositeDirection(currentDirection, newDirection)) {
-            setDirection(newDirection);
-          }
+      // Check if snake ate food
+      if (newHead.x === foodRef.current.x && newHead.y === foodRef.current.y) {
+        if (currentGameState === 'PLAYING') {
+          updateScore();
+          setScore(newSnake.length - MINIMUM_LENGTH);
+        } else {
+          setFood(generateFood());
+          newSnake.pop(); // In AUTO mode, don't grow when eating food
         }
+      } else {
+        newSnake.pop(); // Remove tail to maintain length
       }
-    };
+    }
+
+    // Update snake state
+    setSnake(newSnake);
+    snakeRef.current = newSnake;
+
+    // In AUTO or PAUSED mode, use the improved getAutoDirection for intelligent movement
+    if (currentGameState === 'AUTO' || currentGameState === 'PAUSED') {
+      const autoDirection = getAutoDirection(newSnake[0], foodRef.current, currentDirection);
+      setDirection(autoDirection);
+      directionRef.current = autoDirection;
+    }
+
+    return newSnake;
+  }, [calculateNewHead, checkSelfCollision, wouldCollide, getAutoDirection, updateScore, generateFood]);
+
+  // Main game loop
+  useEffect(() => {
 
     const gameLoop = (timestamp: number) => {
       const canvas = canvasRef.current;
@@ -747,9 +764,6 @@ const GameEngine: React.FC<GameEngineProps> = ({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const gameLoopExecution = (deltaTime: number) => {
-        const currentGameState = gameStateRef.current;
-        const currentSnake = snakeRef.current;
-
         // Accumulate time between moves
         const timeBetweenMoves = 1000 / snakeSpeed; // Convert to milliseconds
         accumulatedTimeRef.current += deltaTime;
@@ -759,7 +773,7 @@ const GameEngine: React.FC<GameEngineProps> = ({
           return;
         }
 
-        // Reset accumulated time and move
+        // Reset accumulated time
         accumulatedTimeRef.current = 0;
 
         // Apply direction change if not opposite
@@ -767,63 +781,10 @@ const GameEngine: React.FC<GameEngineProps> = ({
           directionRef.current = nextDirectionRef.current;
         }
 
-        let newHead: Point;
-        if (currentGameState === 'AUTO' || currentGameState === 'PAUSED') {
-          const autoDirection = getAutoDirection(currentSnake[0], foodRef.current, directionRef.current);
-          directionRef.current = autoDirection;
-        }
+        // Use the centralized moveSnake function to handle all movement logic
+        const newSnake = moveSnake();
 
-        // Use refs to get the most current grid dimensions
-        const currentGridWidth = gridWidthRef.current;
-        const currentGridHeight = gridHeightRef.current;
-
-        switch (directionRef.current) {
-          case 'UP':
-            newHead = { x: currentSnake[0].x, y: (currentSnake[0].y - 1 + currentGridHeight) % currentGridHeight };
-            break;
-          case 'DOWN':
-            newHead = { x: currentSnake[0].x, y: (currentSnake[0].y + 1) % currentGridHeight };
-            break;
-          case 'LEFT':
-            newHead = { x: (currentSnake[0].x - 1 + currentGridWidth) % currentGridWidth, y: currentSnake[0].y };
-            break;
-          case 'RIGHT':
-          default:
-            newHead = { x: (currentSnake[0].x + 1) % currentGridWidth, y: currentSnake[0].y };
-            break;
-        }
-
-        // Check for self-collision
-        const collisionIndex = checkSelfCollision(newHead, currentSnake);
-        let newSnake: Point[];
-
-        if (collisionIndex !== -1 && currentGameState === 'PLAYING') {
-          // If collision occurs and trimming would keep snake at or above MINIMUM_LENGTH,
-          // then trim from collision index onward.
-          if (collisionIndex >= MINIMUM_LENGTH) {
-            newSnake = [newHead, ...currentSnake.slice(0, collisionIndex)];
-          } else {
-            // Otherwise, keep at least MINIMUM_LENGTH segments.
-            newSnake = [newHead, ...currentSnake.slice(0, MINIMUM_LENGTH - 1)];
-          }
-          setScore(Math.max(0, newSnake.length - MINIMUM_LENGTH));
-        } else {
-          newSnake = [newHead, ...currentSnake];
-          if (newHead.x === foodRef.current.x && newHead.y === foodRef.current.y) {
-            if (currentGameState === 'PLAYING') {
-              updateScore();
-              setScore(newSnake.length - MINIMUM_LENGTH);
-            } else {
-              setFood(generateFood());
-              newSnake.pop();
-            }
-          } else {
-            newSnake.pop();
-          }
-        }
-
-        setSnake(newSnake);
-        snakeRef.current = newSnake;
+        // Draw the updated game elements
         drawGameElements(ctx, newSnake, foodRef.current);
       };
 
@@ -845,7 +806,7 @@ const GameEngine: React.FC<GameEngineProps> = ({
 
     const animationId = requestAnimationFrame(gameLoop);
     return () => cancelAnimationFrame(animationId);
-  }, [theme, gameSpeed, generateFood, checkSelfCollision, getAutoDirection]);
+  }, [theme, gameSpeed, moveSnake]);
 
   // Initialize snake starting position and direction
   useEffect(() => {
