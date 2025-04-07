@@ -28,4 +28,4 @@ public/images/og-image.png
 public/images/twitter-image.png
 
 # Generated PDF
-public/*.pdf
+public/pdfs

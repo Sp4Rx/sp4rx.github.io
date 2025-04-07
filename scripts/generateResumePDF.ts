@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
+import { PATHS } from '../src/constants/paths';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -55,10 +56,10 @@ async function generatePDF(theme: (typeof themes)[number]) {
       deviceScaleFactor: 2
     });
 
-    const outputDir = path.join(__dirname, '../public');
-    if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
+    const outputDir = path.join(__dirname, '..', PATHS.PDF.OUTPUT_DIR);
+    if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
-    const outputPath = path.join(outputDir, `resume.pdf`);
+    const outputPath = path.join(outputDir, PATHS.PDF.FILE_NAME);
 
     await page.pdf({
       path: outputPath,

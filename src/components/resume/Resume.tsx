@@ -9,6 +9,7 @@ import { useTheme } from '../ThemeProvider';
 import { Button } from '@/components/ui/button';
 import { DownloadIcon, ExternalLinkIcon } from 'lucide-react';
 import { toast } from 'sonner';
+import { PATHS } from '@/constants/paths';
 
 interface ResumeProps {
   gameState: 'AUTO' | 'PLAYING' | 'PAUSED' | 'GAME_OVER';
@@ -25,7 +26,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
       setIsGenerating(true);
       // Fetch the pre-generated PDF from public directory
       const link = document.createElement('a');
-      link.href = '/resume.pdf';
+      link.href = PATHS.PDF.BROWSER_PATH;
       link.download = `${basics.name.replace(/\s+/g, '_')}_Resume.pdf`;
       document.body.appendChild(link);
       link.click();
