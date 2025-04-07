@@ -17,23 +17,7 @@
     opacity: 1; /* Ensure it's visible at load */
     animation: blink 2s infinite ease-in-out;
     z-index: var(--game-layer-z-index);
-}
-
-/* Ripple glow using pseudo-element */
-.game-food::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    background: currentColor;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
-    pointer-events: none;
-    z-index: -1;
-    animation: ripple 3s infinite ease-in-out;
+    image-rendering: pixelated;
 }
 
 /* Blinking animation */
@@ -65,7 +49,87 @@
     }
 }
 
-/* Dark mode boost */
+/* Pixelated supernova effect */
+.game-food::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    animation: supernova 2s infinite ease-in-out;
+}
+
+/* Supernova animation */
+@keyframes supernova {
+    0% {
+        box-shadow: none;
+        opacity: 0;
+    }
+    50% {
+        box-shadow:
+            2px 0 0 0 #000,
+            -2px 0 0 0 #000,
+            0 2px 0 0 #000,
+            0 -2px 0 0 #000,
+            4px 0 0 0 #000,
+            -4px 0 0 0 #000,
+            0 4px 0 0 #000,
+            0 -4px 0 0 #000,
+            2px 2px 0 0 #000,
+            -2px -2px 0 0 #000,
+            2px -2px 0 0 #000,
+            -2px 2px 0 0 #000;
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+    100% {
+        box-shadow: none;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
+    }
+}
+
+/* Dark mode styling */
 .dark .game-food {
     filter: brightness(1.2);
+}
+
+/* Dark mode supernova effect */
+.dark .game-food::before {
+    animation: supernovaDark 2s infinite ease-in-out;
+}
+
+@keyframes supernovaDark {
+    0% {
+        box-shadow: none;
+        opacity: 0;
+    }
+    50% {
+        box-shadow:
+            2px 0 0 0 #fff,
+            -2px 0 0 0 #fff,
+            0 2px 0 0 #fff,
+            0 -2px 0 0 #fff,
+            4px 0 0 0 #fff,
+            -4px 0 0 0 #fff,
+            0 4px 0 0 #fff,
+            0 -4px 0 0 #fff,
+            2px 2px 0 0 #fff,
+            -2px -2px 0 0 #fff,
+            2px -2px 0 0 #fff,
+            -2px 2px 0 0 #fff;
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+    100% {
+        box-shadow: none;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
+    }
 }
