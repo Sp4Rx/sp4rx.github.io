@@ -50,9 +50,10 @@ export default defineConfig(async ({ mode }) => {
       await downloadFile(resumeData.meta.og.image, ogImagePath);
       await downloadFile(resumeData.meta.twitter.image, twitterImagePath);
 
-      // Update resumeData with local paths
-      resumeData.meta.og.image = '/images/og-image.png';
-      resumeData.meta.twitter.image = '/images/twitter-image.png';
+      // Update resumeData with full domain paths for production
+      const domain = resumeData.meta.og.url;
+      resumeData.meta.og.image = `${domain}/images/og-image.png`;
+      resumeData.meta.twitter.image = `${domain}/images/twitter-image.png`;
     } catch (err) {
       console.error('Failed to download images:', err);
     }
