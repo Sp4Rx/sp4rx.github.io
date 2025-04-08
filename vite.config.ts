@@ -71,10 +71,10 @@ export default defineConfig(async ({ mode }) => {
         inject: {
           data: {
             title: `${resumeData.basics.name} | ${resumeData.basics.designation} | Resume`,
-            description: resumeData.basics.summary,
+            description: resumeData.meta.description,
             author: resumeData.meta.author,
             ogTitle: `${resumeData.basics.name} | ${resumeData.basics.designation} | Resume`,
-            ogDescription: resumeData.basics.summary,
+            ogDescription: resumeData.meta.description,
             ogType: resumeData.meta.og.type,
             ogImage: resumeData.meta.og.image,
             ogUrl: resumeData.meta.og.url,
