@@ -51,7 +51,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
           <h1 className="text-3xl md:text-4xl font-pixel mb-2">{basics.name}</h1>
           <p className="text-lg text-muted-foreground">{basics.designation}</p>
         </div>
-        <div className="flex items-center space-x-2">
+        <div id='download-resume' className="flex items-center space-x-2">
           <Button
             variant="outline"
             size="sm"

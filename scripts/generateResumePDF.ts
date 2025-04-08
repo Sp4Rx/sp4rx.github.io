@@ -30,10 +30,6 @@ async function generatePDF(theme: (typeof themes)[number]) {
     await page.evaluate(() => {
       const selectors = [
         '#game-container',
-        '#snake',
-        '#food',
-        '#message-box',
-        '#help',
         '#theme-toggle',
         '#download-resume'
       ];

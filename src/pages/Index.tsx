@@ -36,14 +36,14 @@ const Index = () => {
 
   return (
     <ThemeProvider>
-      <div className="game-container">
+      <div id='game-container' className="game-container">
         <GameEngine
           cellSize={cellSize}
           onScoreChange={handleScoreChange}
           onGameStateChange={setGameState}
         />
-        <Resume gameState={gameState} score={score} />
       </div>
+      <Resume gameState={gameState} score={score} />
     </ThemeProvider>
   );
 };
