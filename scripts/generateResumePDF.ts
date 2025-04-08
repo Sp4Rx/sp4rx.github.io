@@ -1,11 +1,8 @@
 import puppeteer from 'puppeteer';
-import { fileURLToPath } from 'url';
 import path from 'path';
-import fs from 'fs';
+import fs from 'fs/promises';
 import { PATHS } from '../src/constants/paths';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const themes = ['light', 'dark'] as const;
 
@@ -56,8 +53,8 @@ async function generatePDF(theme: (typeof themes)[number]) {
       deviceScaleFactor: 2
     });
 
-    const outputDir = path.join(__dirname, '..', PATHS.PDF.OUTPUT_DIR);
-    if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
+    const outputDir = path.join(process.cwd(), 'dist');
+    await fs.mkdir(outputDir, { recursive: true });
 
     const outputPath = path.join(outputDir, PATHS.PDF.FILE_NAME);
 
@@ -70,6 +67,13 @@ async function generatePDF(theme: (typeof themes)[number]) {
     });
 
     console.log(`✅ PDF (${theme}) generated: ${outputPath}, with height: ${pageHeight}`);
+
+    // Copy the generated PDF to the public directory
+    const publicDir = path.join(process.cwd(), PATHS.PDF.OUTPUT_DIR);
+    await fs.mkdir(publicDir, { recursive: true });
+    const publicPath = path.join(publicDir, PATHS.PDF.FILE_NAME);
+    await fs.copyFile(outputPath, publicPath);
+    console.log(`✅ PDF copied to: ${publicPath}`);
   } catch (error) {
     console.error('❌ Error generating PDF:', error);
     process.exit(1);
