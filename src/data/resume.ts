@@ -22,7 +22,7 @@ export const resumeData = {
     phone: "+91 981 151 4646",
     showPhoneNumber: false,
     url: "https://about.me/suvajit",
-    summary: "Developer with 8 years of experience working with Flutter, Firebase, Figma, Dio, Bloc, Riverpod, Java, Kotlin, React Native. I have developed successful apps that have touched millions of people. Proficient in Python and experienced with AWS.\n\nIn addition to mobile and backend development, I have a growing expertise in AI-driven content generation. I actively work with ComfyUI, Stable Diffusion, Flux.1 and AI-based image/video generation. I also experiment with LLMs (Gemini API) for automation and creative workflows.",
+    summary: "Software Engineer with 8 years of experience in mobile application development, full-stack engineering, and AI-driven solutions. Expertise in Flutter, Dart, Firebase, Java, Kotlin, React Native, Python, and AWS. Proven track record of developing scalable mobile applications used by millions of users. Specialized in cross-platform mobile development, backend architecture, and AI automation workflows using ComfyUI, Stable Diffusion, Flux.1, and LLM APIs (Gemini, OpenAI). Strong background in team leadership, technical architecture, and agile development practices.",
     location: {
       region: "West Bengal",
       city: "Krishnanagar",
@@ -118,7 +118,7 @@ export const resumeData = {
           level: 50
         },
         {
-          name: "AI Image & Video Generation (Gen-2, SD, OpenAI)",
+          name: "AI Image/Video Generation",
           level: 50
         },
         {
@@ -130,19 +130,51 @@ export const resumeData = {
   ],
   work: [
     {
+      company: "Freelance / Personal Projects",
+      position: "Freelance Consultant & AI Enthusiast",
+      website: "",
+      startDate: "2024-11",
+      endDate: "Present",
+      summary: "Delivering freelance projects and exploring AI automation tools for intelligent workflows.",
+      highlights: [
+        "Delivered freelance projects involving Flutter, Firebase, and custom backend setups for early-stage clients",
+        "Explored AI automation tools like ComfyUI, n8n, and LangChain for building intelligent workflows",
+        "Built experimental applications using Agentic AIs and LLM APIs (Gemini, OpenAI) for task automation and creative problem-solving",
+        "Developed personal initiatives including end-to-end encrypted chat systems and mini games with vibe coding"
+      ],
+      technologies: ["Flutter", "Firebase", "Python", "ComfyUI", "LangChain", "LLM APIs", "AI Automation"]
+    },
+    {
+      company: "Stashfin",
+      position: "Senior Manager",
+      website: "https://www.stashfin.com/",
+      startDate: "2024-06",
+      endDate: "2024-11",
+      summary: "Led mobile engineering team and architected Flutter application for leading Indian fintech company specializing in digital lending and credit access.",
+      highlights: [
+        "Led and managed a team of 5 engineers, overseeing daily execution, code quality, sprint planning, and performance improvements",
+        "Architected the Flutter application from scratch, defining technical roadmap, project structure, state management approach, and scalable modular architecture",
+        "Collaborated with multiple cross-functional stakeholders including product, design, backend, and leadership teams to align requirements and deliver high-impact solutions",
+        "Drove end-to-end technical decision-making, ensuring the app met performance, security, and scalability standards",
+        "Mentored junior developers and established best practices for coding, testing, and CI/CD workflows"
+      ],
+      technologies: ["Flutter", "Dart", "Team Leadership", "Architecture", "Agile", "CI/CD"]
+    },
+    {
       company: "Tailorbird",
       position: "Senior Full Stack Developer",
       website: "https://www.tailorbird.com/",
       startDate: "2023-06",
       endDate: "2024-01",
-      summary: "Worked on AI-powered multifamily renovation platform.",
+      summary: "Developed Flutter mobile application from scratch for multifamily renovation platform, focusing on interactive BIM viewer for building floorplans and measurement modifications.",
       highlights: [
-        "Setting up the foundation of the Flutter app architecture using Bloc, GraphQL, Hive",
-        "Implemented Forge Viewer for viewing Revit models of buildings/projects",
-        "Created architecture for PDF generation used for report generation",
-        "Contributed to APIs and Flutter app features"
+        "Architected and developed Flutter application from scratch using Bloc, GraphQL, and Hive for state management and local data persistence",
+        "Built interactive BIM viewer using Forge Viewer to display and interact with Revit 3D building models and floorplans in the mobile application",
+        "Implemented measurement selection and modification features allowing users to interact with building measurements directly in the viewer",
+        "Designed and developed scalable backend architecture for PDF generation system used for automated report generation",
+        "Contributed to RESTful API development and Flutter app features, working as part of a 4-person development team"
       ],
-      technologies: ["Flutter", "Bloc", "GraphQL", "Hive", "Python"]
+      technologies: ["Flutter", "Dart", "Bloc", "GraphQL", "Hive", "Forge Viewer", "BIM", "Python", "REST APIs"]
     },
     {
       company: "Tranzact",
@@ -150,15 +182,15 @@ export const resumeData = {
       website: "https://letstranzact.com/",
       startDate: "2022-06",
       endDate: "2023-02",
-      summary: "Worked as Flutter developer digitizing SME manufacturers.",
+      summary: "Developed Flutter applications for digitizing SME manufacturers into extraordinary businesses.",
       highlights: [
-        "Restructured the app using Riverpod",
-        "Maintained crash-free users at 99%",
-        "Implemented push notifications using MoEngage with A/B testing",
-        "Set up separate prod and dev environments",
-        "Managed a small team"
+        "Restructured entire mobile application using Riverpod for improved state management and code maintainability",
+        "Maintained 99% crash-free user rate through proactive bug fixes and comprehensive error handling",
+        "Implemented push notification system using MoEngage with A/B testing capabilities for user engagement",
+        "Configured and maintained separate production and development environments with proper CI/CD pipelines",
+        "Managed a small development team, providing technical guidance and code reviews"
       ],
-      technologies: ["Flutter", "Riverpod", "MoEngage"]
+      technologies: ["Flutter", "Riverpod", "MoEngage", "CI/CD", "Team Management"]
     },
     {
       company: "Vedantu",
@@ -166,14 +198,14 @@ export const resumeData = {
       website: "https://www.vedantu.com/",
       startDate: "2020-08",
       endDate: "2022-05",
-      summary: "Worked on growth team for online education platform.",
+      summary: "Developed features for growth team on India's leading LIVE online learning platform, ensuring uninterrupted education delivery.",
       highlights: [
-        "Implemented live video streaming and socket communication",
-        "Written Jenkins scripts in groovy for building android apk",
-        "Dockerized FE project for development and QA",
-        "Contributed to website using React and Next.js"
+        "Implemented real-time live video streaming functionality and WebSocket-based socket communication for interactive learning sessions",
+        "Developed Jenkins automation scripts in Groovy for automated Android APK builds and deployment pipelines",
+        "Containerized frontend project using Docker for consistent development and QA environments",
+        "Contributed to company website development using React and Next.js, improving user experience and performance"
       ],
-      technologies: ["React Native", "Jenkins", "Docker", "React", "Next.js"]
+      technologies: ["React Native", "WebSocket", "Jenkins", "Groovy", "Docker", "React", "Next.js"]
     },
     {
       company: "Bounce",
@@ -181,13 +213,14 @@ export const resumeData = {
       website: "https://play.google.com/store/apps/details?id=com.metrobikes.app",
       startDate: "2020-02",
       endDate: "2020-07",
-      summary: "Worked on rental scooter & bike service app.",
+      summary: "Developed mobile applications for rental scooter and bike service transforming mobility for thousands of daily commuters.",
       highlights: [
-        "Worked on consumer side features",
-        "Developed Hawkeye project (Bounce Hero App)",
-        "Implemented Sentry for crash reporting"
+        "Developed consumer-facing features for rental scooter and bike booking mobile application",
+        "Built Hawkeye project (Bounce Hero App) - a comprehensive app for fleet management and operations",
+        "Implemented earnings and incentives features for fleet operators",
+        "Integrated Sentry crash reporting and error tracking system for improved app stability and monitoring"
       ],
-      technologies: ["Flutter", "Sentry"]
+      technologies: ["Flutter", "Dart", "Sentry", "Crash Reporting"]
     },
     {
       company: "Leher.ai Pvt. Ltd",
@@ -195,14 +228,57 @@ export const resumeData = {
       website: "https://play.google.com/store/apps/details?id=com.leher",
       startDate: "2019-01",
       endDate: "2020-02",
-      summary: "Worked on video discussion social platform.",
+      summary: "Developed video discussion social platform enabling users to join video discussions with interesting people worldwide.",
       highlights: [
-        "Boosted app stability to 98% from 75% within 20 days",
-        "Implemented Dagger",
-        "Built full-screen video feed",
-        "Rewrote whole app in Flutter for v4.0"
+        "Improved app stability from 75% to 98% within 20 days through systematic bug fixes and performance optimization",
+        "Implemented dependency injection using Dagger framework following MVP architectural pattern",
+        "Built full-screen video feed feature for enhanced user engagement and viewing experience",
+        "Led complete application rewrite in Flutter for version 4.0, improving performance and maintainability"
       ],
-      technologies: ["Android", "MVP", "Dagger", "Flutter"]
+      technologies: ["Android", "Java", "MVP", "Dagger", "Flutter", "Dart"]
+    },
+    {
+      company: "Vokal",
+      position: "Android Developer",
+      website: "https://play.google.com/store/apps/details?id=com.oktalk.app",
+      startDate: "2018-05",
+      endDate: "2019-01",
+      summary: "Developed India's favorite question-answer app for learning in Hindi and vernacular languages.",
+      highlights: [
+        "Built features following MVVM architectural pattern for improved code organization and testability",
+        "Implemented live streaming functionality using Wowza streaming server for Vokal Live feature",
+        "Developed multiple mini applications for daily digest section including Polls, mini audio player, and Guess games",
+        "Implemented auto-play video functionality for enhanced user engagement in feed section"
+      ],
+      technologies: ["Android", "Java", "MVVM", "Wowza", "Live Streaming"]
+    },
+    {
+      company: "STUPIDCHAT TECHNOLOGY",
+      position: "Android Developer",
+      website: "https://play.google.com/store/apps/details?id=chat.stupid.app",
+      startDate: "2018-03",
+      endDate: "2018-05",
+      summary: "Developed quiz and trivia gaming app offering prize money to winners (later acquihired by Vokal).",
+      highlights: [
+        "Created real-time chat messaging system with Firebase Push Notifications including sent, delivered, and read receipt features",
+        "Implemented vernacular language support for multi-language user experience",
+        "Fixed socket.io integration bugs in Android application for improved real-time communication"
+      ],
+      technologies: ["Android", "Java", "Firebase", "Socket.io", "Real-time Communication"]
+    },
+    {
+      company: "Sitegalleria Pvt. Ltd",
+      position: "Android Developer",
+      website: "",
+      startDate: "2017-01",
+      endDate: "2018-02",
+      summary: "Developed Android applications for educational technology platforms.",
+      highlights: [
+        "Developed Android application for EXAMIN project from scratch, a major educational platform",
+        "Built AISEE application and internal projects for the organization",
+        "Implemented core Android features and functionality following best practices"
+      ],
+      technologies: ["Android", "Java", "Mobile Development"]
     }
   ],
   projects: [

@@ -23,9 +23,32 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, children, classNam
     return titleMap[title] || title;
   };
 
+  // ATS-friendly heading mapping - these will be used in PDF
+  const getATSTitle = (title: string) => {
+    const atsTitleMap: Record<string, string> = {
+      'Experience': 'Work Experience',
+      'Skills': 'Technical Skills',
+      'Projects': 'Projects',
+      'Education': 'Education',
+      'Languages': 'Languages',
+      'Interests': 'Interests'
+    };
+
+    return atsTitleMap[title] || title;
+  };
+
   return (
     <div className={cn('mb-8 pixel-section', className)}>
-      <h2 className="pixel-heading" data-original-title={title}>{getRetroTitle(title)}</h2>
+      {/* Heading with both retro and ATS-friendly versions */}
+      <h2 
+        className="pixel-heading resume-heading" 
+        data-ats-title={getATSTitle(title)} 
+        data-original-title={title}
+        data-retro-title={getRetroTitle(title)}
+      >
+        <span className="retro-title">{getRetroTitle(title)}</span>
+        <span className="ats-title">{getATSTitle(title)}</span>
+      </h2>
       <div>{children}</div>
     </div>
   );

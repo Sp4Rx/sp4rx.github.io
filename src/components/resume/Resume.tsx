@@ -145,7 +145,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
         {skills.map((skillGroup, groupIndex) => (
           <div key={groupIndex} className="mb-4 last:mb-0">
             <h3 className="text-sm font-semibold mb-2 px-1 bg-secondary/30 rounded-sm inline-block retro-label">{skillGroup.group}</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-3 gap-y-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-3 gap-y-2 items-start">
               {[...skillGroup.items]
                 .sort((a, b) => b.level - a.level) // Sort by level in descending order
                 .map((skill, index) => (

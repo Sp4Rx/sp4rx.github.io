@@ -83,6 +83,9 @@ const GameEngine: React.FC<GameEngineProps> = ({
   const [touchIdentifier, setTouchIdentifier] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [showControls, setShowControls] = useState(isMobile);
+  const [lastSwipeTime, setLastSwipeTime] = useState(0);
+  const minSwipeDistance = 30; // Minimum distance for a swipe
+  const maxSwipeTime = 300; // Maximum time for a swipe (ms)
 
   const lastRenderTimeRef = useRef(performance.now());
   const accumulatedTimeRef = useRef(0);
@@ -341,17 +344,31 @@ const GameEngine: React.FC<GameEngineProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [helpVisible, isMobile]);
 
+  // Haptic feedback helper (for supported devices)
+  const triggerHapticFeedback = useCallback(() => {
+    if ('vibrate' in navigator && isMobile) {
+      // Short vibration for direction change
+      navigator.vibrate(10);
+    }
+  }, [isMobile]);
+
   // Handle touch events for swipe and drag detection
   const handleTouchStart = (e: TouchEvent<HTMLCanvasElement>) => {
     // Only track the first finger touch
     if (touchIdentifier !== null) return;
 
     const touch = e.touches[0];
+    const now = Date.now();
+    
+    // Prevent rapid swipes (debounce)
+    if (now - lastSwipeTime < 100) return;
+
     setTouchIdentifier(touch.identifier);
     setTouchStart({
       x: touch.clientX,
       y: touch.clientY
     });
+    setTouchEnd(null);
     setIsDragging(true);
   };
 
@@ -377,31 +394,33 @@ const GameEngine: React.FC<GameEngineProps> = ({
     setTouchEnd(currentPosition);
 
     // Handle drag gesture - update direction based on drag movement
-    if (isDragging) {
+    if (isDragging && touchStart) {
       const xDiff = touchStart.x - currentPosition.x;
       const yDiff = touchStart.y - currentPosition.y;
+      const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 
-      // Only change direction if the drag distance is significant but not too large
-      if ((Math.abs(xDiff) > 10 && Math.abs(xDiff) < 100) || (Math.abs(yDiff) > 10 && Math.abs(yDiff) < 100)) {
+      // Only change direction if the drag distance is significant
+      if (distance >= minSwipeDistance) {
         // Determine if horizontal or vertical movement is dominant
         if (Math.abs(xDiff) > Math.abs(yDiff)) {
           // Horizontal drag
-          if (xDiff > 0) {
-            handleTouchDirectionChange('LEFT');
-          } else {
-            handleTouchDirectionChange('RIGHT');
+          const newDirection = xDiff > 0 ? 'LEFT' : 'RIGHT';
+          if (directionRef.current !== newDirection && !isOppositeDirection(directionRef.current, newDirection)) {
+            handleTouchDirectionChange(newDirection);
+            triggerHapticFeedback();
+            // Update touch start to current position for continuous movement
+            setTouchStart(currentPosition);
           }
         } else {
           // Vertical drag
-          if (yDiff > 0) {
-            handleTouchDirectionChange('UP');
-          } else {
-            handleTouchDirectionChange('DOWN');
+          const newDirection = yDiff > 0 ? 'UP' : 'DOWN';
+          if (directionRef.current !== newDirection && !isOppositeDirection(directionRef.current, newDirection)) {
+            handleTouchDirectionChange(newDirection);
+            triggerHapticFeedback();
+            // Update touch start to current position for continuous movement
+            setTouchStart(currentPosition);
           }
         }
-
-        // Update touch start to current position for continuous movement
-        setTouchStart(currentPosition);
       }
     }
   };
@@ -409,35 +428,60 @@ const GameEngine: React.FC<GameEngineProps> = ({
   const handleTouchEnd = (e: TouchEvent<HTMLCanvasElement>) => {
     // Check if the ended touch is the one we're tracking
     let touchEnded = false;
+    let touchObj = null;
     for (let i = 0; i < e.changedTouches.length; i++) {
       if (e.changedTouches[i].identifier === touchIdentifier) {
         touchEnded = true;
+        touchObj = e.changedTouches[i];
         break;
       }
     }
 
-    if (!touchEnded) return;
+    if (!touchEnded || !touchStart) {
+      // Reset touch tracking
+      setTouchStart(null);
+      setTouchEnd(null);
+      setTouchIdentifier(null);
+      setIsDragging(false);
+      return;
+    }
 
-    if (touchStart && touchEnd) {
-      const xDiff = touchStart.x - touchEnd.x;
-      const yDiff = touchStart.y - touchEnd.y;
+    const endPosition = touchObj ? { x: touchObj.clientX, y: touchObj.clientY } : touchEnd;
+    if (!endPosition) {
+      setTouchStart(null);
+      setTouchEnd(null);
+      setTouchIdentifier(null);
+      setIsDragging(false);
+      return;
+    }
 
-      // Handle final swipe gesture if it was a quick motion
+    const xDiff = touchStart.x - endPosition.x;
+    const yDiff = touchStart.y - endPosition.y;
+    const distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+    const timeDiff = Date.now() - lastSwipeTime;
+
+    // Handle final swipe gesture if it was a quick motion with sufficient distance
+    if (distance >= minSwipeDistance && timeDiff < maxSwipeTime) {
       if (Math.abs(xDiff) > Math.abs(yDiff)) {
         // Horizontal swipe
-        if (xDiff > 10) {
+        if (xDiff > minSwipeDistance) {
           handleTouchDirectionChange('LEFT');
-        } else if (xDiff < -10) {
+          triggerHapticFeedback();
+        } else if (xDiff < -minSwipeDistance) {
           handleTouchDirectionChange('RIGHT');
+          triggerHapticFeedback();
         }
       } else {
         // Vertical swipe
-        if (yDiff > 10) {
+        if (yDiff > minSwipeDistance) {
           handleTouchDirectionChange('UP');
-        } else if (yDiff < -10) {
+          triggerHapticFeedback();
+        } else if (yDiff < -minSwipeDistance) {
           handleTouchDirectionChange('DOWN');
+          triggerHapticFeedback();
         }
       }
+      setLastSwipeTime(Date.now());
     }
 
     // Reset touch tracking
@@ -573,11 +617,19 @@ const GameEngine: React.FC<GameEngineProps> = ({
   }, [generateFood, windowSize, cellSize, food.x, food.y, foodSymbols.length]);
 
   // Check if snake collided with itself and return the collision index, if any.
+  // Optimized: only check segments that could actually collide (skip tail if moving)
   const checkSelfCollision = useCallback((head: Point, body: Point[]) => {
-    for (let i = 1; i < body.length; i++) {
+    // Skip the first segment (current head) and check from index 1
+    // For optimization, we can skip the last segment if snake is moving (tail will move away)
+    const endIndex = body.length - 1;
+    for (let i = 1; i < endIndex; i++) {
       if (head.x === body[i].x && head.y === body[i].y) {
         return i;
       }
+    }
+    // Check last segment separately (tail collision)
+    if (endIndex > 0 && head.x === body[endIndex].x && head.y === body[endIndex].y) {
+      return endIndex;
     }
     return -1;
   }, []);
@@ -601,12 +653,15 @@ const GameEngine: React.FC<GameEngineProps> = ({
   }, []);
 
   // Check if a move would result in collision
+  // Optimized: use early exit and skip tail when appropriate
   const wouldCollide = useCallback((newPos: Point, snake: Point[], excludeTail: boolean = true): boolean => {
-    return snake.some((segment, i) => {
-      // Optionally exclude the tail since it will move out of the way
-      if (excludeTail && i === snake.length - 1) return false;
-      return segment.x === newPos.x && segment.y === newPos.y;
-    });
+    const endIndex = excludeTail ? snake.length - 1 : snake.length;
+    for (let i = 0; i < endIndex; i++) {
+      if (snake[i].x === newPos.x && snake[i].y === newPos.y) {
+        return true;
+      }
+    }
+    return false;
   }, []);
 
   // Update score when snake eats food
@@ -791,9 +846,8 @@ const GameEngine: React.FC<GameEngineProps> = ({
     return newSnake;
   }, [calculateNewHead, checkSelfCollision, wouldCollide, getAutoDirection, updateScore, generateFood]);
 
-  // Main game loop
+  // Main game loop - optimized version
   useEffect(() => {
-
     const gameLoop = (timestamp: number) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
@@ -804,60 +858,40 @@ const GameEngine: React.FC<GameEngineProps> = ({
       const deltaTime = timestamp - lastRenderTimeRef.current;
       lastRenderTimeRef.current = timestamp;
 
-      // Accumulate time for movement updates
-      accumulatedTimeRef.current += deltaTime;
-
-      // Only update snake position when enough time has passed
-      while (accumulatedTimeRef.current >= movementInterval) {
-        accumulatedTimeRef.current -= movementInterval;
-        moveSnake();
-      }
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const gameLoopExecution = (deltaTime: number) => {
-        // Accumulate time between moves
-        const timeBetweenMoves = 1000 / snakeSpeed; // Convert to milliseconds
+      // Only process game logic if game is active
+      if (
+        gameStateRef.current === 'PLAYING' ||
+        gameStateRef.current === 'AUTO' ||
+        gameStateRef.current === 'PAUSED'
+      ) {
+        // Accumulate time for movement updates
         accumulatedTimeRef.current += deltaTime;
 
-        // Only move when enough time has passed
-        if (accumulatedTimeRef.current < timeBetweenMoves) {
-          return;
+        // Process direction queue before movement
+        processDirectionQueue();
+
+        // Only update snake position when enough time has passed
+        // Limit updates to prevent multiple moves in one frame
+        const maxUpdatesPerFrame = 3; // Safety limit
+        let updatesThisFrame = 0;
+        
+        while (accumulatedTimeRef.current >= movementInterval && updatesThisFrame < maxUpdatesPerFrame) {
+          accumulatedTimeRef.current -= movementInterval;
+          moveSnake();
+          updatesThisFrame++;
         }
-
-        // Reset accumulated time
-        accumulatedTimeRef.current = 0;
-
-        // Apply direction change if not opposite
-        if (nextDirectionRef.current && !isOppositeDirection(directionRef.current, nextDirectionRef.current)) {
-          directionRef.current = nextDirectionRef.current;
-        }
-
-        // Use the centralized moveSnake function to handle all movement logic
-        const newSnake = moveSnake();
-
-        // Draw the updated game elements
-        drawGameElements(ctx, newSnake, foodRef.current);
-      };
-
-      if (deltaTime > gameSpeed || lastRenderTimeRef.current === 0) {
-        lastRenderTimeRef.current = timestamp;
-        if (
-          gameStateRef.current === 'PLAYING' ||
-          gameStateRef.current === 'AUTO' ||
-          gameStateRef.current === 'PAUSED'
-        ) {
-          gameLoopExecution(deltaTime);
-        }
-      } else {
-        drawGameElements(ctx, snakeRef.current, foodRef.current);
       }
+
+      // Always draw the current state (even when paused)
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawGameElements(ctx, snakeRef.current, foodRef.current);
 
       requestAnimationFrame(gameLoop);
     };
 
     const animationId = requestAnimationFrame(gameLoop);
     return () => cancelAnimationFrame(animationId);
-  }, [theme, gameSpeed, moveSnake]);
+  }, [theme, moveSnake, processDirectionQueue]);
 
   // Initialize snake starting position and direction
   useEffect(() => {
@@ -927,25 +961,46 @@ const GameEngine: React.FC<GameEngineProps> = ({
     setNextDirection(initialDirection);
   }, []);
 
-  // Draw game elements
+  // Draw game elements with smooth transitions
   const drawGameElements = (
     ctx: CanvasRenderingContext2D,
     snake: Point[],
     food: Point
   ) => {
-    // Draw snake segments first
+    // Draw snake segments with gradient effect
     snake.forEach((segment, index) => {
       let color;
-      if (index === 0) color = isDarkMode ? '#a487ff' : '#6E59A5';
-      else if (index === 1 || index === 2) color = isDarkMode ? '#b59dff' : '#7E69AB';
-      else if (index === 3) color = isDarkMode ? '#c6b5ff' : '#9b87f5';
-      else color = isDarkMode ? '#d4c9ff' : '#b8abfa';
+      if (index === 0) {
+        // Head - brighter color
+        color = isDarkMode ? '#a487ff' : '#6E59A5';
+      } else if (index === 1 || index === 2) {
+        // Neck - slightly lighter
+        color = isDarkMode ? '#b59dff' : '#7E69AB';
+      } else if (index === 3) {
+        // Transition segment
+        color = isDarkMode ? '#c6b5ff' : '#9b87f5';
+      } else {
+        // Body - lighter color
+        color = isDarkMode ? '#d4c9ff' : '#b8abfa';
+      }
+
+      // Add subtle glow to head
+      if (index === 0) {
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = isDarkMode ? 'rgba(164, 135, 255, 0.5)' : 'rgba(110, 89, 165, 0.5)';
+      } else {
+        ctx.shadowBlur = 0;
+      }
 
       ctx.fillStyle = color;
       ctx.fillRect(segment.x * cellSize, segment.y * cellSize, cellSize, cellSize);
       ctx.strokeStyle = isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.2)';
+      ctx.lineWidth = 1;
       ctx.strokeRect(segment.x * cellSize, segment.y * cellSize, cellSize, cellSize);
     });
+
+    // Reset shadow
+    ctx.shadowBlur = 0;
 
     // Check if food element exists
     let foodElement = document.getElementById('game-food');

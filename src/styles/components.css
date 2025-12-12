@@ -19,6 +19,29 @@
         letter-spacing: 1px;
     }
 
+    /* ATS-friendly headings for PDF/Print */
+    .resume-heading .retro-title {
+        display: inline;
+    }
+
+    .resume-heading .ats-title {
+        display: none;
+    }
+
+    /* Show ATS-friendly titles in print/PDF mode */
+    @media print {
+        .resume-heading .retro-title {
+            display: none;
+        }
+
+        .resume-heading .ats-title {
+            display: inline;
+            font-family: inherit;
+            text-shadow: none;
+            letter-spacing: normal;
+        }
+    }
+
     /* Help Dialog Components */
     .help-dialog {
         @apply fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-auto;

@@ -15,9 +15,10 @@
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
     background: transparent;
     opacity: 1; /* Ensure it's visible at load */
-    animation: blink 2s infinite ease-in-out;
+    animation: blink 2s infinite ease-in-out, float 3s infinite ease-in-out;
     z-index: var(--game-layer-z-index);
     image-rendering: pixelated;
+    transition: transform 0.2s ease-out;
 }
 
 /* Blinking animation */
@@ -30,6 +31,16 @@
     }
     100% {
         opacity: 0.8;
+    }
+}
+
+/* Floating animation for food */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-5px) scale(1.1);
     }
 }
 
