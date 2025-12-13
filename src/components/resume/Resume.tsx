@@ -172,7 +172,8 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
               highlights={project.highlights}
               technologies={project.technologies}
               githubUrl={project.githubUrl}
-              images={project.images}
+              appStoreUrl={project.appStoreUrl}
+              playStoreUrl={project.playStoreUrl}
             />
           ))}
         </div>

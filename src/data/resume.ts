@@ -22,7 +22,7 @@ export const resumeData = {
     phone: "+91 981 151 4646",
     showPhoneNumber: false,
     url: "https://about.me/suvajit",
-    summary: "Software Engineer with 8 years of experience in mobile application development, full-stack engineering, and AI-driven solutions. Expertise in Flutter, Dart, Firebase, Java, Kotlin, React Native, Python, and AWS. Proven track record of developing scalable mobile applications used by millions of users. Specialized in cross-platform mobile development, backend architecture, and AI automation workflows using ComfyUI, Stable Diffusion, Flux.1, and LLM APIs (Gemini, OpenAI). Strong background in team leadership, technical architecture, and agile development practices.",
+    summary: "Senior Frontend Engineer with 8 years of experience building enterprise-grade web and mobile applications, specializing in React, TypeScript, and real-time data visualization. Proven expertise in fintech application development, having led engineering teams at leading financial technology companies. Strong background in frontend architecture, performance optimization, state management, and secure application development. Experienced in building scalable React applications with WebSocket integration, GraphQL, and modern frontend frameworks. Additional expertise in AI-driven solutions, mobile development (Flutter, React Native), and full-stack engineering. Track record of delivering high-performance applications used by millions of users with focus on security, compliance, and user experience.",
     location: {
       region: "West Bengal",
       city: "Krishnanagar",
@@ -72,14 +72,51 @@ export const resumeData = {
         {
           name: "Java",
           level: 80
+        },
+        {
+          name: "Capacitor",
+          level: 50
+        },
+        {
+          name: "Swift",
+          level: 50
         }
       ]
     },
     {
-      group: "Frontend Development",
+      group: "Web Development",
       items: [
         {
           name: "React JS",
+          level: 50
+        },
+        {
+          name: "Next.js",
+          level: 50
+        },
+        {
+          name: "TypeScript",
+          level: 60
+        },
+        {
+          name: "JavaScript",
+          level: 60
+        }
+      ]
+    },
+    {
+      group: "API & Communication",
+      items: [
+        {
+          name: "REST APIs",
+          level: 60
+        },
+        {
+          name: "GraphQL",
+          level: 50
+        },
+        {
+          name: "WebSocket",
           level: 50
         }
       ]
@@ -94,6 +131,30 @@ export const resumeData = {
         {
           name: "AWS",
           level: 50
+        },
+        {
+          name: "Firebase",
+          level: 70
+        },
+        {
+          name: "Supabase",
+          level: 50
+        },
+        {
+          name: "Supabase Functions",
+          level: 50
+        },
+        {
+          name: "Cloudflare",
+          level: 50
+        },
+        {
+          name: "Cloudflare Pages/Workers",
+          level: 50
+        },
+        {
+          name: "Google Cloud",
+          level: 50
         }
       ]
     },
@@ -105,7 +166,23 @@ export const resumeData = {
           level: 50
         },
         {
-          name: "Jenkins/Github Actions",
+          name: "Jenkins",
+          level: 50
+        },
+        {
+          name: "GitHub Actions",
+          level: 50
+        },
+        {
+          name: "GitLab CI",
+          level: 50
+        },
+        {
+          name: "TravisCI / CircleCI",
+          level: 50
+        },
+        {
+          name: "n8n",
           level: 50
         }
       ]
@@ -131,18 +208,21 @@ export const resumeData = {
   work: [
     {
       company: "Freelance / Personal Projects",
-      position: "Freelance Consultant & AI Enthusiast",
+      position: "Freelance Full Stack & AI Consultant",
       website: "",
       startDate: "2024-11",
       endDate: "Present",
-      summary: "Delivering freelance projects and exploring AI automation tools for intelligent workflows.",
+      summary: "Delivering full-stack solutions and AI-powered applications for clients, specializing in React, TypeScript, Node.js, and modern web technologies. Building scalable applications across the entire stack with focus on performance optimization, security, and robust architecture. Experienced in frontend development, backend services, database design, and cloud infrastructure.",
       highlights: [
-        "Delivered freelance projects involving Flutter, Firebase, and custom backend setups for early-stage clients",
-        "Explored AI automation tools like ComfyUI, n8n, and LangChain for building intelligent workflows",
-        "Built experimental applications using Agentic AIs and LLM APIs (Gemini, OpenAI) for task automation and creative problem-solving",
-        "Developed personal initiatives including end-to-end encrypted chat systems and mini games with vibe coding"
+        "Architected and developed full-stack applications using React, TypeScript, Node.js, and modern web frameworks, implementing scalable architecture patterns, state management, and performance optimization techniques for enterprise clients",
+        "Built real-time applications and data visualization interfaces using React, WebSocket connections, GraphQL subscriptions, and Supabase real-time features for live data streaming and interactive analytics",
+        "Developed secure, end-to-end encrypted communication platforms with React and Node.js, implementing security best practices, authentication systems, and compliance considerations for sensitive financial and personal data",
+        "Designed and implemented RESTful APIs, GraphQL endpoints, and backend services using Node.js, Python, and cloud platforms (AWS, Cloudflare), ensuring scalable and maintainable server-side architecture",
+        "Optimized application performance across frontend and backend through virtualization, memoization, caching strategies, database query optimization, and lazy loading, achieving significant improvements in performance and user experience",
+        "Created AI-powered applications using LLM APIs (Gemini, OpenAI) and automation tools (ComfyUI, n8n) for intelligent workflows, integrating AI capabilities into full-stack web and mobile applications",
+        "Implemented CI/CD pipelines with GitHub Actions, automated testing, containerization, and cloud-native deployments on AWS and Cloudflare Pages for scalable full-stack applications"
       ],
-      technologies: ["Flutter", "Firebase", "Python", "ComfyUI", "LangChain", "LLM APIs", "AI Automation"]
+      technologies: ["React", "TypeScript", "Next.js", "JavaScript", "Node.js", "Python", "WebSocket", "GraphQL", "Supabase", "State Management", "Performance Optimization", "React Native", "Expo", "AWS", "Cloudflare", "GitHub Actions", "CI/CD", "AI/ML"]
     },
     {
       company: "Stashfin",
@@ -150,15 +230,17 @@ export const resumeData = {
       website: "https://www.stashfin.com/",
       startDate: "2024-06",
       endDate: "2024-11",
-      summary: "Led mobile engineering team and architected Flutter application for leading Indian fintech company specializing in digital lending and credit access.",
+      summary: "Led mobile engineering team and architected Flutter application for leading Indian fintech company specializing in digital lending and credit access. Delivered enterprise-grade financial application with focus on security, compliance, and real-time transaction processing.",
       highlights: [
-        "Led and managed a team of 5 engineers, overseeing daily execution, code quality, sprint planning, and performance improvements",
-        "Architected the Flutter application from scratch, defining technical roadmap, project structure, state management approach, and scalable modular architecture",
-        "Collaborated with multiple cross-functional stakeholders including product, design, backend, and leadership teams to align requirements and deliver high-impact solutions",
-        "Drove end-to-end technical decision-making, ensuring the app met performance, security, and scalability standards",
-        "Mentored junior developers and established best practices for coding, testing, and CI/CD workflows"
+        "Led and managed a team of 5 engineers, overseeing daily execution, code quality, sprint planning, and performance improvements for critical fintech application",
+        "Architected the Flutter application from scratch, defining technical roadmap, project structure, state management approach, and scalable modular architecture for financial services platform",
+        "Participated in technical hiring process, conducting interviews, evaluating candidates, and making hiring decisions to build and scale the engineering team",
+        "Ensured application compliance with financial regulations and security standards, implementing secure data handling, encryption, and authentication mechanisms for sensitive financial data",
+        "Collaborated with multiple cross-functional stakeholders including product, design, backend, and leadership teams to align requirements and deliver high-impact solutions for institutional clients",
+        "Drove end-to-end technical decision-making, ensuring the app met performance, security, and scalability standards required for enterprise financial applications",
+        "Mentored junior developers and established best practices for coding, testing, and CI/CD workflows, promoting code quality and maintainability"
       ],
-      technologies: ["Flutter", "Dart", "Team Leadership", "Architecture", "Agile", "CI/CD"]
+      technologies: ["Flutter", "Dart", "Team Leadership", "Architecture", "Agile", "CI/CD", "Fintech", "Security", "Compliance"]
     },
     {
       company: "Tailorbird",
@@ -166,15 +248,15 @@ export const resumeData = {
       website: "https://www.tailorbird.com/",
       startDate: "2023-06",
       endDate: "2024-01",
-      summary: "Developed Flutter mobile application from scratch for multifamily renovation platform, focusing on interactive BIM viewer for building floorplans and measurement modifications.",
+      summary: "Developed full-stack solutions including Flutter mobile application and web services for multifamily renovation platform, focusing on interactive BIM viewer for building floorplans and measurement modifications.",
       highlights: [
         "Architected and developed Flutter application from scratch using Bloc, GraphQL, and Hive for state management and local data persistence",
         "Built interactive BIM viewer using Forge Viewer to display and interact with Revit 3D building models and floorplans in the mobile application",
         "Implemented measurement selection and modification features allowing users to interact with building measurements directly in the viewer",
         "Designed and developed scalable backend architecture for PDF generation system used for automated report generation",
-        "Contributed to RESTful API development and Flutter app features, working as part of a 4-person development team"
+        "Developed RESTful APIs and backend services using Python, supporting mobile application features and ensuring seamless data integration"
       ],
-      technologies: ["Flutter", "Dart", "Bloc", "GraphQL", "Hive", "Forge Viewer", "BIM", "Python", "REST APIs"]
+      technologies: ["Flutter", "Dart", "Bloc", "GraphQL", "Hive", "Forge Viewer", "BIM", "Python", "REST APIs", "React", "JavaScript"]
     },
     {
       company: "Tranzact",
@@ -200,10 +282,11 @@ export const resumeData = {
       endDate: "2022-05",
       summary: "Developed features for growth team on India's leading LIVE online learning platform, ensuring uninterrupted education delivery.",
       highlights: [
-        "Implemented real-time live video streaming functionality and WebSocket-based socket communication for interactive learning sessions",
-        "Developed Jenkins automation scripts in Groovy for automated Android APK builds and deployment pipelines",
-        "Containerized frontend project using Docker for consistent development and QA environments",
-        "Contributed to company website development using React and Next.js, improving user experience and performance"
+        "Developed React Native mobile application features for the growth team, implementing cross-platform components, state management, and native module integrations for iOS and Android platforms",
+        "Implemented real-time live video streaming functionality and WebSocket-based socket communication for interactive learning sessions, handling high-frequency data updates and maintaining low-latency connections",
+        "Developed and maintained enterprise-grade company website using React and Next.js, implementing responsive design patterns, performance optimization (code splitting, caching, memoization), and enhancing user experience through modern frontend development practices",
+        "Developed Jenkins automation scripts in Groovy for automated Android APK builds and deployment pipelines, ensuring consistent CI/CD workflows",
+        "Containerized frontend project using Docker for consistent development and QA environments, improving deployment reliability and scalability"
       ],
       technologies: ["React Native", "WebSocket", "Jenkins", "Groovy", "Docker", "React", "Next.js"]
     },
@@ -283,54 +366,58 @@ export const resumeData = {
   ],
   projects: [
     {
-      name: "8-Bit Resume",
-      description: "An interactive 8-bit themed resume game that combines retro gaming with professional portfolio presentation. At its core, it features a classic snake game where you control a colorful snake that grows longer as it collects food, while avoiding self-collision. The game seamlessly integrates with your professional portfolio - the snake's movements and interactions create an engaging way to navigate through your experience, skills, and achievements. Experience a unique way of showcasing professional experience through a nostalgic pixel art interface.",
+      name: "SecretRipple",
+      description: "Enterprise-grade secure messaging and communication platform built with React, TypeScript, and Supabase. Features real-time messaging using Supabase real-time subscriptions, end-to-end encryption, and security-first architecture. Demonstrates advanced React patterns, state management, and performance optimization for secure financial-grade applications.",
       highlights: [
-        "Snake game mechanics",
-        "Dynamic portfolio data",
-        "Pixel art retro design",
+        "Built secure messaging platform with end-to-end encryption using React and TypeScript",
+        "Implemented real-time communication using Supabase real-time subscriptions for instant message delivery and live updates",
+        "Applied security best practices and compliance considerations for handling sensitive data",
+        "Optimized React application performance with code splitting, memoization, and efficient rendering strategies"
+      ],
+      url: "https://secretripple.pages.dev/",
+      githubUrl: "https://github.com/SecretRipple/secret-ripple",
+      technologies: ["React", "TypeScript", "Supabase", "Real-time Subscriptions", "State Management", "Web Security", "Encryption", "Performance Optimization"]
+    },
+    {
+      name: "SumtubeBot",
+      description: "AI-powered Discord bot that automatically detects YouTube links and generates intelligent video summaries using Google Gemini API. Provides comprehensive summaries with key timestamps, content categorization, and topic extraction for better understanding of video content.",
+      highlights: [
+        "Discord bot integration with automatic YouTube link detection",
+        "AI-powered video summarization using Google Gemini API",
+        "Timestamp extraction and content categorization",
+        "Multi-server support with customizable permissions",
+        "Deployed on AWS EC2 (backend) and Cloudflare Pages (frontend)"
+      ],
+      url: "https://sumtubebot.pages.dev/",
+      githubUrl: "https://github.com/sp4rx/sumtubebot",
+      technologies: ["Node.js", "TypeScript", "Discord.js", "Google Gemini API", "React", "AWS EC2", "Cloudflare Pages"]
+    },
+    {
+      name: "Dhyanam",
+      description: "Meditation puzzle game launched across iOS, Android, and Web platforms using React and Capacitor. Demonstrates rapid development and deployment capabilities through vibe coding methodology, enabling quick iteration from concept to production across multiple platforms. Available on App Store, Google Play Store, and web.",
+      highlights: [
+        "Cross-platform mobile app (iOS, Android) and web using React and Capacitor",
+        "Rapid development and deployment using vibe coding methodology",
+        "Published on App Store and Google Play Store with single codebase",
+        "Demonstrates full-stack mobile development capabilities"
+      ],
+      url: "https://dhyanam.pages.dev/",
+      playStoreUrl: "https://play.google.com/store/apps/details?id=app.dhyanam&hl=en",
+      appStoreUrl: "https://apps.apple.com/us/app/dhyanam-meditation-puzzle/id6746568303",
+      technologies: ["React", "Capacitor", "TypeScript", "iOS", "Android", "Web", "Mobile Development"]
+    },
+    {
+      name: "8-Bit Resume",
+      description: "High-performance interactive portfolio website built with React and TypeScript, featuring real-time game mechanics and advanced frontend architecture. Demonstrates expertise in React optimization, state management, performance tuning, and modern frontend development practices with ATS-friendly PDF export functionality.",
+      highlights: [
+        "Built React-based interactive portfolio with optimized game loop and real-time rendering",
+        "Implemented advanced state management and performance optimization techniques (memoization, virtualization, code splitting)",
+        "Developed ATS-optimized resume with automated PDF generation using Puppeteer",
+        "Applied modern React patterns, TypeScript best practices, and responsive design principles"
       ],
       url: "https://suvajit.in",
       githubUrl: "https://github.com/Sp4Rx/sp4rx.github.io",
-      technologies: ["React", "Vite"],
-      images: [
-        "https://placehold.co/600x400/4f46e5/ffffff?text=8-Bit+Resume+Screenshot",
-        "https://placehold.co/600x400/3b82f6/ffffff?text=Game+Interface",
-        "https://placehold.co/600x400/10b981/ffffff?text=Resume+View",
-        "https://placehold.co/600x400/f59e0b/ffffff?text=Mobile+Responsive"
-      ]
-    },
-    {
-      name: "ComfyUI",
-      description: "ComfyUI is an open-source and modular node-based graphical user interface for Stable Diffusion. It allows you to create and share custom workflows by connecting different nodes together.",
-      highlights: [
-        "Node-based UI",
-        "Customizable workflows",
-        "Modular architecture",
-      ],
-      url: "https://suvajit.in",
-      technologies: ["Python", "PyTorch", "Stable Diffusion"],
-      images: [
-        "https://placehold.co/600x400/6d28d9/ffffff?text=ComfyUI+Interface",
-        "https://placehold.co/600x400/8b5cf6/ffffff?text=Node+Editor",
-        "https://placehold.co/600x400/ec4899/ffffff?text=Generated+Image"
-      ]
-    },
-    {
-      name: "Flux.1",
-      description: "Flux.1 is an AI-driven content generation platform that leverages the power of AI to generate high-quality images and videos. It provides a user-friendly interface for creating and customizing prompts, and then generates images and videos based on those prompts.",
-      highlights: [
-        "AI-driven content generation",
-        "User-friendly interface",
-        "Customizable prompts",
-      ],
-      technologies: ["Python", "AI", "Image Generation"],
-      images: [
-        "https://placehold.co/600x400/dc2626/ffffff?text=Flux.1+Dashboard",
-        "https://placehold.co/600x400/ea580c/ffffff?text=Image+Generator",
-        "https://placehold.co/600x400/84cc16/ffffff?text=Video+Output",
-        "https://placehold.co/600x400/06b6d4/ffffff?text=Prompt+Editor"
-      ]
+      technologies: ["React", "TypeScript", "State Management", "Performance Optimization", "Vite", "Puppeteer", "Tailwind CSS"]
     }
   ],
   education: [
