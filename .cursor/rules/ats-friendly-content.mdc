@@ -1,0 +1,62 @@
+---
+alwaysApply: true
+---
+
+# ATS-Friendly Content Guidelines
+
+## Resume Content Standards
+
+### Section Headings
+- Use standard, ATS-friendly section headings in PDF exports:
+  - `Work Experience` (not "Job Dungeons")
+  - `Technical Skills` (not "Power Ups")
+  - `Projects` (not "Project Logs")
+  - `Development Tools` (not "Tool Kit")
+  - `Education` (not "Edu Quest")
+  - `Languages` (not "Spell Book")
+  - `Interests` (not "Side Quests")
+
+### Content Writing Guidelines
+
+1. **Action Verbs**: Always start bullet points with strong action verbs:
+   - Architected, Developed, Implemented, Built, Designed, Led, Optimized, Created, Delivered
+
+2. **Quantifiable Achievements**: Include metrics and numbers where possible:
+   - Team size (e.g., "Led team of 5 engineers")
+   - Performance improvements (e.g., "Improved performance by 30%")
+   - User metrics (e.g., "Used by millions of users")
+   - Crash-free rates (e.g., "Maintained 99% crash-free rate")
+
+3. **Technology Keywords**: Include relevant technology names naturally:
+   - React, TypeScript, Node.js, Python, AWS, Cloudflare
+   - Use full names (e.g., "React Native" not "RN")
+   - Include version numbers only when relevant
+
+4. **Industry-Specific Terms**: Use standard industry terminology:
+   - "Full-stack development" not "full stack dev"
+   - "CI/CD pipelines" not "ci/cd"
+   - "State management" not "state mgmt"
+   - "Performance optimization" not "perf opt"
+
+5. **ATS-Friendly Formatting**:
+   - Use standard date formats: "2024-06" (YYYY-MM)
+   - Spell out abbreviations on first use
+   - Use consistent capitalization
+   - Avoid special characters that might break parsing
+
+### Content Structure
+
+- **Work Experience**: Focus on achievements, impact, and technologies used
+- **Skills**: Group logically, include proficiency levels
+- **Projects**: Highlight technologies, challenges solved, and outcomes
+- **Tools**: List development tools and platforms used
+
+### Keywords to Include
+
+For frontend/full-stack roles, ensure these keywords appear naturally:
+- React, TypeScript, JavaScript, Node.js
+- State Management, Performance Optimization
+- WebSocket, GraphQL, REST APIs
+- CI/CD, GitHub Actions, Docker
+- AWS, Cloudflare, Supabase
+- Security, Compliance, Enterprise Applications
