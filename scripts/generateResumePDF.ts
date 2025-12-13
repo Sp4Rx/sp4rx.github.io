@@ -16,6 +16,11 @@ process.on('unhandledRejection', (reason, promise) => {
 
 const themes = ['light', 'dark'] as const;
 
+// Helper function to replace page.waitForTimeout (removed in Puppeteer 24.x)
+function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function generatePDF(theme: (typeof themes)[number]) {
   let browser;
   
@@ -34,7 +39,6 @@ async function generatePDF(theme: (typeof themes)[number]) {
         '--disable-features=IsolateOrigins,site-per-process'
       ],
       protocolTimeout: 120000, // Increase to 120 seconds
-      ignoreHTTPSErrors: true,
       handleSIGINT: false,
       handleSIGTERM: false,
       handleSIGHUP: false
@@ -75,7 +79,7 @@ async function generatePDF(theme: (typeof themes)[number]) {
     }
 
     // Wait for content to be fully rendered
-    await page.waitForTimeout(2000);
+    await delay(2000);
     
     // Wait for resume content to be visible
     await page.waitForSelector('.resume-content', { timeout: 10000 }).catch(() => {
@@ -126,14 +130,33 @@ async function generatePDF(theme: (typeof themes)[number]) {
       });
     });
 
-    // Calculate actual content height (resume content + some padding)
+    // Wait for all content to be fully rendered
+    await delay(1000);
+    
+    // Wait for images and other resources to load
+    await page.evaluate(() => {
+      return Promise.all(
+        Array.from(document.images).map((img) => {
+          if (img.complete) return Promise.resolve();
+          return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve; // Continue even if image fails
+          });
+        })
+      );
+    });
+
+    // Calculate actual content height using scrollHeight to get full content
     const pageHeight = await page.evaluate(() => {
-      // Try to get the resume content height first
-      const resumeContent = document.querySelector('.resume-content');
+      const resumeContent = document.querySelector('.resume-content') as HTMLElement;
       if (resumeContent) {
-        const rect = resumeContent.getBoundingClientRect();
-        // Add some padding for margins
-        return Math.ceil(rect.height + 100);
+        // Use scrollHeight to get the full content height, including clipped content
+        const scrollHeight = resumeContent.scrollHeight;
+        const offsetHeight = resumeContent.offsetHeight;
+        // Use the larger of the two to ensure we capture all content
+        const contentHeight = Math.max(scrollHeight, offsetHeight);
+        // Add minimal padding (20px) to prevent clipping
+        return Math.ceil(contentHeight + 20);
       }
       // Fallback to body scroll height
       const body = document.body;
@@ -141,31 +164,37 @@ async function generatePDF(theme: (typeof themes)[number]) {
       return Math.max(
         body.scrollHeight,
         body.offsetHeight,
-        html.clientHeight,
         html.scrollHeight,
         html.offsetHeight
       );
     });
 
     // Update viewport to match content height (but cap at reasonable max)
-    const viewportHeight = Math.min(pageHeight, 20000); // Cap at 20k pixels
+    const viewportHeight = Math.min(pageHeight, 30000); // Cap at 30k pixels
     await page.setViewport({
       width: 1024,
       height: viewportHeight,
       deviceScaleFactor: 2
     });
 
-    // Wait a bit for viewport to settle
-    await page.waitForTimeout(500);
+    // Wait for viewport to settle and content to reflow
+    await delay(500);
 
-    // Recalculate height after viewport is set
+    // Recalculate height after viewport is set using scrollHeight
     const finalHeight = await page.evaluate(() => {
-      const resumeContent = document.querySelector('.resume-content');
+      const resumeContent = document.querySelector('.resume-content') as HTMLElement;
       if (resumeContent) {
-        const rect = resumeContent.getBoundingClientRect();
-        return Math.ceil(rect.height + 100);
+        // Use scrollHeight to ensure we get the full content height
+        const scrollHeight = resumeContent.scrollHeight;
+        const offsetHeight = resumeContent.offsetHeight;
+        const contentHeight = Math.max(scrollHeight, offsetHeight);
+        // Add minimal padding to prevent clipping
+        return Math.ceil(contentHeight + 20);
       }
-      return Math.ceil(document.body.scrollHeight);
+      return Math.ceil(Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      ));
     });
 
     const outputDir = path.join(process.cwd(), 'dist');
