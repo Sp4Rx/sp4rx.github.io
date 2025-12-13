@@ -19,7 +19,7 @@ interface ResumeProps {
 const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
   const { theme, toggleTheme } = useTheme();
   const [isGenerating, setIsGenerating] = useState(false);
-  const { basics, skills, work, projects, education, languages, interests } = resumeData;
+  const { basics, skills, work, projects, education, languages, interests, tools } = resumeData;
 
   const handleDownloadResume = () => {
     try {
@@ -175,6 +175,16 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
               appStoreUrl={project.appStoreUrl}
               playStoreUrl={project.playStoreUrl}
             />
+          ))}
+        </div>
+      </ResumeSection>
+
+      <ResumeSection title="Tools" className="pixel-section">
+        <div className="flex flex-wrap gap-2">
+          {tools.map((tool, index) => (
+            <div key={index} className="bg-secondary/50 px-3 py-2 rounded-md">
+              <span className="text-sm font-medium">{tool}</span>
+            </div>
           ))}
         </div>
       </ResumeSection>

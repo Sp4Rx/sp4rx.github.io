@@ -15,6 +15,7 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, children, classNam
       'Experience': '[JOB DUNGEONS]',
       'Skills': '[POWER UPS]',
       'Projects': '[PROJECT LOGS]',
+      'Tools': '[TOOL KIT]',
       'Education': '[EDU QUEST]',
       'Languages': '[SPELL BOOK]',
       'Interests': '[SIDE QUESTS]'
@@ -29,6 +30,7 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, children, classNam
       'Experience': 'Work Experience',
       'Skills': 'Technical Skills',
       'Projects': 'Projects',
+      'Tools': 'Development Tools',
       'Education': 'Education',
       'Languages': 'Languages',
       'Interests': 'Interests'

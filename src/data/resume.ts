@@ -466,5 +466,22 @@ export const resumeData = {
         }
       ]
     }
+  ],
+  tools: [
+    "VS Code",
+    "Cursor",
+    "Antigravity",
+    "Windsurf",
+    "Tree",
+    "Xcode",
+    "Android Studio",
+    "Figma",
+    "Postman",
+    "Git",
+    "Terminal",
+    "Chrome DevTools",
+    "Firebase Console",
+    "AWS Console",
+    "Cloudflare Dashboard"
   ]
 };
