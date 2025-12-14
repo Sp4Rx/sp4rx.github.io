@@ -1,0 +1,70 @@
+---
+alwaysApply: true
+---
+
+# Architecture Guidelines
+
+## Code Architecture Principles
+
+### Component Structure
+- Keep components modular and reusable
+- Follow single responsibility principle
+- Use TypeScript for type safety
+- Implement proper error handling
+
+### File Organization
+```
+src/
+  components/
+    resume/
+      - Resume.tsx (main component)
+      - ResumeSection.tsx (section wrapper)
+      - SkillBar.tsx (skill display)
+      - ProjectCard.tsx (project display)
+      - WorkEntry.tsx (work experience)
+  data/
+    - resume.ts (resume data structure)
+  styles/
+    - components.css (component styles)
+```
+
+### Data Structure
+- Centralize resume data in `src/data/resume.ts`
+- Use TypeScript interfaces for type safety
+- Keep data structure consistent and extensible
+
+### Styling Approach
+- Use Tailwind CSS for utility-first styling
+- Maintain retro/pixel art theme consistency
+- Ensure responsive design for mobile and desktop
+- Use CSS custom properties for theming
+
+### PDF Generation
+- Use Puppeteer for PDF export
+- Ensure ATS-friendly headings in PDF mode
+- Remove interactive elements (games, toggles) from PDF
+- Optimize for print/PDF rendering
+
+### Performance Optimization
+- Lazy load components where appropriate
+- Optimize images and assets
+- Use code splitting for better load times
+- Implement proper caching strategies
+
+### Accessibility
+- Use semantic HTML elements
+- Ensure proper ARIA labels
+- Maintain keyboard navigation
+- Test with screen readers
+
+### State Management
+- Use React hooks for local state
+- Keep state as local as possible
+- Avoid prop drilling
+- Consider context for theme/global state
+
+### Error Handling
+- Implement error boundaries
+- Provide user-friendly error messages
+- Log errors appropriately
+- Handle edge cases gracefully

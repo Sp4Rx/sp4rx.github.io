@@ -6,3 +6,6 @@
 
 /* Import utility styles */
 @import "./utilities.css";
+
+/* Import PDF styles */
+@import "./pdf.css";

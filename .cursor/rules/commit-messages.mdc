@@ -1,0 +1,147 @@
+---
+alwaysApply: true
+---
+
+# Commit Message Guidelines
+
+## Commit Message Standards
+
+### Format Structure
+Follow conventional commit format when appropriate:
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+### Commit Types
+Use standard commit types:
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, no logic change)
+- `refactor`: Code refactoring
+- `perf`: Performance improvements
+- `test`: Adding or updating tests
+- `chore`: Maintenance tasks, dependencies
+- `ci`: CI/CD changes
+- `build`: Build system changes
+
+### Subject Line Rules
+
+1. **Capitalize first letter**: Start with uppercase
+2. **No period**: Don't end with a period
+3. **Imperative mood**: Write as if completing "This commit will..."
+   - ✅ "Add tools section to resume"
+   - ❌ "Added tools section" or "Adding tools section"
+4. **Keep it concise**: 50-72 characters ideal, max 100
+5. **Be specific**: Describe what changed, not why
+
+### Body (Optional but Recommended)
+
+- Separate from subject with blank line
+- Explain **what** and **why**, not **how**
+- Wrap at 72 characters
+- Use bullet points for multiple changes
+- Reference issues/PRs when relevant
+
+### Footer (Optional)
+
+- Reference issues: `Fixes #123`, `Closes #456`
+- Breaking changes: `BREAKING CHANGE: description`
+- Co-authors: `Co-authored-by: Name <email>`
+
+### Examples
+
+**Good Commit Messages:**
+```
+feat(resume): add tools section with development tools
+
+- Add tools array to resume data structure
+- Create Tools section component with retro styling
+- Update ResumeSection to handle Tools with ATS-friendly titles
+- Include VS Code, Cursor, Xcode, Android Studio, etc.
+
+Closes #42
+```
+
+```
+fix(pdf): reduce excessive whitespace in generated PDF
+
+Calculate PDF height based on actual content height instead of
+document height to eliminate unnecessary whitespace at bottom.
+```
+
+```
+refactor(resume): update freelance section for full-stack focus
+
+- Change position title to emphasize full-stack capabilities
+- Add backend services and database design to summary
+- Update highlights to include Node.js, Python, and backend work
+```
+
+```
+docs(rules): add ATS-friendly content guidelines
+
+Create cursor rules for maintaining ATS-friendly resume content
+including section headings, action verbs, and keyword usage.
+```
+
+**Bad Commit Messages:**
+```
+❌ "update"
+❌ "fix bug"
+❌ "changes"
+❌ "WIP"
+❌ "asdf"
+❌ "Fixed the thing that was broken"
+```
+
+### Scope Guidelines
+
+Use scope to indicate what part of the codebase changed:
+- `resume`: Resume-related components/data
+- `pdf`: PDF generation scripts
+- `game`: Snake game logic
+- `ui`: UI components
+- `styles`: Styling changes
+- `config`: Configuration files
+- `docs`: Documentation
+
+### Special Cases
+
+**Breaking Changes:**
+```
+feat(api): change authentication method
+
+BREAKING CHANGE: Authentication now requires JWT tokens instead
+of session cookies. Update client code accordingly.
+```
+
+**Multiple Changes:**
+```
+feat(resume): add tools section and update cursor rules
+
+- Add tools section to resume data and UI
+- Create cursor rules for commit messages and architecture
+- Update ResumeSection component for Tools section
+```
+
+### Best Practices
+
+1. **Commit often**: Small, focused commits are better than large ones
+2. **One logical change per commit**: Don't mix unrelated changes
+3. **Write for your future self**: Clear messages help with debugging
+4. **Use present tense**: "Add feature" not "Added feature"
+5. **Be descriptive**: Future you will thank present you
+6. **Review before committing**: Read your message before finalizing
+
+### Integration with Workflow
+
+- Use clear commits for easier code reviews
+- Better git history and `git blame` results
+- Easier to revert specific changes
+- Better changelog generation
+- Improved collaboration with team

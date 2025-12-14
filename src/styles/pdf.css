@@ -1,0 +1,96 @@
+/* PDF-specific styles for single continuous page */
+@page {
+  size: auto;
+  margin: 0;
+}
+
+/* Remove border and adjust layout for PDF */
+@media print {
+  * {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    page-break-before: avoid !important;
+    break-before: avoid !important;
+  }
+
+  body, html, #root {
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .resume-content {
+    border: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    margin-top: 0 !important;
+    padding: 20px !important;
+    padding-top: 40px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-bottom: 20px !important;
+    page-break-inside: avoid !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /* Prevent page breaks inside sections */
+  .pixel-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 12px;
+  }
+
+  /* Prevent breaking work entries */
+  .pixel-section > div[class*="mb-"] {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Allow breaks between work entries if needed, but keep entry together */
+  .pixel-section > div.mb-4,
+  .pixel-section > div.mb-5 {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Prevent breaking project cards */
+  .grid > div {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Smart page breaks for lists */
+  ul {
+    page-break-inside: avoid;
+  }
+
+  li {
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* Headers should not be alone at bottom */
+  h2, h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+    page-break-before: auto;
+  }
+
+  /* Prevent orphans and widows */
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Ensure proper spacing between sections */
+  .pixel-section + .pixel-section {
+    page-break-before: auto;
+  }
+}
+

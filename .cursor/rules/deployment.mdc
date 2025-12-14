@@ -1,0 +1,103 @@
+# Deployment Guidelines
+
+## Automatic Deployment Script Updates
+
+When making changes that affect the build or deployment process, **automatically check and update** the deployment configuration files:
+
+### Files to Check
+
+1. **`.github/workflows/deploy.yml`** - GitHub Actions workflow
+2. **`package.json`** - Scripts and dependencies
+3. **Build scripts** - Any scripts used in the deployment pipeline
+
+### When to Update Deployment Scripts
+
+Update deployment scripts when:
+
+1. **New Dependencies Added**
+   - If adding new npm packages (especially devDependencies used in build)
+   - Ensure `npm ci` will install them correctly
+   - Example: Adding `pdf-lib` requires it to be in `package.json`
+
+2. **Build Process Changes**
+   - Changes to build commands (`npm run build`, `npm run predeploy`)
+   - New build steps or scripts
+   - Changes to output directories
+
+3. **External Tools Required**
+   - Playwright browsers: `npx playwright install --with-deps chromium`
+   - Other system dependencies
+   - Environment variables or secrets
+
+4. **PDF Generation Changes**
+   - If PDF generation script changes
+   - New dependencies for PDF manipulation (e.g., `pdf-lib`)
+   - Changes to PDF generation workflow
+
+5. **File Path Changes**
+   - Changes to output directories (`dist`, `public`)
+   - Changes to file names or locations
+
+### Standard Checks
+
+Before completing any task that might affect deployment:
+
+1. **Check `.github/workflows/deploy.yml`**:
+   - Verify all required dependencies are installed
+   - Ensure build commands match `package.json` scripts
+   - Confirm all external tools (Playwright, etc.) are installed
+   - Verify output paths are correct
+
+2. **Check `package.json`**:
+   - All new dependencies are listed
+   - Scripts match what's used in deployment
+   - `predeploy` script includes PDF generation if needed
+
+3. **Verify Build Process**:
+   - `npm run build` works locally
+   - `npm run predeploy` works locally
+   - PDF generation works in CI environment
+
+### Example: Adding pdf-lib
+
+If adding `pdf-lib` for PDF manipulation:
+
+1. ✅ Add to `package.json` devDependencies
+2. ✅ Check `.github/workflows/deploy.yml` - no changes needed (npm ci installs all deps)
+3. ✅ Verify script imports work correctly
+4. ✅ Test PDF generation locally
+
+### Example: Changing Build Output
+
+If changing output directory:
+
+1. ✅ Update `vite.config.ts` or build config
+2. ✅ Update `.github/workflows/deploy.yml` `path` in upload-artifact step
+3. ✅ Update any scripts that reference the path
+
+### Best Practices
+
+- **Always test locally first**: Run the same commands that CI will run
+- **Check for missing dependencies**: Ensure all packages are in `package.json`
+- **Verify external tools**: Playwright, Node version, etc.
+- **Document changes**: Update relevant documentation if deployment process changes
+- **Fail fast**: If deployment might fail, add checks or error handling
+
+### Common Issues
+
+1. **Missing dependencies**: Package used in script but not in `package.json`
+2. **Wrong Node version**: CI uses different Node version than local
+3. **Missing Playwright browsers**: PDF generation requires Chromium
+4. **Path mismatches**: Output directory changed but CI still uses old path
+5. **Timeout issues**: Long-running scripts might need timeout adjustments
+
+### Action Items
+
+When making changes that affect deployment:
+
+- [ ] Check `.github/workflows/deploy.yml`
+- [ ] Verify all dependencies in `package.json`
+- [ ] Test build process locally
+- [ ] Verify PDF generation works (if applicable)
+- [ ] Check for any new external tools needed
+- [ ] Update this document if deployment process changes significantly

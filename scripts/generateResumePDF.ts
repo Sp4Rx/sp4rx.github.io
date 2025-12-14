@@ -1,27 +1,21 @@
-import puppeteer from 'puppeteer';
+import { chromium } from 'playwright';
 import path from 'path';
 import fs from 'fs/promises';
 import { PATHS } from '../src/constants/paths';
 
-// Suppress WebSocket errors that are non-fatal
-process.on('unhandledRejection', (reason, promise) => {
-  if (reason && typeof reason === 'object' && 'code' in reason && reason.code === 'ECONNRESET') {
-    // Ignore WebSocket connection reset errors - they're often non-fatal
-    console.log('⚠️  WebSocket connection warning (non-fatal), continuing...');
-    return;
-  }
-  // Re-throw other errors
-  throw reason;
-});
-
 const themes = ['light', 'dark'] as const;
+
+// Helper function for delays
+function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function generatePDF(theme: (typeof themes)[number]) {
   let browser;
   
   try {
-    browser = await puppeteer.launch({
-      headless: true, // Use 'true' instead of 'new' for better stability
+    browser = await chromium.launch({
+      headless: true,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
@@ -32,12 +26,7 @@ async function generatePDF(theme: (typeof themes)[number]) {
         '--disable-gpu',
         '--disable-web-security',
         '--disable-features=IsolateOrigins,site-per-process'
-      ],
-      protocolTimeout: 120000, // Increase to 120 seconds
-      ignoreHTTPSErrors: true,
-      handleSIGINT: false,
-      handleSIGTERM: false,
-      handleSIGHUP: false
+      ]
     });
   } catch (error) {
     console.error('❌ Failed to launch browser:', error);
@@ -45,25 +34,26 @@ async function generatePDF(theme: (typeof themes)[number]) {
   }
 
   try {
-    const page = await browser.newPage();
+    const context = await browser.newContext({
+      viewport: {
+        width: 1024,
+        height: 10
+      },
+      deviceScaleFactor: 2
+    });
+    
+    const page = await context.newPage();
     
     // Set longer timeouts
     page.setDefaultNavigationTimeout(60000);
     page.setDefaultTimeout(60000);
-
-    // First set a standard viewport
-    await page.setViewport({
-      width: 1024,
-      height: 8000,
-      deviceScaleFactor: 2
-    });
 
     const url = `http://localhost:4173/?theme=${theme}`;
     console.log(`Navigating to ${url}`);
     
     try {
       await page.goto(url, { 
-        waitUntil: 'networkidle0',
+        waitUntil: 'networkidle',
         timeout: 60000 
       });
     } catch (error) {
@@ -75,7 +65,7 @@ async function generatePDF(theme: (typeof themes)[number]) {
     }
 
     // Wait for content to be fully rendered
-    await page.waitForTimeout(2000);
+    await delay(2000);
     
     // Wait for resume content to be visible
     await page.waitForSelector('.resume-content', { timeout: 10000 }).catch(() => {
@@ -87,11 +77,18 @@ async function generatePDF(theme: (typeof themes)[number]) {
       const selectors = [
         '#game-container',
         '#theme-toggle',
-        '#download-resume'
+        '#download-resume',
+        '.stack-overflow-flair' // Hide Stack Overflow flair in PDF (badge will show instead)
       ];
       for (const selector of selectors) {
         const el = document.querySelector(selector);
         if (el) el.remove();
+      }
+
+      // Show Stack Overflow badge in PDF (it's hidden on webpage)
+      const stackOverflowBadge = document.querySelector('.stack-overflow-badge');
+      if (stackOverflowBadge) {
+        (stackOverflowBadge as HTMLElement).style.display = 'block';
       }
 
       // Replace retro-themed headings with ATS-friendly headings
@@ -126,46 +123,77 @@ async function generatePDF(theme: (typeof themes)[number]) {
       });
     });
 
-    // Calculate actual content height (resume content + some padding)
-    const pageHeight = await page.evaluate(() => {
-      // Try to get the resume content height first
-      const resumeContent = document.querySelector('.resume-content');
+    // Wait for all content to be fully rendered
+    await delay(1000);
+    
+    // Wait for images and other resources to load
+    await page.evaluate(() => {
+      return Promise.all(
+        Array.from(document.images).map((img) => {
+          if (img.complete) return Promise.resolve();
+          return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve; // Continue even if image fails
+          });
+        })
+      );
+    });
+
+    // Calculate actual content height using scrollHeight to get full content
+    // First, set a large viewport to ensure all content is visible for accurate measurement
+    await page.setViewportSize({
+      width: 1024,
+      height: 50000 // Large initial viewport to capture all content
+    });
+    
+    // Wait for viewport to settle
+    await delay(300);
+
+    // Calculate the actual content height dynamically
+    const contentHeight = await page.evaluate(() => {
+      const resumeContent = document.querySelector('.resume-content') as HTMLElement;
       if (resumeContent) {
-        const rect = resumeContent.getBoundingClientRect();
-        // Add some padding for margins
-        return Math.ceil(rect.height + 100);
+        // Use scrollHeight to get the full content height, including clipped content
+        const scrollHeight = resumeContent.scrollHeight;
+        const offsetHeight = resumeContent.offsetHeight;
+        // Use the larger of the two to ensure we capture all content
+        const height = Math.max(scrollHeight, offsetHeight);
+        // Add minimal padding (20px) to prevent clipping
+        return Math.ceil(height + 20);
       }
       // Fallback to body scroll height
       const body = document.body;
       const html = document.documentElement;
-      return Math.max(
+      return Math.ceil(Math.max(
         body.scrollHeight,
         body.offsetHeight,
-        html.clientHeight,
         html.scrollHeight,
         html.offsetHeight
-      );
+      ));
     });
 
-    // Update viewport to match content height (but cap at reasonable max)
-    const viewportHeight = Math.min(pageHeight, 20000); // Cap at 20k pixels
-    await page.setViewport({
+    // Set viewport to exactly match the content height (fully dynamic)
+    await page.setViewportSize({
       width: 1024,
-      height: viewportHeight,
-      deviceScaleFactor: 2
+      height: contentHeight // Dynamic height based on actual content
     });
 
-    // Wait a bit for viewport to settle
-    await page.waitForTimeout(500);
+    // Wait for viewport to settle and content to reflow
+    await delay(300);
 
-    // Recalculate height after viewport is set
+    // Final height calculation to ensure accuracy
     const finalHeight = await page.evaluate(() => {
-      const resumeContent = document.querySelector('.resume-content');
+      const resumeContent = document.querySelector('.resume-content') as HTMLElement;
       if (resumeContent) {
-        const rect = resumeContent.getBoundingClientRect();
-        return Math.ceil(rect.height + 100);
+        const scrollHeight = resumeContent.scrollHeight;
+        const offsetHeight = resumeContent.offsetHeight;
+        const height = Math.max(scrollHeight, offsetHeight);
+        return Math.ceil(height + 20);
       }
-      return Math.ceil(document.body.scrollHeight);
+      return Math.ceil(Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      ));
     });
 
     const outputDir = path.join(process.cwd(), 'dist');
@@ -178,8 +206,7 @@ async function generatePDF(theme: (typeof themes)[number]) {
       printBackground: true,
       width: '1024px',
       height: `${finalHeight}px`,
-      margin: { top: '0px', right: '0px', bottom: '0px', left: '0px' },
-      preferCSSPageSize: false
+      margin: { top: '0px', right: '0px', bottom: '0px', left: '0px' }
     });
 
     console.log(`✅ PDF (${theme}) generated: ${outputPath}, with height: ${finalHeight}px`);
@@ -196,8 +223,6 @@ async function generatePDF(theme: (typeof themes)[number]) {
   } finally {
     if (browser) {
       try {
-        const pages = await browser.pages();
-        await Promise.all(pages.map(page => page.close().catch(() => {})));
         await browser.close();
       } catch (closeError) {
         // Ignore close errors - browser might already be closed
@@ -213,33 +238,12 @@ async function main() {
     console.log('✅ PDF generation completed successfully');
     process.exit(0);
   } catch (error: any) {
-    // Check if it's a WebSocket error that we can ignore
-    if (error?.code === 'ECONNRESET' || error?.message?.includes('socket hang up')) {
-      console.log('⚠️  WebSocket error occurred but PDF might still be generated. Checking...');
-      // Check if PDF was actually created
-      const outputPath = path.join(process.cwd(), 'dist', PATHS.PDF.FILE_NAME);
-      try {
-        await fs.access(outputPath);
-        console.log('✅ PDF was generated successfully despite WebSocket warning');
-        process.exit(0);
-      } catch {
-        console.error('❌ PDF was not generated. Fatal error:', error);
-        process.exit(1);
-      }
-    } else {
-      console.error('❌ Fatal error in PDF generation:', error);
-      process.exit(1);
-    }
+    console.error('❌ Fatal error in PDF generation:', error);
+    process.exit(1);
   }
 }
 
 main().catch((error: any) => {
-  // Final catch for any unhandled errors
-  if (error?.code === 'ECONNRESET') {
-    console.log('⚠️  WebSocket connection issue (non-fatal)');
-    process.exit(0); // Exit successfully if it's just a WebSocket issue
-  } else {
-    console.error('❌ Unhandled error:', error);
-    process.exit(1);
-  }
+  console.error('❌ Unhandled error:', error);
+  process.exit(1);
 });

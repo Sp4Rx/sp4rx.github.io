@@ -14,12 +14,14 @@ import { PATHS } from '@/constants/paths';
 interface ResumeProps {
   gameState: 'AUTO' | 'PLAYING' | 'PAUSED' | 'GAME_OVER';
   score: number;
+  showBorder?: boolean; // Parameter to enable/disable outermost border
+  enableScroll?: boolean; // Parameter to enable/disable scrolling (for PDF generation)
 }
 
-const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
+const Resume: React.FC<ResumeProps> = ({ gameState, score, showBorder = true, enableScroll = true }) => {
   const { theme, toggleTheme } = useTheme();
   const [isGenerating, setIsGenerating] = useState(false);
-  const { basics, skills, work, projects, education, languages, interests } = resumeData;
+  const { basics, skills, work, projects, education, languages, interests, tools } = resumeData;
 
   const handleDownloadResume = () => {
     try {
@@ -45,11 +47,11 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
   if (!isResumeVisible) return null;
 
   return (
-    <div className="resume-content overflow-y-auto scrollbar-none max-h-[90vh] shadow-none">
-      <div className="flex justify-between items-center mb-6">
+    <div className={`resume-content ${enableScroll ? 'overflow-y-auto max-h-[90vh]' : ''} scrollbar-none shadow-none ${showBorder ? '' : 'border-0'}`}>
+      <div className="flex justify-between items-center mb-4">
         <div>
-          <h1 className="text-3xl md:text-4xl font-pixel mb-2">{basics.name}</h1>
-          <p className="text-lg text-muted-foreground">{basics.designation}</p>
+          <h1 className="text-2xl md:text-3xl font-pixel mb-1">{basics.name}</h1>
+          <p className="text-base text-muted-foreground">{basics.designation}</p>
         </div>
         <div id='download-resume' className="flex items-center space-x-2">
           <Button
@@ -65,11 +67,11 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div className="col-span-2">
-          <p className="text-sm">{basics.summary}</p>
+          <p className="text-xs leading-relaxed">{basics.summary}</p>
         </div>
-        <div className="space-y-2 text-sm">
+        <div className="space-y-1.5 text-xs">
           <p>
             <span className="font-semibold">Email: </span>
             <a href={`mailto:${basics.email}`} className="text-primary hover:underline">
@@ -88,7 +90,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
             <span className="font-semibold">Location: </span>
             {basics.location.city}, {basics.location.region}
           </p>
-          <div className="flex flex-wrap gap-2 mt-3">
+          <div className="flex flex-wrap gap-1.5 mt-2">
             {basics.profiles.map((profile, index) => (
               <a
                 key={index}
@@ -98,16 +100,30 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
                 className="hover:opacity-80 transition-opacity"
               >
                 <img
-                  src={`https://img.shields.io/badge/${profile.network}-${profile.username}-6c5ce7?style=flat-square&logo=${profile.network.toLowerCase()}&logoColor=white&labelColor=555555`}
+                  src={`https://img.shields.io/badge/${encodeURIComponent(profile.network)}-${encodeURIComponent(profile.username)}-6c5ce7?style=flat-square&logo=${profile.network.toLowerCase().replace(/\s+/g, '')}&logoColor=white&labelColor=555555`}
                   alt={`${profile.network} - ${profile.username}`}
-                  className="h-6 pixel-badge"
+                  className="h-5 pixel-badge"
                 />
               </a>
             ))}
+            {/* Stack Overflow badge - only for PDF, hidden on webpage (flair shows instead) */}
+            <a
+              href={`https://stackoverflow.com/users/${basics.stackOverflowId}/${basics.stackOverflowUsername}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity stack-overflow-badge"
+              style={{ display: 'none' }}
+            >
+              <img
+                src={`https://img.shields.io/badge/Stack%20Overflow-${encodeURIComponent(basics.stackOverflowUsername)}-6c5ce7?style=flat-square&logo=stackoverflow&logoColor=white&labelColor=555555`}
+                alt={`Stack Overflow - ${basics.stackOverflowUsername}`}
+                className="h-5 pixel-badge"
+              />
+            </a>
           </div>
 
-          {/* Stack Overflow Flare */}
-          <div className="mt-4">
+          {/* Stack Overflow Flare - Only show on webpage, not in PDF */}
+          <div className="mt-2 stack-overflow-flair" style={{ display: 'block' }}>
             <a href={`https://stackoverflow.com/users/${basics.stackOverflowId}/${basics.stackOverflowUsername}`} target="_blank" rel="noopener noreferrer">
               <img
                 src={`https://stackoverflow.com/users/flair/${basics.stackOverflowId}.png`}
@@ -143,9 +159,9 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
 
       <ResumeSection title="Skills" className="pixel-section">
         {skills.map((skillGroup, groupIndex) => (
-          <div key={groupIndex} className="mb-4 last:mb-0">
-            <h3 className="text-sm font-semibold mb-2 px-1 bg-secondary/30 rounded-sm inline-block retro-label">{skillGroup.group}</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-3 gap-y-2 items-start">
+          <div key={groupIndex} className="mb-3 last:mb-0">
+            <h3 className="text-xs font-semibold mb-1.5 px-1 bg-secondary/30 rounded-sm inline-block retro-label">{skillGroup.group}</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1.5 items-start">
               {[...skillGroup.items]
                 .sort((a, b) => b.level - a.level) // Sort by level in descending order
                 .map((skill, index) => (
@@ -162,7 +178,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
       </ResumeSection>
 
       <ResumeSection title="Projects" className="pixel-section">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {projects.map((project, index) => (
             <ProjectCard
               key={index}
@@ -172,15 +188,26 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
               highlights={project.highlights}
               technologies={project.technologies}
               githubUrl={project.githubUrl}
-              images={project.images}
+              appStoreUrl={project.appStoreUrl}
+              playStoreUrl={project.playStoreUrl}
             />
+          ))}
+        </div>
+      </ResumeSection>
+
+      <ResumeSection title="Tools" className="pixel-section">
+        <div className="flex flex-wrap gap-1.5">
+          {tools.map((tool, index) => (
+            <div key={index} className="bg-secondary/50 px-2.5 py-1.5 rounded-md">
+              <span className="text-xs font-medium">{tool}</span>
+            </div>
           ))}
         </div>
       </ResumeSection>
 
       <ResumeSection title="Education" className="pixel-section">
         {education.map((edu, index) => (
-          <div key={index} className="mb-4 last:mb-0">
+          <div key={index} className="mb-3 last:mb-0">
             <div className="flex flex-col md:flex-row md:items-center justify-between">
               <h3 className="font-semibold">{edu.institution}</h3>
               {edu.startDate && edu.endDate && (
@@ -189,13 +216,13 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
                 </div>
               )}
             </div>
-            <p className="text-md">
+            <p className="text-sm">
               {edu.studyType && `${edu.studyType} in `}{edu.area}
               {edu.gpa && ` (GPA: ${edu.gpa})`}
             </p>
             {edu.courses && edu.courses.length > 0 && (
-              <div className="mt-2">
-                <p className="text-sm font-medium mb-1">Relevant Courses:</p>
+              <div className="mt-1.5">
+                <p className="text-xs font-medium mb-1">Relevant Courses:</p>
                 <div className="flex flex-wrap gap-1">
                   {edu.courses.map((course, courseIndex) => (
                     <span
@@ -212,13 +239,13 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
         ))}
       </ResumeSection>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ResumeSection title="Languages" className="pixel-section">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5">
             {languages.map((lang, index) => (
-              <div key={index} className="bg-secondary/50 px-3 py-2 rounded-md flex items-center gap-2">
-                <span className="font-medium">{lang.language}</span>
-                <span className="text-xs px-2 py-1 bg-primary/20 text-primary rounded">{lang.fluency}</span>
+              <div key={index} className="bg-secondary/50 px-2.5 py-1.5 rounded-md flex items-center gap-1.5">
+                <span className="text-xs font-medium">{lang.language}</span>
+                <span className="text-xs px-1.5 py-0.5 bg-primary/20 text-primary rounded">{lang.fluency}</span>
               </div>
             ))}
           </div>
@@ -226,7 +253,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
 
         <ResumeSection title="Interests" className="pixel-section">
           {interests.map((interest, index) => (
-            <div key={index} className="mb-4 last:mb-0">
+            <div key={index} className="mb-3 last:mb-0">
               <h4 className="font-medium">{interest.name}</h4>
               <div className="flex flex-wrap gap-1 mt-1 mb-1">
                 {interest.keywords.map((keyword, keywordIndex) => (
