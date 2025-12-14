@@ -63,7 +63,8 @@ export const resumeData = {
         },
         {
           name: "React Native",
-          level: 60
+          level: 80,
+          keywords: ["React Native", "Expo", "React", "JavaScript", "TypeScript", "Redux", "Zustand", "Hooks", "Navigation", "State Management"]
         },
         {
           name: "Kotlin",
@@ -71,11 +72,11 @@ export const resumeData = {
         },
         {
           name: "Java",
-          level: 80
+          level: 50
         },
         {
           name: "Capacitor",
-          level: 50
+          level: 80
         },
         {
           name: "Swift",
@@ -88,19 +89,19 @@ export const resumeData = {
       items: [
         {
           name: "React JS",
-          level: 50
+          level: 90
         },
         {
           name: "Next.js",
-          level: 50
+          level: 90
         },
         {
           name: "TypeScript",
-          level: 60
+          level: 90
         },
         {
           name: "JavaScript",
-          level: 60
+          level: 90
         }
       ]
     },
@@ -125,12 +126,18 @@ export const resumeData = {
       group: "Backend & Cloud",
       items: [
         {
+          name: "Node.js",
+          level: 90,
+          keywords: ["Express", "API", "REST", "GraphQL", "WebSocket"]
+        },
+        {
           name: "Python",
           level: 60
         },
         {
           name: "AWS",
-          level: 50
+          level: 50,
+          keywords: ["EC2", "S3", "ECR", "CloudFront", "Route 53"]
         },
         {
           name: "Firebase",
@@ -138,19 +145,13 @@ export const resumeData = {
         },
         {
           name: "Supabase",
-          level: 50
-        },
-        {
-          name: "Supabase Functions",
-          level: 50
+          level: 80,
+          keywords: ["Functions", "PostgreSQL", "Realtime", "Authentication", "Storage", "Database"]
         },
         {
           name: "Cloudflare",
-          level: 50
-        },
-        {
-          name: "Cloudflare Pages/Workers",
-          level: 50
+          level: 70,
+          keywords: ["Pages", "Workers", "DNS"]
         },
         {
           name: "Google Cloud",
@@ -163,7 +164,7 @@ export const resumeData = {
       items: [
         {
           name: "Docker",
-          level: 50
+          level: 70
         },
         {
           name: "Jenkins",
@@ -171,7 +172,7 @@ export const resumeData = {
         },
         {
           name: "GitHub Actions",
-          level: 50
+          level: 90
         },
         {
           name: "GitLab CI",
@@ -183,7 +184,7 @@ export const resumeData = {
         },
         {
           name: "n8n",
-          level: 50
+          level: 70
         }
       ]
     },
