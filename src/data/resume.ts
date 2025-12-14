@@ -17,7 +17,7 @@ export const resumeData = {
   },
   basics: {
     name: "Suvajit Sarkar",
-    designation: "Software Engineer",
+    designation: "Senior Full Stack Engineer",
     email: "hello@suvajit.in",
     phone: "+91 981 151 4646",
     showPhoneNumber: false, // Show phone on website
@@ -25,8 +25,8 @@ export const resumeData = {
     url: "https://suvajit.in",
     showWebsiteUrl: false, // Show website URL on website
     showWebsiteUrlInPDF: true, // Show website URL in PDF
-    summary: "Senior Frontend Engineer with 8 years of experience building enterprise-grade web and mobile applications, specializing in React, TypeScript, and real-time data visualization. Proven expertise in fintech application development, having led engineering teams at leading financial technology companies. Strong background in frontend architecture, performance optimization, state management, and secure application development. Experienced in building scalable React applications with WebSocket integration, GraphQL, and modern frontend frameworks. Additional expertise in AI-driven solutions, mobile development (Flutter, React Native), and full-stack engineering. Track record of delivering high-performance applications used by millions of users with focus on security, compliance, and user experience.",
-    coreSkills: "React, TypeScript, Next.js, JavaScript, Flutter, React Native, Expo, Zustand, Node.js, Express, GraphQL, WebSocket, REST APIs, AWS, Cloudflare, Supabase, Firebase, GitHub Actions, CI/CD, Docker",
+    summary: "Senior Full Stack Engineer with 9 years of experience building enterprise-grade web and mobile applications, specializing in React, TypeScript, and real-time data visualization. Proven expertise in fintech application development, having led engineering teams at leading financial technology companies. Strong background in frontend architecture, performance optimization, state management (Redux, Zustand), and secure application development. Experienced in building scalable React applications with WebSocket integration, GraphQL subscriptions, streaming APIs, and real-time dashboards for enterprise financial systems. Additional expertise in AI-driven solutions, mobile development (Flutter, React Native), and full-stack engineering. Track record of delivering high-performance applications used by millions of users with focus on security, compliance, and user experience.",
+    coreSkills: "React, TypeScript, Next.js, JavaScript, Redux, Zustand, Flutter, React Native, Expo, Node.js, Express, GraphQL, GraphQL Subscriptions, WebSocket, Streaming APIs, REST APIs, Real-time Dashboards, AWS, Cloudflare, Kubernetes, Supabase, Firebase, GitHub Actions, CI/CD, Docker",
     location: {
       region: "West Bengal",
       city: "Krishnanagar",
@@ -93,7 +93,8 @@ export const resumeData = {
       items: [
         {
           name: "React JS",
-          level: 90
+          level: 90,
+          keywords: ["React", "TypeScript", "Redux", "Zustand", "State Management", "Real-time Dashboards", "Data Visualization"]
         },
         {
           name: "Next.js",
@@ -118,11 +119,13 @@ export const resumeData = {
         },
         {
           name: "GraphQL",
-          level: 50
+          level: 50,
+          keywords: ["GraphQL", "GraphQL Subscriptions", "Real-time Data", "Streaming APIs"]
         },
         {
           name: "WebSocket",
-          level: 50
+          level: 50,
+          keywords: ["WebSocket", "Real-time Communication", "Streaming APIs", "Live Data"]
         }
       ]
     },
@@ -169,6 +172,10 @@ export const resumeData = {
         {
           name: "Docker",
           level: 70
+        },
+        {
+          name: "Kubernetes",
+          level: 50
         },
         {
           name: "Jenkins",
@@ -220,7 +227,7 @@ export const resumeData = {
       summary: "Delivering full-stack solutions and AI-powered applications for clients, specializing in React, TypeScript, Node.js, and modern web technologies. Building scalable applications across the entire stack with focus on performance optimization, security, and robust architecture. Experienced in frontend development, backend services, database design, and cloud infrastructure.",
       highlights: [
         "Architected and developed full-stack applications using React, TypeScript, Node.js, and modern web frameworks, implementing scalable architecture patterns, state management, and performance optimization techniques for enterprise clients",
-        "Built real-time applications and data visualization interfaces using React, WebSocket connections, GraphQL subscriptions, and Supabase real-time features for live data streaming and interactive analytics",
+        "Built real-time dashboards and data visualization interfaces using React, WebSocket connections, GraphQL subscriptions, and Supabase real-time features for live data streaming, interactive analytics, and enterprise-grade financial dashboards",
         "Developed secure, end-to-end encrypted communication platforms with React and Node.js, implementing security best practices, authentication systems, and compliance considerations for sensitive financial and personal data",
         "Designed and implemented RESTful APIs, GraphQL endpoints, and backend services using Node.js, Python, and cloud platforms (AWS, Cloudflare), ensuring scalable and maintainable server-side architecture",
         "Optimized application performance across frontend and backend through virtualization, memoization, caching strategies, database query optimization, and lazy loading, achieving significant improvements in performance and user experience",
