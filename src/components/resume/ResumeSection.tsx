@@ -40,7 +40,7 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, children, classNam
   };
 
   return (
-    <div className={cn('mb-8 pixel-section', className)}>
+    <div className={cn('mb-5 pixel-section', className)}>
       {/* Heading with both retro and ATS-friendly versions */}
       <h2 
         className="pixel-heading resume-heading" 

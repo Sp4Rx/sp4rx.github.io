@@ -31,13 +31,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const hasStoreLinks = appStoreUrl || playStoreUrl;
   
   return (
-    <div className="bg-card/50 p-4 rounded-lg border border-border">
-      <div className="flex flex-col gap-3 mb-3">
-        <h3 className="font-semibold text-lg">{name}</h3>
+    <div className="bg-card/50 p-3 rounded-lg border border-border">
+      <div className="flex flex-col gap-2 mb-2">
+        <h3 className="font-semibold text-base">{name}</h3>
         
         {/* Web Links Section */}
         {hasWebLinks && (
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-1.5 flex-wrap">
             {url && (
               <a
                 href={url}
@@ -67,7 +67,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
         {/* App Store Links Section */}
         {hasStoreLinks && (
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-1.5 flex-wrap">
             {playStoreUrl && (
               <a
                 href={playStoreUrl}
@@ -95,11 +95,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           </div>
         )}
       </div>
-      <p className="text-sm mb-2">{description}</p>
+      <p className="text-xs mb-2 leading-relaxed">{description}</p>
 
-      <div className="mb-3">
+      <div className="mb-2">
         <div className="text-xs text-muted-foreground mb-1 font-medium">Highlights:</div>
-        <ul className="list-disc pl-4 text-xs space-y-1">
+        <ul className="list-disc pl-4 text-xs space-y-0.5">
           {highlights.map((highlight, index) => (
             <li key={index}>{highlight}</li>
           ))}
