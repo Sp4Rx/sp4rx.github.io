@@ -159,7 +159,7 @@ export const resumeData = {
       ]
     },
     {
-      group: "DevOps & Tools",
+      group: "DevOps & Automation Tools",
       items: [
         {
           name: "Docker",
