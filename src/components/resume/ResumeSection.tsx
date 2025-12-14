@@ -29,7 +29,7 @@ const ResumeSection: React.FC<ResumeSectionProps> = ({ title, children, classNam
     const atsTitleMap: Record<string, string> = {
       'Experience': 'Work Experience',
       'Skills': 'Technical Skills',
-      'Projects': 'Projects',
+      'Projects': 'Personal Projects', // ATS-friendly name for independent side projects
       'Tools': 'Development Tools',
       'Education': 'Education',
       'Languages': 'Languages',

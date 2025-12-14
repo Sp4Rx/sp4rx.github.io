@@ -91,34 +91,29 @@ async function generatePDF(theme: (typeof themes)[number]) {
         (stackOverflowBadge as HTMLElement).style.display = 'block';
       }
 
-      // Replace retro-themed headings with ATS-friendly headings
-      const headingMap: Record<string, string> = {
-        '[JOB DUNGEONS]': 'Work Experience',
-        '[POWER UPS]': 'Technical Skills',
-        '[PROJECT LOGS]': 'Projects',
-        '[EDU QUEST]': 'Education',
-        '[SPELL BOOK]': 'Languages',
-        '[SIDE QUESTS]': 'Interests'
-      };
+      // Show phone number in PDF if showPhoneNumberInPDF is true
+      const phoneElement = document.querySelector('.pdf-only-phone');
+      if (phoneElement) {
+        (phoneElement as HTMLElement).style.display = 'block';
+      }
 
-      // Find all pixel-heading elements and replace their text content
+      // Replace retro-themed headings with ATS-friendly headings
+      // Use the data-ats-title attribute set by ResumeSection component (single source of truth)
       const headings = document.querySelectorAll('.pixel-heading');
       headings.forEach((heading) => {
-        const currentText = heading.textContent?.trim() || '';
         const atsTitle = heading.getAttribute('data-ats-title');
         if (atsTitle) {
           heading.textContent = atsTitle;
-        } else if (headingMap[currentText]) {
-          heading.textContent = headingMap[currentText];
         }
       });
 
       // Also update any h2 elements that might have retro titles
+      // Check if they have data-ats-title attribute
       const allHeadings = document.querySelectorAll('h2');
       allHeadings.forEach((heading) => {
-        const currentText = heading.textContent?.trim() || '';
-        if (headingMap[currentText]) {
-          heading.textContent = headingMap[currentText];
+        const atsTitle = heading.getAttribute('data-ats-title');
+        if (atsTitle) {
+          heading.textContent = atsTitle;
         }
       });
     });

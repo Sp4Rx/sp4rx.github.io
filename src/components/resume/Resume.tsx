@@ -78,8 +78,8 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score, showBorder = true, en
               {basics.email}
             </a>
           </p>
-          {basics.showPhoneNumber && (
-            <p>
+          {(basics.showPhoneNumber || basics.showPhoneNumberInPDF) && (
+            <p className={basics.showPhoneNumber ? '' : 'pdf-only-phone'} style={basics.showPhoneNumber ? {} : { display: 'none' }}>
               <span className="font-semibold">Phone: </span>
               <a href={`tel:${basics.phone.replace(/\s+/g, '')}`} className="text-primary hover:underline">
                 {basics.phone}
