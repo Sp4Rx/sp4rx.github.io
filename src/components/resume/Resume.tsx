@@ -14,9 +14,11 @@ import { PATHS } from '@/constants/paths';
 interface ResumeProps {
   gameState: 'AUTO' | 'PLAYING' | 'PAUSED' | 'GAME_OVER';
   score: number;
+  showBorder?: boolean; // Parameter to enable/disable outermost border
+  enableScroll?: boolean; // Parameter to enable/disable scrolling (for PDF generation)
 }
 
-const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
+const Resume: React.FC<ResumeProps> = ({ gameState, score, showBorder = true, enableScroll = true }) => {
   const { theme, toggleTheme } = useTheme();
   const [isGenerating, setIsGenerating] = useState(false);
   const { basics, skills, work, projects, education, languages, interests, tools } = resumeData;
@@ -45,7 +47,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score }) => {
   if (!isResumeVisible) return null;
 
   return (
-    <div className="resume-content overflow-y-auto scrollbar-none max-h-[90vh] shadow-none">
+    <div className={`resume-content ${enableScroll ? 'overflow-y-auto max-h-[90vh]' : ''} scrollbar-none shadow-none ${showBorder ? '' : 'border-0'}`}>
       <div className="flex justify-between items-center mb-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-pixel mb-1">{basics.name}</h1>
