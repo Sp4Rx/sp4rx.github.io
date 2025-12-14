@@ -22,7 +22,9 @@ export const resumeData = {
     phone: "+91 981 151 4646",
     showPhoneNumber: false, // Show phone on website
     showPhoneNumberInPDF: true, // Show phone in PDF
-    url: "https://about.me/suvajit",
+    url: "https://suvajit.in",
+    showWebsiteUrl: false, // Show website URL on website
+    showWebsiteUrlInPDF: true, // Show website URL in PDF
     summary: "Senior Frontend Engineer with 8 years of experience building enterprise-grade web and mobile applications, specializing in React, TypeScript, and real-time data visualization. Proven expertise in fintech application development, having led engineering teams at leading financial technology companies. Strong background in frontend architecture, performance optimization, state management, and secure application development. Experienced in building scalable React applications with WebSocket integration, GraphQL, and modern frontend frameworks. Additional expertise in AI-driven solutions, mobile development (Flutter, React Native), and full-stack engineering. Track record of delivering high-performance applications used by millions of users with focus on security, compliance, and user experience.",
     location: {
       region: "West Bengal",

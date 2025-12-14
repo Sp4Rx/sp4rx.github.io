@@ -86,6 +86,14 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score, showBorder = true, en
               </a>
             </p>
           )}
+          {(basics.showWebsiteUrl || basics.showWebsiteUrlInPDF) && (
+            <p className={basics.showWebsiteUrl ? '' : 'pdf-only-website'} style={basics.showWebsiteUrl ? {} : { display: 'none' }}>
+              <span className="font-semibold">Website: </span>
+              <a href={basics.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                {basics.url}
+              </a>
+            </p>
+          )}
           <p>
             <span className="font-semibold">Location: </span>
             {basics.location.city}, {basics.location.region}

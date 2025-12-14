@@ -97,6 +97,12 @@ async function generatePDF(theme: (typeof themes)[number]) {
         (phoneElement as HTMLElement).style.display = 'block';
       }
 
+      // Show website URL in PDF if showWebsiteUrlInPDF is true
+      const websiteElement = document.querySelector('.pdf-only-website');
+      if (websiteElement) {
+        (websiteElement as HTMLElement).style.display = 'block';
+      }
+
       // Replace retro-themed headings with ATS-friendly headings
       // Use the data-ats-title attribute set by ResumeSection component (single source of truth)
       const headings = document.querySelectorAll('.pixel-heading');
