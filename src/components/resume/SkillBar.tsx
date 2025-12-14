@@ -10,16 +10,6 @@ interface SkillBarProps {
 const SkillBar: React.FC<SkillBarProps> = ({ name, level, keywords }) => {
   const [showAllKeywords, setShowAllKeywords] = useState(false);
 
-  // Determine color based on skill level using professional colors
-  const getColor = () => {
-    if (level >= 90) return 'bg-violet-500';
-    if (level >= 80) return 'bg-indigo-500';
-    if (level >= 70) return 'bg-blue-500';
-    if (level >= 60) return 'bg-sky-500';
-    if (level >= 50) return 'bg-cyan-500';
-    return 'bg-amber-500';
-  };
-
   const toggleKeywords = () => {
     setShowAllKeywords(!showAllKeywords);
   };
@@ -27,21 +17,20 @@ const SkillBar: React.FC<SkillBarProps> = ({ name, level, keywords }) => {
   return (
     <div className="mb-3 flex flex-col h-full">
       <div className="flex flex-col w-full h-full">
-        {/* Skill name and percentage row - align to top for proper wrapping alignment */}
+        {/* Skill name */}
         <div className="flex justify-between items-start gap-2 min-h-[1.25rem]">
           <span className="text-xs font-medium break-words flex-1 min-w-0 leading-tight">{name}</span>
-          <span className="text-xs text-muted-foreground font-pixel flex-shrink-0 whitespace-nowrap pt-0.5">{level}%</span>
         </div>
         {/* Progress bar - fixed height */}
         <div className="retro-progress h-1.5 mt-1 mb-1 flex-shrink-0">
           <div
-            className={`retro-progress-fill ${getColor()} h-1.5 rounded-sm`}
+            className="retro-progress-fill bg-primary h-1.5 rounded-sm"
             style={{ width: `${level}%` }}
           />
         </div>
         {/* Keywords - can expand */}
         {keywords && keywords.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-1 flex-shrink-0">
+          <div className="flex flex-wrap gap-1 mt-1 flex-shrink-0 skill-keywords">
             {(showAllKeywords ? keywords : keywords.slice(0, 3)).map((keyword, index) => (
               <span
                 key={index}

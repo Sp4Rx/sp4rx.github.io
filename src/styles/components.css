@@ -65,30 +65,11 @@
 
     /* Progress Components */
     .retro-progress {
-        @apply h-4 bg-secondary relative overflow-hidden border-2 border-black dark:border-white/70;
-        image-rendering: pixelated;
+        @apply h-1.5 bg-secondary/50 relative overflow-hidden rounded-sm;
     }
 
     .retro-progress-fill {
-        @apply h-full transition-all duration-300;
-        position: relative;
-    }
-
-    .retro-progress-fill::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: linear-gradient(
-            to right,
-            transparent 0%,
-            rgba(255, 255, 255, 0.2) 20%,
-            transparent 40%,
-            transparent 100%
-        );
-        background-size: 8px 8px;
+        @apply h-full transition-all duration-300 rounded-sm;
     }
 
     /* Game Components */

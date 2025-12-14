@@ -69,7 +69,13 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score, showBorder = true, en
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div className="col-span-2">
-          <p className="text-xs leading-relaxed">{basics.summary}</p>
+          <p className="text-xs leading-relaxed mb-2">{basics.summary}</p>
+          {basics.coreSkills && (
+            <div className="mt-2 pt-2 border-t border-border">
+              <p className="text-xs font-semibold mb-1">Core Skills:</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">{basics.coreSkills}</p>
+            </div>
+          )}
         </div>
         <div className="space-y-1.5 text-xs">
           <p>

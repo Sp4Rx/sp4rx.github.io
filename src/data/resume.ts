@@ -26,6 +26,7 @@ export const resumeData = {
     showWebsiteUrl: false, // Show website URL on website
     showWebsiteUrlInPDF: true, // Show website URL in PDF
     summary: "Senior Frontend Engineer with 8 years of experience building enterprise-grade web and mobile applications, specializing in React, TypeScript, and real-time data visualization. Proven expertise in fintech application development, having led engineering teams at leading financial technology companies. Strong background in frontend architecture, performance optimization, state management, and secure application development. Experienced in building scalable React applications with WebSocket integration, GraphQL, and modern frontend frameworks. Additional expertise in AI-driven solutions, mobile development (Flutter, React Native), and full-stack engineering. Track record of delivering high-performance applications used by millions of users with focus on security, compliance, and user experience.",
+    coreSkills: "React, TypeScript, Next.js, JavaScript, Flutter, React Native, Expo, Zustand, Node.js, Express, GraphQL, WebSocket, REST APIs, AWS, Cloudflare, Supabase, Firebase, GitHub Actions, CI/CD, Docker",
     location: {
       region: "West Bengal",
       city: "Krishnanagar",
@@ -371,12 +372,10 @@ export const resumeData = {
   projects: [
     {
       name: "SecretRipple",
-      description: "Enterprise-grade secure messaging and communication platform built with React, TypeScript, and Supabase. Features real-time messaging using Supabase real-time subscriptions, end-to-end encryption, and security-first architecture. Demonstrates advanced React patterns, state management, and performance optimization for secure financial-grade applications.",
+      description: "Enterprise-grade secure messaging platform with React, TypeScript, and Supabase. Features end-to-end encryption and real-time messaging for financial-grade applications.",
       highlights: [
-        "Built secure messaging platform with end-to-end encryption using React and TypeScript",
-        "Implemented real-time communication using Supabase real-time subscriptions for instant message delivery and live updates",
-        "Applied security best practices and compliance considerations for handling sensitive data",
-        "Optimized React application performance with code splitting, memoization, and efficient rendering strategies"
+        "Built secure messaging platform with end-to-end encryption using React, TypeScript, and Supabase",
+        "Implemented real-time communication with Supabase subscriptions for instant message delivery"
       ],
       url: "https://secretripple.pages.dev/",
       githubUrl: "https://github.com/SecretRipple/secret-ripple",
@@ -384,13 +383,10 @@ export const resumeData = {
     },
     {
       name: "SumtubeBot",
-      description: "AI-powered Discord bot that automatically detects YouTube links and generates intelligent video summaries using Google Gemini API. Provides comprehensive summaries with key timestamps, content categorization, and topic extraction for better understanding of video content.",
+      description: "AI-powered Discord bot using Google Gemini API for automatic YouTube video summarization with timestamps and content categorization.",
       highlights: [
-        "Discord bot integration with automatic YouTube link detection",
-        "AI-powered video summarization using Google Gemini API",
-        "Timestamp extraction and content categorization",
-        "Multi-server support with customizable permissions",
-        "Deployed on AWS EC2 (backend) and Cloudflare Pages (frontend)"
+        "AI-powered video summarization using Google Gemini API with automatic YouTube link detection",
+        "Deployed on AWS EC2 (backend) and Cloudflare Pages (frontend) with multi-server support"
       ],
       url: "https://sumtubebot.pages.dev/",
       githubUrl: "https://github.com/sp4rx/sumtubebot",
@@ -398,12 +394,10 @@ export const resumeData = {
     },
     {
       name: "Dhyanam",
-      description: "Meditation puzzle game launched across iOS, Android, and Web platforms using React and Capacitor. Demonstrates rapid development and deployment capabilities through vibe coding methodology, enabling quick iteration from concept to production across multiple platforms. Available on App Store, Google Play Store, and web.",
+      description: "Cross-platform meditation puzzle game built with React and Capacitor, published on iOS, Android, and Web platforms.",
       highlights: [
-        "Cross-platform mobile app (iOS, Android) and web using React and Capacitor",
-        "Rapid development and deployment using vibe coding methodology",
-        "Published on App Store and Google Play Store with single codebase",
-        "Demonstrates full-stack mobile development capabilities"
+        "Cross-platform app (iOS, Android, Web) using React and Capacitor with single codebase",
+        "Published on App Store and Google Play Store, demonstrating full-stack mobile development"
       ],
       url: "https://dhyanam.pages.dev/",
       playStoreUrl: "https://play.google.com/store/apps/details?id=app.dhyanam&hl=en",
@@ -412,12 +406,10 @@ export const resumeData = {
     },
     {
       name: "8-Bit Resume",
-      description: "High-performance interactive portfolio website built with React and TypeScript, featuring real-time game mechanics and advanced frontend architecture. Demonstrates expertise in React optimization, state management, performance tuning, and modern frontend development practices with ATS-friendly PDF export functionality.",
+      description: "High-performance interactive portfolio website with React, TypeScript, and real-time game mechanics. Features ATS-optimized resume with automated PDF generation.",
       highlights: [
-        "Built React-based interactive portfolio with optimized game loop and real-time rendering",
-        "Implemented advanced state management and performance optimization techniques (memoization, virtualization, code splitting)",
-        "Developed ATS-optimized resume with automated PDF generation using Puppeteer",
-        "Applied modern React patterns, TypeScript best practices, and responsive design principles"
+        "Built React-based interactive portfolio with optimized game loop and performance techniques (memoization, virtualization, code splitting)",
+        "Developed ATS-optimized resume with automated PDF generation using Puppeteer for modern frontend development"
       ],
       url: "https://suvajit.in",
       githubUrl: "https://github.com/Sp4Rx/sp4rx.github.io",

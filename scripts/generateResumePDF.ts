@@ -72,18 +72,19 @@ async function generatePDF(theme: (typeof themes)[number]) {
       console.log('Resume content selector not found, continuing anyway...');
     });
 
-    // Remove unwanted elements and replace headings with ATS-friendly versions
-    await page.evaluate(() => {
-      const selectors = [
-        '#game-container',
-        '#theme-toggle',
-        '#download-resume',
-        '.stack-overflow-flair' // Hide Stack Overflow flair in PDF (badge will show instead)
-      ];
-      for (const selector of selectors) {
-        const el = document.querySelector(selector);
-        if (el) el.remove();
-      }
+      // Remove unwanted elements and replace headings with ATS-friendly versions
+      await page.evaluate(() => {
+        const selectors = [
+          '#game-container',
+          '#theme-toggle',
+          '#download-resume',
+          '.stack-overflow-flair', // Hide Stack Overflow flair in PDF (badge will show instead)
+          '.skill-keywords' // Hide skill keywords in PDF
+        ];
+        for (const selector of selectors) {
+          const el = document.querySelector(selector);
+          if (el) el.remove();
+        }
 
       // Show Stack Overflow badge in PDF (it's hidden on webpage)
       const stackOverflowBadge = document.querySelector('.stack-overflow-badge');
