@@ -100,16 +100,30 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score, showBorder = true, en
                 className="hover:opacity-80 transition-opacity"
               >
                 <img
-                  src={`https://img.shields.io/badge/${profile.network}-${profile.username}-6c5ce7?style=flat-square&logo=${profile.network.toLowerCase()}&logoColor=white&labelColor=555555`}
+                  src={`https://img.shields.io/badge/${encodeURIComponent(profile.network)}-${encodeURIComponent(profile.username)}-6c5ce7?style=flat-square&logo=${profile.network.toLowerCase().replace(/\s+/g, '')}&logoColor=white&labelColor=555555`}
                   alt={`${profile.network} - ${profile.username}`}
                   className="h-5 pixel-badge"
                 />
               </a>
             ))}
+            {/* Stack Overflow badge - only for PDF, hidden on webpage (flair shows instead) */}
+            <a
+              href={`https://stackoverflow.com/users/${basics.stackOverflowId}/${basics.stackOverflowUsername}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity stack-overflow-badge"
+              style={{ display: 'none' }}
+            >
+              <img
+                src={`https://img.shields.io/badge/Stack%20Overflow-${encodeURIComponent(basics.stackOverflowUsername)}-6c5ce7?style=flat-square&logo=stackoverflow&logoColor=white&labelColor=555555`}
+                alt={`Stack Overflow - ${basics.stackOverflowUsername}`}
+                className="h-5 pixel-badge"
+              />
+            </a>
           </div>
 
-          {/* Stack Overflow Flare */}
-          <div className="mt-2">
+          {/* Stack Overflow Flare - Only show on webpage, not in PDF */}
+          <div className="mt-2 stack-overflow-flair" style={{ display: 'block' }}>
             <a href={`https://stackoverflow.com/users/${basics.stackOverflowId}/${basics.stackOverflowUsername}`} target="_blank" rel="noopener noreferrer">
               <img
                 src={`https://stackoverflow.com/users/flair/${basics.stackOverflowId}.png`}

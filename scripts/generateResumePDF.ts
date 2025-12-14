@@ -77,11 +77,18 @@ async function generatePDF(theme: (typeof themes)[number]) {
       const selectors = [
         '#game-container',
         '#theme-toggle',
-        '#download-resume'
+        '#download-resume',
+        '.stack-overflow-flair' // Hide Stack Overflow flair in PDF (badge will show instead)
       ];
       for (const selector of selectors) {
         const el = document.querySelector(selector);
         if (el) el.remove();
+      }
+
+      // Show Stack Overflow badge in PDF (it's hidden on webpage)
+      const stackOverflowBadge = document.querySelector('.stack-overflow-badge');
+      if (stackOverflowBadge) {
+        (stackOverflowBadge as HTMLElement).style.display = 'block';
       }
 
       // Replace retro-themed headings with ATS-friendly headings
