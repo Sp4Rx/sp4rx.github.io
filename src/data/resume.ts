@@ -241,7 +241,7 @@ export const resumeData = {
         "Drove end-to-end technical decision-making, ensuring the app met performance, security, and scalability standards required for enterprise financial applications",
         "Mentored junior developers and established best practices for coding, testing, and CI/CD workflows, promoting code quality and maintainability"
       ],
-      technologies: ["Flutter", "Dart", "Team Leadership", "Architecture", "Agile", "CI/CD", "Fintech", "Security", "Compliance"]
+      technologies: ["Flutter", "Dart", "Codemagic"]
     },
     {
       company: "Tailorbird",
@@ -273,7 +273,7 @@ export const resumeData = {
         "Configured and maintained separate production and development environments with proper CI/CD pipelines",
         "Managed a small development team, providing technical guidance and code reviews"
       ],
-      technologies: ["Flutter", "Riverpod", "MoEngage", "CI/CD", "Team Management"]
+      technologies: ["Flutter", "Riverpod", "MoEngage", "Codemagic", "GitHub Actions", "Firebase"]
     },
     {
       company: "Vedantu",
@@ -304,7 +304,7 @@ export const resumeData = {
         "Implemented earnings and incentives features for fleet operators",
         "Integrated Sentry crash reporting and error tracking system for improved app stability and monitoring"
       ],
-      technologies: ["Flutter", "Dart", "Sentry", "Crash Reporting"]
+      technologies: ["Flutter", "Dart", "Sentry"]
     },
     {
       company: "Leher.ai Pvt. Ltd",
@@ -362,7 +362,7 @@ export const resumeData = {
         "Built AISEE application and internal projects for the organization",
         "Implemented core Android features and functionality following best practices"
       ],
-      technologies: ["Android", "Java", "Mobile Development"]
+      technologies: ["Android", "Java"]
     }
   ],
   projects: [
@@ -377,7 +377,7 @@ export const resumeData = {
       ],
       url: "https://secretripple.pages.dev/",
       githubUrl: "https://github.com/SecretRipple/secret-ripple",
-      technologies: ["React", "TypeScript", "Supabase", "Real-time Subscriptions", "State Management", "Web Security", "Encryption", "Performance Optimization"]
+      technologies: ["React", "TypeScript", "Supabase"]
     },
     {
       name: "SumtubeBot",
@@ -405,7 +405,7 @@ export const resumeData = {
       url: "https://dhyanam.pages.dev/",
       playStoreUrl: "https://play.google.com/store/apps/details?id=app.dhyanam&hl=en",
       appStoreUrl: "https://apps.apple.com/us/app/dhyanam-meditation-puzzle/id6746568303",
-      technologies: ["React", "Capacitor", "TypeScript", "iOS", "Android", "Web", "Mobile Development"]
+      technologies: ["React", "Capacitor", "TypeScript", "iOS", "Android"]
     },
     {
       name: "8-Bit Resume",
@@ -418,7 +418,7 @@ export const resumeData = {
       ],
       url: "https://suvajit.in",
       githubUrl: "https://github.com/Sp4Rx/sp4rx.github.io",
-      technologies: ["React", "TypeScript", "State Management", "Performance Optimization", "Vite", "Puppeteer", "Tailwind CSS"]
+      technologies: ["React", "TypeScript", "Vite", "Playwright", "Tailwind CSS"]
     }
   ],
   education: [
