@@ -24,7 +24,7 @@ const SkillBar: React.FC<SkillBarProps> = ({ name, level, keywords }) => {
         {/* Progress bar - fixed height */}
         <div className="retro-progress h-1.5 mt-1 mb-1 flex-shrink-0">
           <div
-            className="retro-progress-fill bg-primary h-1.5 rounded-sm"
+            className="retro-progress-fill bg-primary/70 h-1.5 rounded-sm"
             style={{ width: `${level}%` }}
           />
         </div>
