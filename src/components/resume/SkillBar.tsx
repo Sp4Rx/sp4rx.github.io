@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 
 interface SkillBarProps {
   name: string;
@@ -8,12 +8,6 @@ interface SkillBarProps {
 }
 
 const SkillBar: React.FC<SkillBarProps> = ({ name, level, keywords }) => {
-  const [showAllKeywords, setShowAllKeywords] = useState(false);
-
-  const toggleKeywords = () => {
-    setShowAllKeywords(!showAllKeywords);
-  };
-
   return (
     <div className="mb-3 flex flex-col h-full">
       <div className="flex flex-col w-full h-full">
@@ -28,10 +22,10 @@ const SkillBar: React.FC<SkillBarProps> = ({ name, level, keywords }) => {
             style={{ width: `${level}%` }}
           />
         </div>
-        {/* Keywords - can expand */}
+        {/* Keywords - show all */}
         {keywords && keywords.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-1 flex-shrink-0 skill-keywords">
-            {(showAllKeywords ? keywords : keywords.slice(0, 3)).map((keyword, index) => (
+            {keywords.map((keyword, index) => (
               <span
                 key={index}
                 className="text-[10px] bg-secondary/70 px-1 py-0.5 rounded-sm text-secondary-foreground"
@@ -39,22 +33,6 @@ const SkillBar: React.FC<SkillBarProps> = ({ name, level, keywords }) => {
                 {keyword}
               </span>
             ))}
-            {!showAllKeywords && keywords.length > 3 && (
-              <span
-                className="text-[10px] text-primary hover:underline cursor-pointer"
-                onClick={toggleKeywords}
-              >
-                +{keywords.length - 3} more
-              </span>
-            )}
-            {showAllKeywords && (
-              <span
-                className="text-[10px] text-primary hover:underline cursor-pointer"
-                onClick={toggleKeywords}
-              >
-                Show less
-              </span>
-            )}
           </div>
         )}
       </div>

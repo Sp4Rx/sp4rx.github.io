@@ -1,0 +1,102 @@
+---
+alwaysApply: true
+---
+
+# Skills Data Management Guidelines
+
+## Skills Data Structure Standards
+
+### Keyword Optimization Rules
+
+1. **Limit Keywords Per Skill**:
+   - Maximum **3-4 keywords** per skill item
+   - Focus on the most important, ATS-relevant technologies
+   - Remove redundant or less important keywords
+
+2. **Keyword Selection Criteria**:
+   - Prioritize technologies mentioned in job descriptions
+   - Include industry-standard tools and frameworks
+   - Remove duplicates (e.g., if "React" is in skill name, don't repeat in keywords)
+   - Avoid generic terms unless they add ATS value
+
+3. **ATS-Friendly Keywords**:
+   - Use full technology names (e.g., "React Native" not "RN")
+   - Include specific frameworks/libraries (e.g., "Redux", "Zustand")
+   - Add relevant concepts (e.g., "Real-time Dashboards", "GraphQL Subscriptions")
+   - Avoid overly generic terms unless necessary
+
+### Skills Data Structure
+
+```typescript
+skills: [
+  {
+    group: "Category Name", // Clear, ATS-friendly category
+    items: [
+      {
+        name: "Technology Name", // Main technology/framework
+        level: 50-90, // Proficiency level (50-90 range)
+        keywords?: string[] // Optional: 3-4 most important related technologies
+      }
+    ]
+  }
+]
+```
+
+### Best Practices
+
+1. **Consistency**:
+   - Keep keyword count consistent across similar skills
+   - Use similar keyword patterns for related technologies
+   - Maintain consistent naming conventions
+
+2. **Relevance**:
+   - Keywords should be directly related to the main skill
+   - Focus on technologies that appear in job descriptions
+   - Prioritize skills that demonstrate full-stack capabilities
+
+3. **Maintenance**:
+   - Review and update keywords when adding new job-relevant technologies
+   - Remove outdated or less relevant keywords
+   - Keep total keyword count manageable (3-4 per skill max)
+
+4. **ATS Optimization**:
+   - Keywords are hidden in PDF but visible on website
+   - Ensure important technologies appear in skill names or coreSkills
+   - Keywords supplement but don't replace main skill names
+
+### Examples
+
+**Good:**
+```typescript
+{
+  name: "React JS",
+  level: 90,
+  keywords: ["React", "Redux", "Zustand", "Real-time Dashboards"]
+}
+```
+
+**Bad (too many keywords):**
+```typescript
+{
+  name: "React JS",
+  level: 90,
+  keywords: ["React", "TypeScript", "Redux", "Zustand", "State Management", "Real-time Dashboards", "Data Visualization", "Hooks", "Context API"]
+}
+```
+
+**Bad (redundant keywords):**
+```typescript
+{
+  name: "React Native",
+  level: 80,
+  keywords: ["React Native", "React", "JavaScript", "TypeScript"] // React Native already implies React
+}
+```
+
+### When Adding New Skills
+
+1. Check if technology already exists in another group
+2. Limit keywords to 3-4 most important related technologies
+3. Ensure keywords are ATS-friendly and job-relevant
+4. Update `coreSkills` in `basics` if it's a major technology
+5. Maintain consistency with existing skill structure

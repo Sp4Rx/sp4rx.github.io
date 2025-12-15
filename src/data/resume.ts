@@ -63,12 +63,12 @@ export const resumeData = {
         {
           name: "Flutter & Dart",
           level: 90,
-          keywords: ["Flutter", "Dart", "Firebase", "Figma", "Dio", "Bloc", "Riverpod"]
+          keywords: ["Flutter", "Dart", "Bloc", "Riverpod"]
         },
         {
           name: "React Native",
           level: 80,
-          keywords: ["React Native", "Expo", "React", "JavaScript", "TypeScript", "Redux", "Zustand", "Hooks", "Navigation", "State Management"]
+          keywords: ["React Native", "Expo", "Redux", "Zustand"]
         },
         {
           name: "Kotlin",
@@ -94,7 +94,7 @@ export const resumeData = {
         {
           name: "React JS",
           level: 90,
-          keywords: ["React", "TypeScript", "Redux", "Zustand", "State Management", "Real-time Dashboards", "Data Visualization"]
+          keywords: ["React", "Redux", "Zustand", "Real-time Dashboards"]
         },
         {
           name: "Next.js",
@@ -120,12 +120,12 @@ export const resumeData = {
         {
           name: "GraphQL",
           level: 50,
-          keywords: ["GraphQL", "GraphQL Subscriptions", "Real-time Data", "Streaming APIs"]
+          keywords: ["GraphQL", "GraphQL Subscriptions", "Real-time Data"]
         },
         {
           name: "WebSocket",
           level: 50,
-          keywords: ["WebSocket", "Real-time Communication", "Streaming APIs", "Live Data"]
+          keywords: ["WebSocket", "Real-time Communication", "Streaming APIs"]
         }
       ]
     },
@@ -135,7 +135,7 @@ export const resumeData = {
         {
           name: "Node.js",
           level: 90,
-          keywords: ["Express", "API", "REST", "GraphQL", "WebSocket"]
+          keywords: ["Express", "REST APIs", "GraphQL", "WebSocket"]
         },
         {
           name: "Python",
@@ -144,7 +144,7 @@ export const resumeData = {
         {
           name: "AWS",
           level: 50,
-          keywords: ["EC2", "S3", "ECR", "CloudFront", "Route 53"]
+          keywords: ["EC2", "S3", "CloudFront", "Route 53"]
         },
         {
           name: "Firebase",
@@ -153,7 +153,7 @@ export const resumeData = {
         {
           name: "Supabase",
           level: 80,
-          keywords: ["Functions", "PostgreSQL", "Realtime", "Authentication", "Storage", "Database"]
+          keywords: ["PostgreSQL", "Realtime", "Authentication", "Storage"]
         },
         {
           name: "Cloudflare",
