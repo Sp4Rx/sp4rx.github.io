@@ -1,7 +1,7 @@
 export const resumeData = {
   meta: {
     author: "Sp4Rx",
-    description: "Flutter expert with 8 yrs' experience, full-stack savvy, building with AI—ComfyUI, Stable Diffusion & Gemini API. Smart, bold, future-ready.",
+    description: "Senior Flutter Developer with 9 yrs' experience, full-stack capable, building with AI—ComfyUI, Stable Diffusion & Gemini API. Smart, bold, future-ready.",
     keywords: "resume, pixel art, game, portfolio, interactive, Sp4Rx, heySuvajit, suvajit, suvajit sarkar, suvajit.in, suvajit.in/resume",
     themeColor: "#000000",
     og: {
@@ -25,8 +25,8 @@ export const resumeData = {
     url: "https://suvajit.in",
     showWebsiteUrl: false, // Show website URL on website
     showWebsiteUrlInPDF: true, // Show website URL in PDF
-    summary: "Senior Full Stack Engineer with 9 years of experience building enterprise-grade web and mobile applications, specializing in React, TypeScript, and real-time data visualization. Proven expertise in fintech application development, having led engineering teams at leading financial technology companies. Strong background in frontend architecture, performance optimization, state management (Redux, Zustand), and secure application development. Experienced in building scalable React applications with WebSocket integration, GraphQL subscriptions, streaming APIs, and real-time dashboards for enterprise financial systems. Additional expertise in AI-driven solutions, mobile development (Flutter, React Native), and full-stack engineering. Track record of delivering high-performance applications used by millions of users with focus on security, compliance, and user experience.",
-    coreSkills: "React, TypeScript, Next.js, JavaScript, Redux, Zustand, Flutter, React Native, Expo, Node.js, Express, GraphQL, GraphQL Subscriptions, WebSocket, Streaming APIs, REST APIs, Real-time Dashboards, AWS, Cloudflare, Kubernetes, Supabase, Firebase, GitHub Actions, CI/CD, Docker",
+    summary: "Senior Full Stack Engineer with 9 years of experience building enterprise-grade mobile and web applications, specializing in Flutter, Dart, and cross-platform mobile development. Proven expertise in fintech application development, having architected and led Flutter applications from scratch at leading financial technology companies. Strong background in mobile architecture, state management (Bloc, Riverpod), performance optimization, and secure application development. Experienced in building scalable Flutter applications with GraphQL, REST APIs, real-time features, and complex integrations for enterprise financial systems. Additional expertise in full-stack engineering (React, TypeScript, Node.js), AI-driven solutions, and cross-platform development (React Native, Capacitor). Track record of delivering high-performance applications used by millions of users with focus on security, compliance, and exceptional user experience.",
+    coreSkills: "Flutter, Dart, Bloc, Riverpod, React Native, Mobile Architecture, State Management, GraphQL, REST APIs, React, TypeScript, Next.js, JavaScript, Node.js, Express, WebSocket, Real-time Features, Firebase, Supabase, AWS, Cloudflare, GitHub Actions, CI/CD, Docker, Python",
     location: {
       region: "West Bengal",
       city: "Krishnanagar",
@@ -224,17 +224,17 @@ export const resumeData = {
       website: "",
       startDate: "2024-11",
       endDate: "Present",
-      summary: "Delivering full-stack solutions and AI-powered applications for clients, specializing in React, TypeScript, Node.js, and modern web technologies. Building scalable applications across the entire stack with focus on performance optimization, security, and robust architecture. Experienced in frontend development, backend services, database design, and cloud infrastructure.",
+      summary: "Delivering Flutter mobile applications and full-stack solutions for clients, specializing in Flutter, Dart, React, TypeScript, and Node.js. Building scalable cross-platform mobile applications and web services with focus on performance optimization, security, and robust architecture. Experienced in mobile development, frontend development, backend services, database design, and cloud infrastructure.",
       highlights: [
-        "Architected and developed full-stack applications using React, TypeScript, Node.js, and modern web frameworks, implementing scalable architecture patterns, state management, and performance optimization techniques for enterprise clients",
-        "Built real-time dashboards and data visualization interfaces using React, WebSocket connections, GraphQL subscriptions, and Supabase real-time features for live data streaming, interactive analytics, and enterprise-grade financial dashboards",
-        "Developed secure, end-to-end encrypted communication platforms with React and Node.js, implementing security best practices, authentication systems, and compliance considerations for sensitive financial and personal data",
-        "Designed and implemented RESTful APIs, GraphQL endpoints, and backend services using Node.js, Python, and cloud platforms (AWS, Cloudflare), ensuring scalable and maintainable server-side architecture",
-        "Optimized application performance across frontend and backend through virtualization, memoization, caching strategies, database query optimization, and lazy loading, achieving significant improvements in performance and user experience",
-        "Created AI-powered applications using LLM APIs (Gemini, OpenAI) and automation tools (ComfyUI, n8n) for intelligent workflows, integrating AI capabilities into full-stack web and mobile applications",
-        "Implemented CI/CD pipelines with GitHub Actions, automated testing, containerization, and cloud-native deployments on AWS and Cloudflare Pages for scalable full-stack applications"
+        "Developed Flutter mobile applications and cross-platform solutions using Flutter, Dart, Bloc, and Riverpod, implementing scalable mobile architecture patterns, state management, and performance optimization techniques for enterprise clients",
+        "Architected and developed full-stack applications using React, TypeScript, Node.js, and modern web frameworks, delivering scalable solutions across mobile and web platforms",
+        "Built real-time features and data visualization interfaces using Flutter, React, WebSocket connections, GraphQL subscriptions, and Supabase real-time features for live data streaming and interactive analytics",
+        "Developed secure, end-to-end encrypted communication platforms with Flutter and Node.js, implementing security best practices, authentication systems, and compliance considerations for sensitive financial and personal data",
+        "Designed and implemented RESTful APIs, GraphQL endpoints, and backend services using Node.js, Python, and cloud platforms (AWS, Cloudflare), ensuring scalable and maintainable server-side architecture for mobile applications",
+        "Created AI-powered mobile and web applications using LLM APIs (Gemini, OpenAI) and automation tools (ComfyUI, n8n) for intelligent workflows, integrating AI capabilities into Flutter and full-stack applications",
+        "Implemented CI/CD pipelines with GitHub Actions, automated testing, containerization, and cloud-native deployments for Flutter and full-stack applications on AWS and Cloudflare Pages"
       ],
-      technologies: ["React", "TypeScript", "Next.js", "JavaScript", "Node.js", "Python", "WebSocket", "GraphQL", "Supabase", "State Management", "Performance Optimization", "React Native", "Expo", "AWS", "Cloudflare", "GitHub Actions", "CI/CD", "AI/ML"]
+      technologies: ["Flutter", "Dart", "Bloc", "Riverpod", "React", "TypeScript", "Next.js", "JavaScript", "Node.js", "Python", "WebSocket", "GraphQL", "Supabase", "React Native", "Expo", "AWS", "Cloudflare", "GitHub Actions", "CI/CD", "AI/ML"]
     },
     {
       company: "Stashfin",
@@ -260,7 +260,7 @@ export const resumeData = {
       website: "https://www.tailorbird.com/",
       startDate: "2023-06",
       endDate: "2024-01",
-      summary: "Developed full-stack solutions including Flutter mobile application and web services for multifamily renovation platform, focusing on interactive BIM viewer for building floorplans and measurement modifications.",
+      summary: "Architected and developed Flutter mobile application from scratch for multifamily renovation platform, focusing on interactive BIM viewer for building floorplans and measurement modifications. Also developed backend services and web components to support the mobile application.",
       highlights: [
         "Architected and developed Flutter application from scratch using Bloc, GraphQL, and Hive for state management and local data persistence",
         "Built interactive BIM viewer using Forge Viewer to display and interact with Revit 3D building models and floorplans in the mobile application",
