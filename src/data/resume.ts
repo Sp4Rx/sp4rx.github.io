@@ -18,7 +18,7 @@ export const resumeData = {
   basics: {
     name: "Suvajit Sarkar",
     designation: "Senior Full Stack Engineer",
-    email: "heysuvajit@gmail.com",
+    email: "hello@suvajit.in",
     phone: "+91 9547208091",
     showPhoneNumber: false, // Show phone on website
     showPhoneNumberInPDF: true, // Show phone in PDF
