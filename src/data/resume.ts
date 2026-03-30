@@ -48,6 +48,11 @@ export const resumeData = {
         network: "x",
         username: "@heysuvajit",
         url: "https://x.com/heysuvajit"
+      },
+      {
+        network: "Telegram",
+        username: "heysuvajit",
+        url: "https://telegram.me/heysuvajit"
       }
     ]
   },
