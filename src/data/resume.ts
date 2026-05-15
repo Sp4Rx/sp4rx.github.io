@@ -1,7 +1,7 @@
 export const resumeData = {
   meta: {
     author: "Sp4Rx",
-    description: "Senior Flutter Developer with 9 yrs' experience, full-stack capable, building with AI—ComfyUI, Stable Diffusion & Gemini API. Smart, bold, future-ready.",
+    description: "Senior Flutter Developer with 9+ yrs' experience, full-stack capable, building with AI—ComfyUI, Stable Diffusion & Gemini API. Smart, bold, future-ready.",
     keywords: "resume, pixel art, game, portfolio, interactive, Sp4Rx, heySuvajit, suvajit, suvajit sarkar, suvajit.in, suvajit.in/resume",
     themeColor: "#000000",
     og: {
