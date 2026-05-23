@@ -488,3 +488,45 @@ export const resumeData = {
     "Cloudflare Dashboard"
   ]
 };
+
+export const generateJsonLd = (resume: typeof resumeData) => {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": `${resume.meta.og.url}/#profilepage`,
+        "url": resume.meta.og.url,
+        "name": `${resume.basics.name} - Interactive 8-Bit Resume & Portfolio`,
+        "mainEntity": {
+          "@type": "Person",
+          "@id": `${resume.meta.og.url}/#person`,
+          "name": resume.basics.name,
+          "alternateName": resume.meta.author,
+          "jobTitle": resume.basics.designation,
+          "url": resume.meta.og.url,
+          "image": resume.meta.og.image,
+          "sameAs": resume.basics.profiles.map(p => p.url),
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": resume.basics.location.city,
+            "addressRegion": resume.basics.location.region,
+            "addressCountry": "IN"
+          },
+          "email": resume.basics.email,
+          "description": resume.meta.description,
+          "knowsAbout": resume.skills.flatMap(group => group.items.map(item => item.name))
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${resume.meta.og.url}/#website`,
+        "url": resume.meta.og.url,
+        "name": `${resume.basics.name} - ${resume.basics.designation}`,
+        "publisher": {
+          "@id": `${resume.meta.og.url}/#person`
+        }
+      }
+    ]
+  };
+};

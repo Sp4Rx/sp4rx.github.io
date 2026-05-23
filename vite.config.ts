@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import { resumeData } from "./src/data/resume.ts";
+import { resumeData, generateJsonLd } from "./src/data/resume.ts";
 import { createHtmlPlugin } from "vite-plugin-html";
 import path from "path";
 import fs from "fs";
@@ -58,6 +58,7 @@ export default defineConfig(async ({ mode }) => {
       console.error('Failed to download images:', err);
     }
   }
+  const jsonLd = JSON.stringify(generateJsonLd(resumeData), null, 2);
 
   return {
     server: {
@@ -80,9 +81,12 @@ export default defineConfig(async ({ mode }) => {
             ogUrl: resumeData.meta.og.url,
             twitterCard: resumeData.meta.twitter.card,
             twitterSite: resumeData.meta.twitter.site,
+            twitterTitle: `${resumeData.basics.name} | ${resumeData.basics.designation} | Resume`,
+            twitterDescription: resumeData.meta.description,
             twitterImage: resumeData.meta.twitter.image,
             keywords: resumeData.meta.keywords,
             themeColor: resumeData.meta.themeColor,
+            jsonLd,
           }
         }
       })

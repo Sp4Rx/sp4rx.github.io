@@ -8,6 +8,8 @@
   <meta name="author" content="<%= author %>" />
   <meta name="keywords" content="<%= keywords %>" />
   <meta name="theme-color" content="<%= themeColor %>" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="<%= ogUrl %>" />
   <meta property="og:title" content="<%= ogTitle %>" />
   <meta property="og:description" content="<%= ogDescription %>" />
   <meta property="og:type" content="<%= ogType %>" />
@@ -15,11 +17,16 @@
   <meta property="og:url" content="<%= ogUrl %>" />
   <meta name="twitter:card" content="<%= twitterCard %>" />
   <meta name="twitter:site" content="<%= twitterSite %>" />
+  <meta name="twitter:title" content="<%= twitterTitle %>" />
+  <meta name="twitter:description" content="<%= twitterDescription %>" />
   <meta name="twitter:image" content="<%= twitterImage %>" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>
     <%= title %>
   </title>
+  <script id="json-ld-schema" type="application/ld+json">
+    <%- jsonLd %>
+  </script>
 </head>
 
 <body>
