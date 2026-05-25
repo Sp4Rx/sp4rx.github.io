@@ -384,7 +384,6 @@ export const resumeData = {
         "Built secure messaging platform with end-to-end encryption using React, TypeScript, and Supabase",
         "Implemented real-time communication with Supabase subscriptions for instant message delivery"
       ],
-      url: "https://secretripple.pages.dev/",
       githubUrl: "https://github.com/SecretRipple/secret-ripple",
       technologies: ["React", "TypeScript", "Supabase"]
     },
