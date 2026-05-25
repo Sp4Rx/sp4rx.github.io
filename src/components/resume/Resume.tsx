@@ -23,6 +23,9 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score, showBorder = true, en
   const [isGenerating, setIsGenerating] = useState(false);
   const { basics, skills, work, projects, education, languages, interests, tools } = resumeData;
 
+  // Check if we are in PDF generation mode (e.g., query parameter ?pdf=true is present)
+  const isPdfMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('pdf');
+
   const handleDownloadResume = () => {
     try {
       setIsGenerating(true);
@@ -84,7 +87,7 @@ const Resume: React.FC<ResumeProps> = ({ gameState, score, showBorder = true, en
               {basics.email}
             </a>
           </p>
-          {(basics.showPhoneNumber || basics.showPhoneNumberInPDF) && (
+          {(basics.showPhoneNumber || (basics.showPhoneNumberInPDF && isPdfMode)) && (
             <p className={basics.showPhoneNumber ? '' : 'pdf-only-phone'} style={basics.showPhoneNumber ? {} : { display: 'none' }}>
               <span className="font-semibold">Phone: </span>
               <a href={`tel:${basics.phone.replace(/\s+/g, '')}`} className="text-primary hover:underline">

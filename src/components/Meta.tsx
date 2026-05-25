@@ -45,7 +45,7 @@ export default function Meta() {
         updateMetaTag('property', 'og:type', resumeData.meta.og.type);
         updateMetaTag('property', 'og:image', resumeData.meta.og.image);
         updateMetaTag('property', 'og:url', resumeData.meta.og.url);
-        updateMetaTag('property', 'og:site_name', `${resumeData.basics.name} | Resume`);
+        updateMetaTag('property', 'og:site_name', resumeData.basics.name);
 
         // Twitter
         updateMetaTag('name', 'twitter:card', resumeData.meta.twitter.card);

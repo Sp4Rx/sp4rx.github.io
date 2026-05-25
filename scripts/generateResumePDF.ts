@@ -48,7 +48,7 @@ async function generatePDF(theme: (typeof themes)[number]) {
     page.setDefaultNavigationTimeout(60000);
     page.setDefaultTimeout(60000);
 
-    const url = `http://localhost:4173/?theme=${theme}`;
+    const url = `http://localhost:4173/?theme=${theme}&pdf=true`;
     console.log(`Navigating to ${url}`);
     
     try {

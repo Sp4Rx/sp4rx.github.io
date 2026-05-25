@@ -522,7 +522,8 @@ export const generateJsonLd = (resume: typeof resumeData) => {
         "@type": "WebSite",
         "@id": `${resume.meta.og.url}/#website`,
         "url": resume.meta.og.url,
-        "name": `${resume.basics.name} - ${resume.basics.designation}`,
+        "name": resume.basics.name,
+        "alternateName": [resume.meta.author, "heySuvajit", "suvajit.in"],
         "publisher": {
           "@id": `${resume.meta.og.url}/#person`
         }
