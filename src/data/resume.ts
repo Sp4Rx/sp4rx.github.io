@@ -228,7 +228,7 @@ export const resumeData = {
       highlights: [
         "Developed Flutter mobile applications and cross-platform solutions using Flutter, Dart, Bloc, and Riverpod, implementing scalable mobile architecture patterns, state management, and performance optimization techniques for enterprise clients",
         "Architected and developed full-stack applications using React, TypeScript, Node.js, and modern web frameworks, delivering scalable solutions across mobile and web platforms",
-        "Built real-time features and data visualization interfaces using Flutter, React, WebSocket connections, GraphQL subscriptions, and Supabase real-time features for live data streaming and interactive analytics",
+        "Built real-time features and data visualization interfaces using Flutter, React, WebSocket connections, GraphQL subscriptions, and streaming APIs to support active tickers, live data streaming, and interactive analytics",
         "Developed secure, end-to-end encrypted communication platforms with Flutter and Node.js, implementing security best practices, authentication systems, and compliance considerations for sensitive financial and personal data",
         "Designed and implemented RESTful APIs, GraphQL endpoints, and backend services using Node.js, Python, and cloud platforms (AWS, Cloudflare), ensuring scalable and maintainable server-side architecture for mobile applications",
         "Created AI-powered mobile and web applications using LLM APIs (Gemini, OpenAI) and automation tools (ComfyUI, n8n) for intelligent workflows, integrating AI capabilities into Flutter and full-stack applications",
@@ -247,9 +247,10 @@ export const resumeData = {
         "Led and managed a team of 5 engineers, overseeing daily execution, code quality, sprint planning, and performance improvements for critical fintech application",
         "Architected the Flutter application from scratch, defining technical roadmap, project structure, state management approach, and scalable modular architecture for financial services platform",
         "Participated in technical hiring process, conducting interviews, evaluating candidates, and making hiring decisions to build and scale the engineering team",
-        "Ensured application compliance with financial regulations and security standards, implementing secure data handling, encryption, and authentication mechanisms for sensitive financial data",
+        "Ensured application compliance with financial regulations and security standards, implementing SSL pinning, biometrics authentication, encrypted secure storage, and obfuscation to secure sensitive transaction data",
         "Collaborated with multiple cross-functional stakeholders including product, design, backend, and leadership teams to align requirements and deliver high-impact solutions for institutional clients",
         "Drove end-to-end technical decision-making, ensuring the app met performance, security, and scalability standards required for enterprise financial applications",
+        "Optimized Flutter rendering pipelines (minimizing widget rebuilds, using const constructors, and auditing layout passes) to eliminate frame drops (jank) and improve app responsiveness",
         "Mentored junior developers and established best practices for coding, testing, and CI/CD workflows, promoting code quality and maintainability"
       ],
       technologies: ["Flutter", "Dart", "Codemagic"]
@@ -310,7 +311,7 @@ export const resumeData = {
       endDate: "2020-07",
       summary: "Developed mobile applications for rental scooter and bike service transforming mobility for thousands of daily commuters.",
       highlights: [
-        "Developed consumer-facing features for rental scooter and bike booking mobile application",
+        "Developed consumer-facing features for rental scooter and bike booking mobile application, focusing on fluid micro-animations, responsive layout transitions, and high-fidelity UI elements to enhance overall UX",
         "Built Hawkeye project (Bounce Hero App) - a comprehensive app for fleet management and operations",
         "Implemented earnings and incentives features for fleet operators",
         "Integrated Sentry crash reporting and error tracking system for improved app stability and monitoring"
