@@ -70,6 +70,16 @@ const Index = () => {
     };
     window.addEventListener('pointermove', onPointer, { passive: true });
 
+    // Phones steer the same tilt by being tilted. Devices without a sensor send nulls.
+    // shortcut: assumes portrait and a phone held at about 45 degrees, and iOS stays still
+    // because it needs a permission prompt; ask for it on the coin tap if iPhones matter.
+    const onGyro = (e: DeviceOrientationEvent) => {
+      if (e.gamma === null || e.beta === null) return;
+      pointer.targetX = Math.max(-1, Math.min(1, e.gamma / 30));
+      pointer.targetY = Math.max(-1, Math.min(1, (e.beta - 45) / 30));
+    };
+    window.addEventListener('deviceorientation', onGyro, { passive: true });
+
     const frame = () => {
       raf = requestAnimationFrame(frame);
       const y = window.scrollY;
@@ -107,6 +117,7 @@ const Index = () => {
       seen.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener('pointermove', onPointer);
+      window.removeEventListener('deviceorientation', onGyro);
     };
   }, []);
 
