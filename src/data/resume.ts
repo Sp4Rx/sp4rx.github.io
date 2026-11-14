@@ -1,9 +1,20 @@
+export type Layer = "mobile" | "web" | "ai" | "api" | "cloud";
+
+// The hero's picker. Order is top of the stack to bottom.
+export const stack: { id: Layer; need: string; label: string; tech: string }[] = [
+  { id: "mobile", need: "A mobile app", label: "Mobile", tech: "Flutter, React Native" },
+  { id: "web", need: "A web app", label: "Web", tech: "React, Next.js, TypeScript" },
+  { id: "ai", need: "AI features", label: "AI", tech: "Gemini, LLM APIs, ComfyUI" },
+  { id: "api", need: "Backend & real-time", label: "Backend", tech: "Node.js, GraphQL, WebSocket" },
+  { id: "cloud", need: "Cloud & DevOps", label: "Cloud", tech: "AWS, Cloudflare, CI/CD" },
+];
+
 export const resumeData = {
   meta: {
     author: "Sp4Rx",
-    description: "Senior Flutter Developer with 9+ yrs' experience, full-stack capable, building with AI—ComfyUI, Stable Diffusion & Gemini API. Smart, bold, future-ready.",
-    keywords: "resume, pixel art, game, portfolio, interactive, Sp4Rx, heySuvajit, suvajit, suvajit sarkar, suvajit.in, suvajit.in/resume",
-    themeColor: "#000000",
+    description: "Senior full-stack engineer with 9+ years building mobile apps, web apps and AI features with Flutter, React, Node.js and Gemini. Available for freelance projects.",
+    keywords: "resume, portfolio, freelance, full stack engineer, Flutter, React, AI, Sp4Rx, heySuvajit, suvajit, suvajit sarkar, suvajit.in, suvajit.in/resume",
+    themeColor: "#0C0D0A",
     og: {
       type: "website",
       image: "https://github.com/sp4rx.png",
@@ -219,13 +230,15 @@ export const resumeData = {
   ],
   work: [
     {
-      company: "Freelance / Personal Projects",
+      layers: ["mobile","web","ai","api","cloud"] as Layer[],
+      company: "Freelance (Mavonic and independent clients)",
       position: "Freelance Full Stack & AI Consultant",
-      website: "",
+      website: "https://www.mavonic.com/",
       startDate: "2024-11",
       endDate: "Present",
       summary: "Delivering Flutter mobile applications and full-stack solutions for clients, specializing in Flutter, Dart, React, TypeScript, and Node.js. Building scalable cross-platform mobile applications and web services with focus on performance optimization, security, and robust architecture. Experienced in mobile development, frontend development, backend services, database design, and cloud infrastructure.",
       highlights: [
+        "Worked as a freelance engineer with Mavonic, a technology partner that builds software products for fintech startups and scaleups",
         "Developed Flutter mobile applications and cross-platform solutions using Flutter, Dart, Bloc, and Riverpod, implementing scalable mobile architecture patterns, state management, and performance optimization techniques for enterprise clients",
         "Architected and developed full-stack applications using React, TypeScript, Node.js, and modern web frameworks, delivering scalable solutions across mobile and web platforms",
         "Built real-time features and data visualization interfaces using Flutter, React, WebSocket connections, GraphQL subscriptions, and streaming APIs to support active tickers, live data streaming, and interactive analytics",
@@ -237,6 +250,7 @@ export const resumeData = {
       technologies: ["Flutter", "Dart", "Bloc", "Riverpod", "React", "TypeScript", "Next.js", "JavaScript", "Node.js", "Python", "WebSocket", "GraphQL", "Supabase", "React Native", "Expo", "AWS", "Cloudflare", "GitHub Actions", "CI/CD", "AI/ML"]
     },
     {
+      layers: ["mobile"] as Layer[],
       company: "Stashfin",
       position: "Senior Manager",
       website: "https://www.stashfin.com/",
@@ -256,6 +270,7 @@ export const resumeData = {
       technologies: ["Flutter", "Dart", "Codemagic"]
     },
     {
+      layers: ["mobile","web","api"] as Layer[],
       company: "Tailorbird",
       position: "Senior Full Stack Developer",
       website: "https://www.tailorbird.com/",
@@ -272,6 +287,7 @@ export const resumeData = {
       technologies: ["Flutter", "Dart", "Bloc", "GraphQL", "Hive", "Forge Viewer", "BIM", "Python", "REST APIs", "React", "JavaScript"]
     },
     {
+      layers: ["mobile","cloud"] as Layer[],
       company: "Tranzact",
       position: "Software Engineer",
       website: "https://letstranzact.com/",
@@ -288,6 +304,7 @@ export const resumeData = {
       technologies: ["Flutter", "Riverpod", "MoEngage", "Codemagic", "GitHub Actions", "Firebase"]
     },
     {
+      layers: ["mobile","web","api","cloud"] as Layer[],
       company: "Vedantu",
       position: "Software Engineer",
       website: "https://www.vedantu.com/",
@@ -304,6 +321,7 @@ export const resumeData = {
       technologies: ["React Native", "WebSocket", "Jenkins", "Groovy", "Docker", "React", "Next.js"]
     },
     {
+      layers: ["mobile"] as Layer[],
       company: "Bounce",
       position: "Software Engineer",
       website: "https://play.google.com/store/apps/details?id=com.metrobikes.app",
@@ -319,6 +337,7 @@ export const resumeData = {
       technologies: ["Flutter", "Dart", "Sentry"]
     },
     {
+      layers: ["mobile"] as Layer[],
       company: "Leher.ai Pvt. Ltd",
       position: "SDE II",
       website: "https://play.google.com/store/apps/details?id=com.leher",
@@ -334,6 +353,7 @@ export const resumeData = {
       technologies: ["Android", "Java", "MVP", "Dagger", "Flutter", "Dart"]
     },
     {
+      layers: ["mobile"] as Layer[],
       company: "Vokal",
       position: "Android Developer",
       website: "https://play.google.com/store/apps/details?id=com.oktalk.app",
@@ -349,6 +369,7 @@ export const resumeData = {
       technologies: ["Android", "Java", "MVVM", "Wowza", "Live Streaming"]
     },
     {
+      layers: ["mobile","api"] as Layer[],
       company: "STUPIDCHAT TECHNOLOGY",
       position: "Android Developer",
       website: "https://play.google.com/store/apps/details?id=chat.stupid.app",
@@ -363,6 +384,7 @@ export const resumeData = {
       technologies: ["Android", "Java", "Firebase", "Socket.io", "Real-time Communication"]
     },
     {
+      layers: ["mobile"] as Layer[],
       company: "Sitegalleria Pvt. Ltd",
       position: "Android Developer",
       website: "",
@@ -379,7 +401,19 @@ export const resumeData = {
   ],
   projects: [
     {
+      name: "Pitaara",
+      layers: ["web", "ai", "api", "cloud"] as Layer[],
+      description: "Send an Instagram reel to @pitaara.app and get the recipe, place, or film from it back in about a minute. Every save stays searchable in your own collection.",
+      highlights: [
+        "Extracts recipes (time, ingredients, steps), places, and films from reels and replies over Instagram DM",
+        "Search by what you remember, even when the reel never used those words, with places shown on a map"
+      ],
+      url: "https://pitaara.app/",
+      technologies: ["AI video understanding", "Semantic search", "Instagram DM bot", "Maps"]
+    },
+    {
       name: "SecretRipple",
+      layers: ["web","api"] as Layer[],
       description: "Enterprise-grade secure messaging platform with React, TypeScript, and Supabase. Features end-to-end encryption and real-time messaging for financial-grade applications.",
       highlights: [
         "Built secure messaging platform with end-to-end encryption using React, TypeScript, and Supabase",
@@ -390,6 +424,7 @@ export const resumeData = {
     },
     {
       name: "SumtubeBot",
+      layers: ["web","ai","api","cloud"] as Layer[],
       description: "AI-powered Discord bot using Google Gemini API for automatic YouTube video summarization with timestamps and content categorization.",
       highlights: [
         "AI-powered video summarization using Google Gemini API with automatic YouTube link detection",
@@ -401,6 +436,7 @@ export const resumeData = {
     },
     {
       name: "Dhyanam",
+      layers: ["mobile","web"] as Layer[],
       description: "Cross-platform meditation puzzle game built with React and Capacitor, published on iOS, Android, and Web platforms.",
       highlights: [
         "Cross-platform app (iOS, Android, Web) using React and Capacitor with single codebase",
@@ -412,11 +448,12 @@ export const resumeData = {
       technologies: ["React", "Capacitor", "TypeScript", "iOS", "Android"]
     },
     {
-      name: "8-Bit Resume",
-      description: "High-performance interactive portfolio website with React, TypeScript, and real-time game mechanics. Features ATS-optimized resume with automated PDF generation.",
+      name: "suvajit.in",
+      layers: ["web"] as Layer[],
+      description: "This site. Pick what you need built and a CSS 3D stack shows where I have shipped it. Includes an ATS-friendly resume with automated PDF generation.",
       highlights: [
-        "Built React-based interactive portfolio with optimized game loop and performance techniques (memoization, virtualization, code splitting)",
-        "Developed ATS-optimized resume with automated PDF generation using Puppeteer for modern frontend development"
+        "Interactive 3D stack built with plain CSS transforms, no WebGL or 3D library",
+        "ATS-friendly PDF resume generated on every deploy with Playwright and GitHub Actions"
       ],
       url: "https://suvajit.in",
       githubUrl: "https://github.com/Sp4Rx/sp4rx.github.io",
@@ -497,7 +534,7 @@ export const generateJsonLd = (resume: typeof resumeData) => {
         "@type": "ProfilePage",
         "@id": `${resume.meta.og.url}/#profilepage`,
         "url": resume.meta.og.url,
-        "name": `${resume.basics.name} - Interactive 8-Bit Resume & Portfolio`,
+        "name": `${resume.basics.name} - Portfolio & Resume`,
         "mainEntity": {
           "@type": "Person",
           "@id": `${resume.meta.og.url}/#person`,
