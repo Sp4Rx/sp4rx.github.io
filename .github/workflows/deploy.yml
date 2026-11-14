@@ -14,7 +14,7 @@ permissions:
 jobs:
   deploy:
     name: Deploy to GitHub Pages
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # ubuntu-latest moved to 26, which the locked Playwright cannot install browsers on
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
