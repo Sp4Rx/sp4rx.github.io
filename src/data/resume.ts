@@ -543,8 +543,6 @@ export const generateJsonLd = (resume: typeof resumeData) => {
           "sameAs": resume.basics.profiles.map(p => p.url),
           "address": {
             "@type": "PostalAddress",
-            "addressLocality": resume.basics.location.city,
-            "addressRegion": resume.basics.location.region,
             "addressCountry": "IN"
           },
           "email": resume.basics.email,

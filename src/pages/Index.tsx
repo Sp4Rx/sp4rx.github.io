@@ -154,11 +154,11 @@ const Index = () => {
                   >
                     <span className="face halftone -inset-[16%] rounded-full text-foreground/70" style={{ transform: 'translateZ(-50px)' }} />
                     <span className="face inset-0 rounded-full bg-accent" />
-                    {/* The photo twice: once cut off by the circle, once with only its top half, so the head pops out. */}
+                    {/* The photo twice: once cut off by the circle, once with only its top third, so the hair pops out but the elbow does not. */}
                     <span className="face inset-0 overflow-hidden rounded-full" style={{ transform: 'translateZ(40px)' }}>
                       <img src="/suvajit.webp" alt="" className="portrait" draggable={false} />
                     </span>
-                    <span className="face inset-0" style={{ transform: 'translateZ(40px)', clipPath: 'inset(-40% -40% 50% -40%)' }}>
+                    <span className="face inset-0" style={{ transform: 'translateZ(40px)', clipPath: 'inset(-40% -40% 64% -40%)' }}>
                       <img src="/suvajit.webp" alt="Suvajit sipping from a cup and glancing sideways" className="portrait" draggable={false} />
                     </span>
 
@@ -313,7 +313,7 @@ const Index = () => {
       </main>
 
       <footer className="label flex flex-wrap items-center justify-between gap-3 px-5 py-6 text-muted-foreground sm:px-12">
-        <span>{basics.name} · {basics.location.city}, India</span>
+        <span>{basics.name} · India</span>
         <a href={PATHS.PDF.BROWSER_PATH} download={pdfName} className="link">Download resume PDF</a>
       </footer>
 
