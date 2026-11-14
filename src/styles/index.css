@@ -7,7 +7,7 @@
 @layer base {
     /* Gig-poster palette: ink, bone paper and one lime spot ink. Lime is a fill or a mark, never body text on paper. */
     :root {
-        --background: 80 13% 4.5%;
+        --background: 0 0% 0%;
         --foreground: 50 32% 93%;
         --card: 75 10% 7%;
         --secondary: 70 8% 13%;
