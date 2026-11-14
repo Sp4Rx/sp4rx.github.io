@@ -298,7 +298,7 @@ const Index = () => {
           <p className="pop mt-6 font-hand text-3xl leading-none sm:text-4xl" style={css({ '--d': '500ms' })}>
             freelance project or full-time role, one tap:
           </p>
-          <div className="pop mt-8 flex flex-wrap justify-center gap-4" style={css({ '--d': '650ms', '--from': '0deg', '--btn-shadow': '80 13% 6% / 0.35' })}>
+          <div className="pop mt-8 flex flex-wrap justify-center gap-4" style={css({ '--d': '650ms', '--from': '0deg', '--btn-shadow': 'hsl(80 13% 6% / 0.35)' })}>
             <a href={`mailto:${basics.email}`} className="btn bg-accent-foreground text-accent">
               <Mail className="h-5 w-5" />
               {basics.email}

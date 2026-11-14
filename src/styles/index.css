@@ -13,8 +13,16 @@
         --secondary: 70 8% 13%;
         --muted-foreground: 52 8% 66%;
         --border: 70 8% 22%;
-        --accent: 73 100% 61%;
+        --lime: hsl(73 100% 61%);
         --accent-foreground: 80 13% 6%;
+    }
+
+    /* Phones with wide-colour screens show plain sRGB lime honestly, which looks flat next to an
+       oversaturated monitor. The same numbers in Display P3 are the vivid lime. */
+    @media (color-gamut: p3) {
+        :root:not(.pdf) {
+            --lime: color(display-p3 0.83 1 0.23);
+        }
     }
 
     /* A sheet of paper on the dark page: the same tokens, flipped. */
@@ -53,7 +61,7 @@
     }
 
     ::selection {
-        background: hsl(var(--accent));
+        background: var(--lime);
         color: hsl(var(--accent-foreground));
     }
 
@@ -84,7 +92,7 @@
     /* Chunky poster button with a hard shadow that it sinks into when pressed. */
     .btn {
         @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-[14px] bg-accent px-5 py-3 font-display text-2xl font-black uppercase leading-none text-accent-foreground;
-        box-shadow: 0 7px 0 hsl(var(--btn-shadow, var(--foreground)));
+        box-shadow: 0 7px 0 var(--btn-shadow, hsl(var(--foreground)));
         transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s;
     }
 
@@ -94,11 +102,11 @@
 
     .btn:active {
         transform: translateY(5px);
-        box-shadow: 0 2px 0 hsl(var(--btn-shadow, var(--foreground)));
+        box-shadow: 0 2px 0 var(--btn-shadow, hsl(var(--foreground)));
     }
 
     .btn-ink {
-        --btn-shadow: var(--accent);
+        --btn-shadow: var(--lime);
         background: hsl(var(--foreground));
         color: hsl(var(--background));
     }
@@ -157,7 +165,7 @@
         position: absolute;
         inset: 0.02em -0.08em -0.02em;
         z-index: -1;
-        background: hsl(var(--accent));
+        background: var(--lime);
         transform: rotate(-1deg) scaleX(0);
         transform-origin: left;
         transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--d, 0ms) + 650ms);
@@ -251,6 +259,7 @@
         max-width: none;
         user-select: none;
         pointer-events: none;
+        filter: saturate(1.2) contrast(1.06);
     }
 
     /* ---- Career deck: each card sticks, and the next one lands on top of it ---- */
@@ -258,7 +267,7 @@
         position: relative;
         border-radius: 22px;
         padding: 1.5rem;
-        box-shadow: 0 8px 0 hsl(73 100% 61%);
+        box-shadow: 0 8px 0 var(--lime);
         rotate: var(--r, 0deg);
         transform-origin: center top;
         will-change: transform;
@@ -273,13 +282,13 @@
     }
 
     .highlight {
-        background: linear-gradient(transparent 58%, hsl(73 100% 61%) 58%);
+        background: linear-gradient(transparent 58%, var(--lime) 58%);
     }
 
     .sticker {
         border-radius: 22px;
         overflow: hidden;
-        box-shadow: 0 8px 0 hsl(73 100% 61%);
+        box-shadow: 0 8px 0 var(--lime);
         rotate: var(--r, 0deg);
         transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -296,7 +305,7 @@
         @apply w-[min(44rem,92vw)] rounded-[22px] p-6;
         max-height: 86vh;
         max-height: 86svh;
-        box-shadow: 0 8px 0 hsl(73 100% 61%);
+        box-shadow: 0 8px 0 var(--lime);
     }
 
     .job-dialog::backdrop {
