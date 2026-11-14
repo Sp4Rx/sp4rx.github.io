@@ -1,70 +1,35 @@
-# 8-Bit Resume
+# suvajit.in
 
-An interactive 8-bit themed resume game that combines retro gaming with professional portfolio presentation. At its core, it features a classic snake game where you control a colorful snake that grows longer as it collects food, while avoiding self-collision. The game seamlessly integrates with your professional portfolio - the snake's movements and interactions create an engaging way to navigate through your experience, skills, and achievements. Experience a unique way of showcasing professional experience through a nostalgic pixel art interface.
+Portfolio and resume of Suvajit Sarkar. The hero asks "What do you need built?" and a 3D stack of five layers (mobile, web, AI, backend, cloud) lights up for whatever the visitor ticks, then points to the projects and roles that cover it.
 
-## Features
+## Run it
 
-- 🎮 Interactive 8-bit style gameplay
-- 📝 Professional resume content presented in a gaming format
-- 🎨 Retro pixel art aesthetics
-- 📱 Responsive design for various devices
-- 🖨️ Exportable traditional resume format
-
-## Getting Started
-
-This project requires Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps to run the project locally:
+Needs Node.js 20.19 or newer.
 
 ```sh
-# Step 1: Clone the repository
-git clone https://github.com/your-username/8-bit-resume.git
-
-# Step 2: Navigate to the project directory
-cd 8-bit-resume
-
-# Step 3: Install the necessary dependencies
 npm install
-
-# Step 4: Start the development server
 npm run dev
 ```
 
-## Development
+## Scripts
 
-### Project Structure
+- `npm run dev` - start the dev server on port 8080
+- `npm run build` - build for production
+- `npm run check` - self-check for the picker logic and the layer tags in the resume data
+- `npm run generate:pdf` - build the site and print the ATS-friendly resume to `resume.pdf`
+- `npm run lint` - run ESLint
 
-- `/src` - Source code
-  - `/components` - React components
-  - `/data` - Resume data and game assets
-  - `/hooks` - Custom React hooks
-  - `/lib` - Utility functions
-  - `/pages` - Page components
+Pushing to `main` builds the site, generates the PDF and deploys to GitHub Pages.
 
-### Available Scripts
+## Where things live
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm run deploy` - Deploy to GitHub Pages
+- `src/data/resume.ts` - all content. Every project and role lists the stack `layers` it touched
+- `src/components/site/Hero.tsx` - the picker and the 3D stack (plain CSS transforms, no 3D library)
+- `src/components/resume/` - the resume, shared by the site and the PDF
+- `src/lib/match.ts` - which projects match the ticked layers, and the prefilled email link
+- `src/styles/index.css` - colour tokens for light and dark, and the stack styles
+- `scripts/generateResumePDF.ts` - loads the site with `?pdf` and prints it with Playwright
 
-## Technology Stack
+## Stack
 
-This project leverages modern web technologies:
-
-- **Vite** - Next generation frontend tooling
-- **TypeScript** - Type-safe JavaScript
-- **React** - UI framework
-- **shadcn/ui** - Beautifully designed components
-- **Tailwind CSS** - Utility-first CSS framework
-- **React Router** - Application routing
-- **React Query** - Data synchronization
-
-## Contributing
-
-Contributions are welcome! Feel free to open issues and submit pull requests.
-
-## License
-
-This project is open source and available under the MIT license.
+Vite, React, TypeScript, Tailwind CSS.

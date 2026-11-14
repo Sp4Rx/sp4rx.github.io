@@ -19,13 +19,12 @@ src/
     resume/
       - Resume.tsx (main component)
       - ResumeSection.tsx (section wrapper)
-      - SkillBar.tsx (skill display)
       - ProjectCard.tsx (project display)
       - WorkEntry.tsx (work experience)
   data/
     - resume.ts (resume data structure)
   styles/
-    - components.css (component styles)
+    - index.css (colour tokens, stack and resume styles)
 ```
 
 ### Data Structure
@@ -35,14 +34,14 @@ src/
 
 ### Styling Approach
 - Use Tailwind CSS for utility-first styling
-- Maintain retro/pixel art theme consistency
+- Keep to the ink, bone and lime tokens in `src/styles/index.css`; the lime accent is a fill, never text
 - Ensure responsive design for mobile and desktop
 - Use CSS custom properties for theming
 
 ### PDF Generation
-- Use Puppeteer for PDF export
+- Use Playwright for PDF export
 - Ensure ATS-friendly headings in PDF mode
-- Remove interactive elements (games, toggles) from PDF
+- The PDF (`?pdf`) renders only the resume, with no hero or toggles
 - Optimize for print/PDF rendering
 
 ### Performance Optimization
