@@ -1,6 +1,6 @@
 # suvajit.in
 
-Portfolio and resume of Suvajit Sarkar. The page opens on a portrait drawn in about 32,000 lime particles. Scrolling scatters them into a tunnel and flies through one card per job, then the particles regroup into "SAY HELLO" at the contact section.
+Portfolio and resume of Suvajit Sarkar. The page is styled like a gig poster in black, bone and lime: a giant headline, a 3D coin with my photo that flips when tapped, and a deck of cards, one per job, that pile up as you scroll.
 
 ## Run it
 
@@ -15,7 +15,7 @@ npm run dev
 
 - `npm run dev` - start the dev server on port 8080
 - `npm run build` - build for production
-- `npm run check` - self-check for the career cards and their scroll maths
+- `npm run check` - self-check for the resume data and the static images the page needs
 - `npm run generate:pdf` - build the site and print the ATS-friendly resume to `resume.pdf`
 - `npm run lint` - run ESLint
 
@@ -24,15 +24,14 @@ Pushing to `main` builds the site, generates the PDF and deploys to GitHub Pages
 ## Where things live
 
 - `src/data/resume.ts` - all content. Each job has a one-line `headline` shown on its card
-- `src/pages/Index.tsx` - the page, the scroll loop and the career corridor
-- `src/lib/particles.ts` - the particle scene, written directly in WebGL (one draw call, no 3D library)
-- `src/lib/scene.ts` - where each career card sits for a given scroll position
+- `src/pages/Index.tsx` - the page and its one scroll loop (progress bar, marquee lean, coin tilt, card deck)
 - `src/components/resume/` - the resume, shared by the site and the PDF
-- `src/styles/index.css` - colour tokens (dark site, light PDF) and component styles
-- `public/portrait.png` - the portrait as a small greyscale map with the background removed. To change the photo, replace this with a 240px-wide greyscale PNG whose background is transparent
+- `src/styles/index.css` - colour tokens (dark site, light PDF) and every animation, in plain CSS
+- `public/suvajit.webp` - the coin photo, with a transparent background. Replace it with another cut-out to change the photo
+- `public/og.jpg` - the 1200x630 image shown when the link is shared
 - `scripts/generateResumePDF.ts` - loads the site with `?pdf` and prints it with Playwright
 
-Visitors who ask their device for reduced motion get the same content as a plain page with no animation.
+Visitors who ask their device for reduced motion get the same page with the animations switched off.
 
 ## Stack
 

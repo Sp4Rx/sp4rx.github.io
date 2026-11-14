@@ -1,18 +1,19 @@
 export const resumeData = {
   meta: {
     author: "Sp4Rx",
-    description: "Senior full-stack engineer with 9+ years building mobile apps, web apps and AI features with Flutter, React, Node.js and Gemini. Available for freelance projects.",
-    keywords: "resume, portfolio, freelance, full stack engineer, Flutter, React, AI, Sp4Rx, heySuvajit, suvajit, suvajit sarkar, suvajit.in, suvajit.in/resume",
+    description: "Suvajit Sarkar is a senior full-stack engineer with 9 years across 10 teams, building mobile apps, web apps, backends and AI features with Flutter, React and Node.js. Open to freelance projects and full-time roles.",
+    keywords: "Suvajit Sarkar, senior full stack engineer, Flutter developer, React developer, Node.js, freelance developer India, mobile app developer, AI engineer, portfolio, resume, Sp4Rx, heySuvajit, suvajit.in",
     themeColor: "#0C0D0A",
     og: {
       type: "website",
-      image: "https://github.com/sp4rx.png",
+      image: "https://suvajit.in/og.jpg",
+      imageAlt: "Suvajit Sarkar, senior full-stack engineer, sipping from a cup on a lime circle",
       url: "https://suvajit.in"
     },
     twitter: {
       card: "summary_large_image",
       site: "@heySuvajit",
-      image: "https://github.com/sp4rx.png"
+      image: "https://suvajit.in/og.jpg"
     }
   },
   basics: {
@@ -400,6 +401,16 @@ export const resumeData = {
       technologies: ["AI video understanding", "Semantic search", "Instagram DM bot", "Maps"]
     },
     {
+      name: "T-Shirt Icebreaker",
+      description: "The QR code on the back of my t-shirt. Scan it and you can message me in one tap, or type any silly idea and watch it become an AI cartoon sticker on a public wall.",
+      highlights: [
+        "Generates stickers with Cloudflare Workers AI and falls back to a second image model when the free daily quota runs out, tracked in a D1 database",
+        "Turns a selfie into a sticker through a server-side Gemini call, with rate limits so the free tier survives a crowd"
+      ],
+      url: "https://qr.suvajit.in/",
+      technologies: ["Astro", "React", "Tailwind CSS", "Motion", "Cloudflare Pages", "Workers AI", "D1", "Gemini API"]
+    },
+    {
       name: "SecretRipple",
       description: "Enterprise-grade secure messaging platform with React, TypeScript, and Supabase. Features end-to-end encryption and real-time messaging for financial-grade applications.",
       highlights: [
@@ -434,9 +445,9 @@ export const resumeData = {
     },
     {
       name: "suvajit.in",
-      description: "This site. My portrait drawn in 32,000 particles that scatter into a fly-through of every team I have worked on. Includes an ATS-friendly resume with automated PDF generation.",
+      description: "This site. A poster-style portfolio with a 3D flip coin and a deck of every team I have worked on. Includes an ATS-friendly resume with automated PDF generation.",
       highlights: [
-        "Particle scene written directly in WebGL with one draw call and no 3D library",
+        "Every animation is plain CSS and one small scroll loop, with no animation library",
         "ATS-friendly PDF resume generated on every deploy with Playwright and GitHub Actions"
       ],
       url: "https://suvajit.in",
@@ -518,7 +529,8 @@ export const generateJsonLd = (resume: typeof resumeData) => {
         "@type": "ProfilePage",
         "@id": `${resume.meta.og.url}/#profilepage`,
         "url": resume.meta.og.url,
-        "name": `${resume.basics.name} - Portfolio & Resume`,
+        "name": `${resume.basics.name} | ${resume.basics.designation}`,
+        "description": resume.meta.description,
         "mainEntity": {
           "@type": "Person",
           "@id": `${resume.meta.og.url}/#person`,
@@ -527,6 +539,7 @@ export const generateJsonLd = (resume: typeof resumeData) => {
           "jobTitle": resume.basics.designation,
           "url": resume.meta.og.url,
           "image": resume.meta.og.image,
+          "knowsLanguage": resume.languages.map(l => l.language),
           "sameAs": resume.basics.profiles.map(p => p.url),
           "address": {
             "@type": "PostalAddress",

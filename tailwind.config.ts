@@ -27,7 +27,9 @@ export default {
 			},
 			fontFamily: {
 				sans: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
-				mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+				display: ['"Big Shoulders Display"', '"Arial Narrow"', 'Impact', 'sans-serif'],
+				hand: ['Caveat', '"Comic Sans MS"', 'cursive'],
+				mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
 			},
 		}
 	},
