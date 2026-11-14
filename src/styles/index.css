@@ -366,14 +366,73 @@
         @apply cursor-pointer text-sm font-semibold underline decoration-1 underline-offset-4;
     }
 
-    /* PDF masthead: a lime rule and a quiet dot grid behind the layers mark. */
+    /* ---- The printed resume: the poster look, on white paper ----
+       Nothing here is positioned. Positioned elements are painted last, which moves
+       their text to the end of what ATS parsers read. */
     .pdf-masthead {
-        @apply mb-6 flex items-start justify-between gap-6 border-b-4 border-accent pb-5;
+        @apply mb-10 flex items-center justify-between gap-6 rounded-[18px] px-8 py-7;
+        background: hsl(80 13% 6%);
+        color: hsl(50 32% 93%);
+        box-shadow: 0 8px 0 var(--lime);
     }
 
+    .pdf-masthead h1 {
+        @apply font-display text-7xl font-black uppercase;
+        line-height: 0.85;
+    }
+
+    .pdf-role {
+        @apply mb-4 mt-2 inline-block px-2 py-0.5 font-display text-2xl font-black uppercase leading-none;
+        background: var(--lime);
+        color: hsl(80 13% 6%);
+    }
+
+    /* The coin from the site, as two backgrounds: a lime disc over halftone dots. */
     .pdf-art {
-        @apply flex h-24 w-44 shrink-0 items-center justify-center;
-        background-image: radial-gradient(hsl(var(--foreground) / 0.28) 1px, transparent 1.2px);
-        background-size: 10px 10px;
+        @apply aspect-square w-40 shrink-0;
+        background:
+            radial-gradient(circle, var(--lime) 0 43%, transparent 44%),
+            radial-gradient(circle, hsl(50 32% 93% / 0.75) 36%, transparent 40%) 0 0 / 10px 10px;
+        -webkit-mask-image: radial-gradient(circle, #000 45%, transparent 70%);
+        mask-image: radial-gradient(circle, #000 45%, transparent 70%);
+    }
+
+    .is-pdf .resume-heading {
+        @apply border-b-2 font-display text-3xl font-black uppercase leading-none;
+    }
+
+    .is-pdf .resume-heading::before {
+        @apply h-4 w-4;
+    }
+
+    .is-pdf .work-entry {
+        @apply mb-6 pb-0 pl-4 last:mb-0;
+        border-left: 3px solid var(--lime);
+    }
+
+    .is-pdf .work-entry h3 {
+        @apply text-lg font-bold;
+    }
+
+    /* The dates, as an ink tag. */
+    .is-pdf .work-entry h3 + div {
+        @apply rounded-md bg-foreground px-2 py-1 text-background;
+    }
+
+    .is-pdf .chip {
+        @apply rounded-md;
+    }
+
+    .is-pdf article {
+        @apply rounded-[14px] border-2 border-foreground bg-background;
+        box-shadow: 0 5px 0 var(--lime);
+    }
+
+    .is-pdf article h3 {
+        @apply font-display text-3xl font-black uppercase leading-none;
+    }
+
+    .is-pdf .btn {
+        @apply rounded-md;
     }
 }

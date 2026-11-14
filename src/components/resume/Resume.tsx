@@ -28,8 +28,8 @@ const Resume: React.FC<ResumeProps> = ({ isPdf = false }) => {
       {isPdf && (
         <header className="pdf-masthead">
           <div>
-          <h1 className="text-4xl font-extrabold tracking-tight">{basics.name}</h1>
-          <p className="mb-3 text-lg text-muted-foreground">{basics.designation}</p>
+          <h1>{basics.name}</h1>
+          <p className="pdf-role">{basics.designation}</p>
           <p className="text-sm leading-relaxed">
             {basics.location.city}, {basics.location.region}
             {contacts.map((c) => (
@@ -40,13 +40,7 @@ const Resume: React.FC<ResumeProps> = ({ isPdf = false }) => {
             ))}
           </p>
           </div>
-          <div className="pdf-art" aria-hidden="true">
-            <svg viewBox="0 0 32 32" className="h-16 w-16">
-              <path d="M16 15 5 20.5 16 26l11-5.5z" fill="#fff" stroke="#0C0D0A" strokeWidth="1.2" strokeLinejoin="round" />
-              <path d="M16 10.5 5 16l11 5.5L27 16z" fill="#fff" stroke="#0C0D0A" strokeWidth="1.2" strokeLinejoin="round" />
-              <path d="M16 6 5 11.5 16 17l11-5.5z" fill="#D4FF3A" stroke="#0C0D0A" strokeWidth="1.2" strokeLinejoin="round" />
-            </svg>
-          </div>
+          <div className="pdf-art" aria-hidden="true" />
         </header>
       )}
 
@@ -82,7 +76,7 @@ const Resume: React.FC<ResumeProps> = ({ isPdf = false }) => {
       {/* On the site the projects have their own section above the resume. */}
       {isPdf && (
         <ResumeSection title="Projects">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-5">
             {projects.map((project) => (
               <ProjectCard key={project.name} {...project} />
             ))}
