@@ -35,6 +35,7 @@ src/
 ### Styling Approach
 - Use Tailwind CSS for utility-first styling
 - Keep to the ink, bone and lime tokens in `src/styles/index.css`; the lime accent is a fill, never text
+- The site is dark only; the PDF (`html.pdf`) flips the same tokens to ink on white
 - Ensure responsive design for mobile and desktop
 - Use CSS custom properties for theming
 

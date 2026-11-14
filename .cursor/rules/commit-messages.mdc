@@ -104,7 +104,7 @@ including section headings, action verbs, and keyword usage.
 Use scope to indicate what part of the codebase changed:
 - `resume`: Resume-related components/data
 - `pdf`: PDF generation scripts
-- `hero`: Stack picker in the hero
+- `scene`: Particle scene and career corridor
 - `ui`: UI components
 - `styles`: Styling changes
 - `config`: Configuration files
