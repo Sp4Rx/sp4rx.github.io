@@ -1,305 +1,130 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import ResumeSection from './ResumeSection';
-import SkillBar from './SkillBar';
 import WorkEntry from './WorkEntry';
 import ProjectCard from './ProjectCard';
-import { resumeData } from '@/data/resume';
-import { useTheme } from '../ThemeProvider';
-import { Button } from '@/components/ui/button';
-import { DownloadIcon, ExternalLinkIcon } from 'lucide-react';
-import { toast } from 'sonner';
-import { PATHS } from '@/constants/paths';
+import { resumeData, type Layer } from '@/data/resume';
+import { matches } from '@/lib/match';
 
 interface ResumeProps {
-  gameState: 'AUTO' | 'PLAYING' | 'PAUSED' | 'GAME_OVER';
-  score: number;
-  showBorder?: boolean; // Parameter to enable/disable outermost border
-  enableScroll?: boolean; // Parameter to enable/disable scrolling (for PDF generation)
+  picked?: Layer[]; // what the visitor ticked in the hero
+  isPdf?: boolean; // the PDF adds a contact header and the projects, and expands every role
 }
 
-const Resume: React.FC<ResumeProps> = ({ gameState, score, showBorder = true, enableScroll = true }) => {
-  const { theme, toggleTheme } = useTheme();
-  const [isGenerating, setIsGenerating] = useState(false);
+const Resume: React.FC<ResumeProps> = ({ picked = [], isPdf = false }) => {
   const { basics, skills, work, projects, education, languages, interests, tools } = resumeData;
 
-  // Check if we are in PDF generation mode (e.g., query parameter ?pdf=true is present)
-  const isPdfMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('pdf');
-
-  const handleDownloadResume = () => {
-    try {
-      setIsGenerating(true);
-      // Fetch the pre-generated PDF from public directory
-      const link = document.createElement('a');
-      link.href = PATHS.PDF.BROWSER_PATH;
-      link.download = `${basics.name.replace(/\s+/g, '_')}_Resume.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      toast.success("Resume downloaded successfully!");
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-      toast.error("Failed to download PDF. Please try again.");
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const isResumeVisible = gameState === 'AUTO' || gameState === 'PAUSED';
-
-  if (!isResumeVisible) return null;
+  const contacts = [
+    { label: 'Email', text: basics.email, href: `mailto:${basics.email}` },
+    basics.showPhoneNumberInPDF && { label: 'Phone', text: basics.phone, href: `tel:${basics.phone.replace(/\s+/g, '')}` },
+    basics.showWebsiteUrlInPDF && { label: 'Website', text: basics.url, href: basics.url },
+    ...basics.profiles.map((p) => ({ label: p.network === 'x' ? 'X' : p.network, text: p.username, href: p.url })),
+    {
+      label: 'Stack Overflow',
+      text: basics.stackOverflowUsername,
+      href: `https://stackoverflow.com/users/${basics.stackOverflowId}/${basics.stackOverflowUsername}`,
+    },
+  ].filter(Boolean) as { label: string; text: string; href: string }[];
 
   return (
-    <div className={`resume-content ${enableScroll ? 'overflow-y-auto max-h-[90vh]' : ''} scrollbar-none shadow-none ${showBorder ? '' : 'border-0'}`}>
-      <div className="flex justify-between items-center mb-4">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-pixel mb-1">{basics.name}</h1>
-          <p className="text-base text-muted-foreground">{basics.designation}</p>
-        </div>
-        <div id='download-resume' className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleDownloadResume}
-            disabled={isGenerating}
-            className="pixel-button flex items-center gap-2"
-          >
-            <DownloadIcon className="h-4 w-4" />
-            <span>Resume</span>
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-        <div className="col-span-2">
-          <p className="text-xs leading-relaxed mb-2">{basics.summary}</p>
-          {basics.coreSkills && (
-            <div className="mt-2 pt-2 border-t border-border">
-              <p className="text-xs font-semibold mb-1">Core Skills:</p>
-              <p className="text-xs text-muted-foreground leading-relaxed">{basics.coreSkills}</p>
-            </div>
-          )}
-        </div>
-        <div className="space-y-1.5 text-xs">
-          <p>
-            <span className="font-semibold">Email: </span>
-            <a href={`mailto:${basics.email}`} className="text-primary hover:underline">
-              {basics.email}
-            </a>
-          </p>
-          {(basics.showPhoneNumber || (basics.showPhoneNumberInPDF && isPdfMode)) && (
-            <p className={basics.showPhoneNumber ? '' : 'pdf-only-phone'} style={basics.showPhoneNumber ? {} : { display: 'none' }}>
-              <span className="font-semibold">Phone: </span>
-              <a href={`tel:${basics.phone.replace(/\s+/g, '')}`} className="text-primary hover:underline">
-                {basics.phone}
-              </a>
-            </p>
-          )}
-          {(basics.showWebsiteUrl || basics.showWebsiteUrlInPDF) && (
-            <p className={basics.showWebsiteUrl ? '' : 'pdf-only-website'} style={basics.showWebsiteUrl ? {} : { display: 'none' }}>
-              <span className="font-semibold">Website: </span>
-              <a href={basics.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                {basics.url}
-              </a>
-            </p>
-          )}
-          <p>
-            <span className="font-semibold">Location: </span>
+    <div className={`resume-content ${isPdf ? 'is-pdf' : ''}`}>
+      {isPdf && (
+        <header className="mb-6">
+          <h1 className="text-3xl font-extrabold tracking-tight">{basics.name}</h1>
+          <p className="mb-3 text-lg text-muted-foreground">{basics.designation}</p>
+          <p className="text-sm leading-relaxed">
             {basics.location.city}, {basics.location.region}
-          </p>
-          <div className="flex flex-wrap gap-1.5 mt-2">
-            {basics.profiles.map((profile, index) => (
-              <a
-                key={index}
-                href={profile.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:opacity-80 transition-opacity"
-              >
-                <img
-                  src={`https://img.shields.io/badge/${encodeURIComponent(profile.network)}-${encodeURIComponent(profile.username)}-6c5ce7?style=flat-square&logo=${profile.network.toLowerCase().replace(/\s+/g, '')}&logoColor=white&labelColor=555555`}
-                  alt={`${profile.network} - ${profile.username}`}
-                  className="h-5 pixel-badge"
-                />
-              </a>
+            {contacts.map((c) => (
+              <React.Fragment key={c.label}>
+                {' | '}
+                {c.label}: <a href={c.href} className="underline">{c.text}</a>
+              </React.Fragment>
             ))}
-            {/* Stack Overflow badge - only for PDF, hidden on webpage (flair shows instead) */}
-            <a
-              href={`https://stackoverflow.com/users/${basics.stackOverflowId}/${basics.stackOverflowUsername}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:opacity-80 transition-opacity stack-overflow-badge"
-              style={{ display: 'none' }}
-            >
-              <img
-                src={`https://img.shields.io/badge/Stack%20Overflow-${encodeURIComponent(basics.stackOverflowUsername)}-6c5ce7?style=flat-square&logo=stackoverflow&logoColor=white&labelColor=555555`}
-                alt={`Stack Overflow - ${basics.stackOverflowUsername}`}
-                className="h-5 pixel-badge"
-              />
-            </a>
-          </div>
+          </p>
+        </header>
+      )}
 
-          {/* Stack Overflow Flare - Only show on webpage, not in PDF */}
-          <div className="mt-2 stack-overflow-flair" style={{ display: 'block' }}>
-            <a href={`https://stackoverflow.com/users/${basics.stackOverflowId}/${basics.stackOverflowUsername}`} target="_blank" rel="noopener noreferrer">
-              <img
-                src={`https://stackoverflow.com/users/flair/${basics.stackOverflowId}.png`}
-                width="208"
-                height="58"
-                alt={`Stack Overflow profile for ${basics.stackOverflowUsername}`}
-                title={`Stack Overflow profile for ${basics.stackOverflowUsername}`}
-                className="border border-border rounded"
-              />
-            </a>
-            <p className="text-xs text-muted-foreground mt-1">
-              Visit my Stack Overflow profile to see my contributions
-            </p>
-          </div>
-        </div>
+      <div className="mb-10">
+        <p className="max-w-3xl leading-relaxed">{basics.summary}</p>
+        {isPdf && basics.coreSkills && (
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            <span className="font-semibold text-foreground">Core Skills: </span>
+            {basics.coreSkills}
+          </p>
+        )}
       </div>
 
-      <ResumeSection title="Experience" className="pixel-section">
+      <ResumeSection title="Experience">
         {work.map((job, index) => (
-          <WorkEntry
-            key={index}
-            company={job.company}
-            position={job.position}
-            startDate={job.startDate}
-            endDate={job.endDate}
-            summary={job.summary}
-            highlights={job.highlights}
-            website={job.website}
-            technologies={job.technologies || []}
-          />
+          <WorkEntry key={index} {...job} matched={matches(job, picked)} expanded={isPdf} />
         ))}
       </ResumeSection>
 
-      <ResumeSection title="Skills" className="pixel-section">
-        {skills.map((skillGroup, groupIndex) => (
-          <div key={groupIndex} className="mb-3 last:mb-0">
-            <h3 className="text-xs font-semibold mb-1.5 px-1 bg-secondary/30 rounded-sm inline-block retro-label">{skillGroup.group}</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1.5 items-start">
-              {[...skillGroup.items]
-                .sort((a, b) => b.level - a.level) // Sort by level in descending order
-                .map((skill, index) => (
-                  <SkillBar
-                    key={index}
-                    name={skill.name}
-                    level={skill.level}
-                    keywords={skill.keywords}
-                  />
-                ))}
-            </div>
-          </div>
-        ))}
-      </ResumeSection>
-
-      <ResumeSection title="Projects" className="pixel-section">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={index}
-              name={project.name}
-              description={project.description}
-              url={project.url}
-              highlights={project.highlights}
-              technologies={project.technologies}
-              githubUrl={project.githubUrl}
-              appStoreUrl={project.appStoreUrl}
-              playStoreUrl={project.playStoreUrl}
-            />
-          ))}
-        </div>
-      </ResumeSection>
-
-      <ResumeSection title="Tools" className="pixel-section">
-        <div className="flex flex-wrap gap-1.5">
-          {tools.map((tool, index) => (
-            <div key={index} className="bg-secondary/50 px-2.5 py-1.5 rounded-md">
-              <span className="text-xs font-medium">{tool}</span>
+      <ResumeSection title="Skills">
+        <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+          {skills.map((group) => (
+            <div key={group.group}>
+              <dt className="mb-1 text-sm font-semibold">{group.group}</dt>
+              <dd className="text-sm leading-relaxed text-muted-foreground">
+                {[...group.items].sort((a, b) => b.level - a.level).map((skill) => skill.name).join(', ')}
+              </dd>
             </div>
           ))}
-        </div>
+        </dl>
       </ResumeSection>
 
-      <ResumeSection title="Education" className="pixel-section">
-        {education.map((edu, index) => (
-          <div key={index} className="mb-3 last:mb-0">
-            <div className="flex flex-col md:flex-row md:items-center justify-between">
-              <h3 className="font-semibold">{edu.institution}</h3>
-              {edu.startDate && edu.endDate && (
-                <div className="text-sm font-mono">
-                  {new Date(edu.startDate).getFullYear()} – {new Date(edu.endDate).getFullYear()}
-                </div>
-              )}
-            </div>
-            <p className="text-sm">
-              {edu.studyType && `${edu.studyType} in `}{edu.area}
-              {edu.gpa && ` (GPA: ${edu.gpa})`}
-            </p>
-            {edu.courses && edu.courses.length > 0 && (
-              <div className="mt-1.5">
-                <p className="text-xs font-medium mb-1">Relevant Courses:</p>
-                <div className="flex flex-wrap gap-1">
-                  {edu.courses.map((course, courseIndex) => (
-                    <span
-                      key={courseIndex}
-                      className="text-xs bg-secondary px-2 py-1 rounded text-secondary-foreground"
-                    >
-                      {course}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-      </ResumeSection>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <ResumeSection title="Languages" className="pixel-section">
-          <div className="flex flex-wrap gap-1.5">
-            {languages.map((lang, index) => (
-              <div key={index} className="bg-secondary/50 px-2.5 py-1.5 rounded-md flex items-center gap-1.5">
-                <span className="text-xs font-medium">{lang.language}</span>
-                <span className="text-xs px-1.5 py-0.5 bg-primary/20 text-primary rounded">{lang.fluency}</span>
-              </div>
+      {/* On the site the projects have their own section above the resume. */}
+      {isPdf && (
+        <ResumeSection title="Projects">
+          <div className="grid grid-cols-2 gap-3">
+            {projects.map((project) => (
+              <ProjectCard key={project.name} {...project} />
             ))}
           </div>
         </ResumeSection>
+      )}
 
-        <ResumeSection title="Interests" className="pixel-section">
-          {interests.map((interest, index) => (
-            <div key={index} className="mb-3 last:mb-0">
-              <h4 className="font-medium">{interest.name}</h4>
-              <div className="flex flex-wrap gap-1 mt-1 mb-1">
-                {interest.keywords.map((keyword, keywordIndex) => (
-                  <span
-                    key={keywordIndex}
-                    className="text-xs bg-secondary px-2 py-1 rounded text-secondary-foreground"
-                  >
-                    {keyword}
-                  </span>
-                ))}
-              </div>
-              {interest.links && interest.links.length > 0 && (
-                <div className="mt-1">
-                  {interest.links.map((link, linkIndex) => (
-                    <a
-                      key={linkIndex}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-primary hover:underline flex items-center gap-1"
-                    >
-                      <ExternalLinkIcon className="h-3 w-3" />
-                      {link.name}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+      <ResumeSection title="Tools">
+        <p className="text-sm leading-relaxed text-muted-foreground">{tools.join(', ')}</p>
+      </ResumeSection>
+
+      <ResumeSection title="Education">
+        {education.map((edu) => (
+          <div key={edu.institution} className="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
+            <p>
+              <span className="font-semibold">{edu.institution}</span>
+              <span className="block text-sm text-muted-foreground">
+                {edu.studyType && `${edu.studyType} in `}{edu.area}
+              </span>
+            </p>
+            <p className="font-mono text-xs text-muted-foreground">
+              {new Date(edu.startDate).getFullYear()} – {new Date(edu.endDate).getFullYear()}
+            </p>
+          </div>
+        ))}
+      </ResumeSection>
+
+      <div className="grid gap-x-8 sm:grid-cols-2">
+        <ResumeSection title="Languages">
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            {languages.map((lang) => `${lang.language} (${lang.fluency})`).join(', ')}
+          </p>
+        </ResumeSection>
+
+        <ResumeSection title="Interests">
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            {interests.map((interest, index) => (
+              <React.Fragment key={interest.name}>
+                {index > 0 && ', '}
+                {interest.links?.[0] ? (
+                  <a href={interest.links[0].url} target="_blank" rel="noopener noreferrer" className="link">
+                    {interest.name}
+                  </a>
+                ) : (
+                  interest.name
+                )}
+              </React.Fragment>
+            ))}
+          </p>
         </ResumeSection>
       </div>
     </div>

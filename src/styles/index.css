@@ -1,11 +1,252 @@
-/* Import base styles and theme variables */
-@import "./base.css";
-
-/* Import component styles */
-@import "./components.css";
-
-/* Import utility styles */
-@import "./utilities.css";
-
-/* Import PDF styles */
 @import "./pdf.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* Bone paper, ink, and one highlighter. The accent is only ever a fill, never text. */
+    :root {
+        --background: 50 32% 93%;
+        --foreground: 80 13% 6%;
+        --card: 50 40% 96%;
+        --secondary: 50 20% 87%;
+        --muted-foreground: 55 6% 34%;
+        --border: 50 16% 76%;
+        --accent: 73 100% 61%;
+        --accent-foreground: 80 13% 6%;
+    }
+
+    .dark {
+        --background: 80 13% 5%;
+        --foreground: 50 32% 93%;
+        --card: 75 10% 8%;
+        --secondary: 70 8% 13%;
+        --muted-foreground: 52 8% 64%;
+        --border: 70 8% 22%;
+    }
+
+    * {
+        @apply border-border;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 4.5rem;
+    }
+
+    body {
+        @apply bg-background text-foreground font-sans antialiased;
+    }
+
+    ::selection {
+        background: hsl(var(--accent));
+        color: hsl(var(--accent-foreground));
+    }
+
+    :focus-visible {
+        outline: 2px solid hsl(var(--foreground));
+        outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+}
+
+@layer components {
+    .label {
+        @apply font-mono text-xs uppercase tracking-widest text-muted-foreground;
+    }
+
+    .btn {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 border border-foreground px-4 py-2 text-sm font-semibold transition-colors hover:bg-foreground hover:text-background;
+    }
+
+    .btn-accent {
+        @apply bg-accent text-accent-foreground hover:bg-foreground hover:text-background;
+    }
+
+    .dark .btn-accent {
+        @apply border-accent hover:border-foreground;
+    }
+
+    .link {
+        @apply underline decoration-1 underline-offset-4 hover:bg-accent hover:text-accent-foreground hover:no-underline;
+    }
+
+    .chip {
+        @apply bg-secondary px-2 py-1 text-xs;
+    }
+
+    .tag-match {
+        @apply bg-accent px-1.5 py-0.5 font-mono text-[0.65rem] font-semibold uppercase tracking-wider text-accent-foreground;
+    }
+
+    /* ---- The stack: five slabs in a true isometric view, plain CSS 3D ---- */
+    .stack-scene {
+        --s: clamp(9.5rem, 42vw, 13rem);
+        position: relative;
+        height: calc(var(--s) * 1.85);
+        touch-action: pan-y; /* vertical swipes still scroll the page */
+        cursor: grab;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    @media (min-width: 768px) {
+        .stack-scene {
+            --s: clamp(13rem, 24vw, 18rem);
+        }
+    }
+
+    .stack-scene[data-drag="true"] {
+        cursor: grabbing;
+    }
+
+    .stack,
+    .stack-sway,
+    .slab {
+        transform-style: preserve-3d;
+    }
+
+    .stack {
+        position: absolute;
+        left: 50%;
+        top: 73%;
+        transform: rotateX(60deg) rotateZ(calc(45deg + var(--spin, 0deg)));
+    }
+
+    .stack-sway {
+        animation: stack-sway 7s ease-in-out infinite alternate;
+    }
+
+    .stack-scene[data-drag="true"] .stack-sway {
+        animation-play-state: paused;
+    }
+
+    @keyframes stack-sway {
+        from {
+            transform: rotateZ(-5deg);
+        }
+
+        to {
+            transform: rotateZ(5deg);
+        }
+    }
+
+    .slab {
+        --grid: hsl(var(--foreground) / 0.09);
+        position: absolute;
+        width: var(--s);
+        height: var(--s);
+        left: calc(var(--s) / -2);
+        top: calc(var(--s) / -2);
+        padding: 0;
+        border: 1.5px solid hsl(var(--foreground));
+        color: hsl(var(--foreground));
+        background-color: hsl(var(--background) / 0.9);
+        background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+        background-size: calc(var(--s) / 8) calc(var(--s) / 8);
+        transform: translateZ(calc(var(--i) * var(--s) * 0.24 + var(--lift, 0rem)));
+        transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s, opacity 0.2s;
+        cursor: pointer;
+    }
+
+    /* A second plate just below gives each slab some thickness. */
+    .slab::after {
+        content: "";
+        position: absolute;
+        inset: -1.5px;
+        border: 1.5px solid hsl(var(--foreground));
+        background: hsl(var(--background));
+        transform: translateZ(calc(var(--s) * -0.06));
+    }
+
+    @media (hover: hover) {
+        .slab:hover {
+            --lift: 0.35rem;
+        }
+    }
+
+    .slab[data-on="true"] {
+        --grid: hsl(var(--accent-foreground) / 0.14);
+        --lift: 0.9rem;
+        color: hsl(var(--accent-foreground));
+        background-color: hsl(var(--accent));
+    }
+
+    .slab[data-on="true"],
+    .slab[data-on="true"]::after {
+        border-color: hsl(var(--accent-foreground));
+    }
+
+    .slab[data-on="true"]::after {
+        background: hsl(var(--accent));
+    }
+
+    /* Unticked slabs turn into outlines so the ticked ones show through them.
+       Not done with opacity: that would flatten the 3D transform. */
+    .stack[data-any="true"] .slab[data-on="false"] {
+        color: hsl(var(--foreground) / 0.55);
+        background: none;
+        border-color: hsl(var(--foreground) / 0.55);
+    }
+
+    .stack[data-any="true"] .slab[data-on="false"]::after {
+        display: none;
+    }
+
+    .slab-label {
+        position: absolute;
+        left: 5%;
+        bottom: 3%;
+        font-family: theme("fontFamily.mono");
+        font-size: calc(var(--s) * 0.07);
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    /* ---- Resume ---- */
+    .resume-content.is-pdf {
+        @apply mx-auto max-w-5xl p-8;
+    }
+
+    .resume-heading {
+        @apply mb-4 border-b border-foreground pb-2 text-xl font-bold;
+    }
+
+    .work-entry {
+        @apply pb-6 last:pb-0;
+    }
+
+    /* The timeline rail is site-only: positioned elements are painted last, which
+       moved every role to the end of the PDF text that ATS parsers read. */
+    .resume-content:not(.is-pdf) .work-entry {
+        @apply relative border-l border-border pl-5;
+    }
+
+    .resume-content:not(.is-pdf) .work-entry::before {
+        content: "";
+        @apply absolute -left-[5px] top-1.5 h-[9px] w-[9px] border border-foreground bg-background;
+    }
+
+    .resume-content:not(.is-pdf) .work-entry[data-match="true"]::before {
+        @apply bg-accent;
+    }
+
+    .work-entry summary {
+        @apply cursor-pointer text-sm font-semibold underline decoration-1 underline-offset-4;
+    }
+}

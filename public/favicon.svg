@@ -1,16 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <!-- Phone outline -->
-  <rect x="25" y="10" width="50" height="80" rx="5" fill="none" stroke="#2563eb" stroke-width="4"/>
-  
-  <!-- Screen -->
-  <rect x="30" y="20" width="40" height="55" rx="2" fill="#2563eb" opacity="0.1"/>
-  
-  <!-- Code symbols -->
-  <text x="38" y="45" font-family="monospace" font-size="12" fill="#2563eb">&lt;/&gt;</text>
-  
-  <!-- Home button -->
-  <circle cx="50" cy="82" r="4" fill="#2563eb"/>
-  
-  <!-- Speaker -->
-  <rect x="45" y="15" width="10" height="2" rx="1" fill="#2563eb"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#0C0D0A"/>
+  <path d="M16 15 5 20.5 16 26l11-5.5z" fill="none" stroke="#F2F0E6" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M16 10.5 5 16l11 5.5L27 16z" fill="#0C0D0A" stroke="#F2F0E6" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M16 6 5 11.5 16 17l11-5.5z" fill="#D4FF3A" stroke="#D4FF3A" stroke-width="1.5" stroke-linejoin="round"/>
 </svg>
