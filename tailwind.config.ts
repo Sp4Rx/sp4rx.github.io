@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 export default {
-	darkMode: ["class"],
 	// Touch screens keep :hover stuck after a tap, which made an unticked row look ticked.
 	future: { hoverOnlyWhenSupported: true },
 	content: ["./index.html", "./src/**/*.{ts,tsx}"],
@@ -28,7 +27,7 @@ export default {
 			},
 			fontFamily: {
 				sans: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
-				mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+				mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
 			},
 		}
 	},

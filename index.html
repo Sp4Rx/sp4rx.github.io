@@ -23,16 +23,10 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <script>
-    // Set the theme before first paint so the page never flashes. The PDF is always light.
-    (function () {
-      var saved = null;
-      try { saved = localStorage.getItem('theme'); } catch (e) { }
-      var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-      if (/[?&]pdf(=|&|$)/.test(location.search)) dark = false;
-      document.documentElement.classList.toggle('dark', dark);
-    })();
+    // The PDF script loads the page with ?pdf; flag it before first paint so it prints light.
+    if (/[?&]pdf(=|&|$)/.test(location.search)) document.documentElement.classList.add('pdf');
   </script>
   <title>
     <%= title %>

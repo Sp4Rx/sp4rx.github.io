@@ -9,7 +9,6 @@ interface WorkEntryProps {
   highlights: string[];
   website?: string;
   technologies?: string[];
-  matched?: boolean; // covers what the visitor ticked in the hero
   expanded?: boolean; // the PDF shows every highlight
 }
 
@@ -27,12 +26,11 @@ const WorkEntry: React.FC<WorkEntryProps> = ({
   highlights,
   website,
   technologies = [],
-  matched = false,
   expanded = false,
 }) => {
   const items = highlights.map((highlight, index) => <li key={index}>{highlight}</li>);
   return (
-  <div className="work-entry" data-match={matched}>
+  <div className="work-entry">
     <div className="mb-1.5 flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
       <h3 className="text-base font-semibold">
         {position} @{' '}
@@ -43,7 +41,6 @@ const WorkEntry: React.FC<WorkEntryProps> = ({
         ) : (
           company
         )}
-        {matched && <span className="tag-match ml-2 align-middle">Matches your build</span>}
       </h3>
       <div className="whitespace-nowrap font-mono text-xs text-muted-foreground">
         {formatDate(startDate)} – {formatDate(endDate)}

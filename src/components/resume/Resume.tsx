@@ -2,15 +2,13 @@ import React from 'react';
 import ResumeSection from './ResumeSection';
 import WorkEntry from './WorkEntry';
 import ProjectCard from './ProjectCard';
-import { resumeData, type Layer } from '@/data/resume';
-import { matches } from '@/lib/match';
+import { resumeData } from '@/data/resume';
 
 interface ResumeProps {
-  picked?: Layer[]; // what the visitor ticked in the hero
   isPdf?: boolean; // the PDF adds a contact header and the projects, and expands every role
 }
 
-const Resume: React.FC<ResumeProps> = ({ picked = [], isPdf = false }) => {
+const Resume: React.FC<ResumeProps> = ({ isPdf = false }) => {
   const { basics, skills, work, projects, education, languages, interests, tools } = resumeData;
 
   const contacts = [
@@ -28,8 +26,9 @@ const Resume: React.FC<ResumeProps> = ({ picked = [], isPdf = false }) => {
   return (
     <div className={`resume-content ${isPdf ? 'is-pdf' : ''}`}>
       {isPdf && (
-        <header className="mb-6">
-          <h1 className="text-3xl font-extrabold tracking-tight">{basics.name}</h1>
+        <header className="pdf-masthead">
+          <div>
+          <h1 className="text-4xl font-extrabold tracking-tight">{basics.name}</h1>
           <p className="mb-3 text-lg text-muted-foreground">{basics.designation}</p>
           <p className="text-sm leading-relaxed">
             {basics.location.city}, {basics.location.region}
@@ -40,6 +39,14 @@ const Resume: React.FC<ResumeProps> = ({ picked = [], isPdf = false }) => {
               </React.Fragment>
             ))}
           </p>
+          </div>
+          <div className="pdf-art" aria-hidden="true">
+            <svg viewBox="0 0 32 32" className="h-16 w-16">
+              <path d="M16 15 5 20.5 16 26l11-5.5z" fill="#fff" stroke="#0C0D0A" strokeWidth="1.2" strokeLinejoin="round" />
+              <path d="M16 10.5 5 16l11 5.5L27 16z" fill="#fff" stroke="#0C0D0A" strokeWidth="1.2" strokeLinejoin="round" />
+              <path d="M16 6 5 11.5 16 17l11-5.5z" fill="#D4FF3A" stroke="#0C0D0A" strokeWidth="1.2" strokeLinejoin="round" />
+            </svg>
+          </div>
         </header>
       )}
 
@@ -55,7 +62,7 @@ const Resume: React.FC<ResumeProps> = ({ picked = [], isPdf = false }) => {
 
       <ResumeSection title="Experience">
         {work.map((job, index) => (
-          <WorkEntry key={index} {...job} matched={matches(job, picked)} expanded={isPdf} />
+          <WorkEntry key={index} {...job} expanded={isPdf} />
         ))}
       </ResumeSection>
 

@@ -1,14 +1,3 @@
-export type Layer = "mobile" | "web" | "ai" | "api" | "cloud";
-
-// The hero's picker. Order is top of the stack to bottom.
-export const stack: { id: Layer; need: string; label: string; tech: string }[] = [
-  { id: "mobile", need: "A mobile app", label: "Mobile", tech: "Flutter, React Native" },
-  { id: "web", need: "A web app", label: "Web", tech: "React, Next.js, TypeScript" },
-  { id: "ai", need: "AI features", label: "AI", tech: "Gemini, LLM APIs, ComfyUI" },
-  { id: "api", need: "Backend & real-time", label: "Backend", tech: "Node.js, GraphQL, WebSocket" },
-  { id: "cloud", need: "Cloud & DevOps", label: "Cloud", tech: "AWS, Cloudflare, CI/CD" },
-];
-
 export const resumeData = {
   meta: {
     author: "Sp4Rx",
@@ -230,7 +219,7 @@ export const resumeData = {
   ],
   work: [
     {
-      layers: ["mobile","web","ai","api","cloud"] as Layer[],
+      headline: "Clients include Mavonic, a fintech engineering partner",
       company: "Freelance (Mavonic and independent clients)",
       position: "Freelance Full Stack & AI Consultant",
       website: "https://www.mavonic.com/",
@@ -250,7 +239,7 @@ export const resumeData = {
       technologies: ["Flutter", "Dart", "Bloc", "Riverpod", "React", "TypeScript", "Next.js", "JavaScript", "Node.js", "Python", "WebSocket", "GraphQL", "Supabase", "React Native", "Expo", "AWS", "Cloudflare", "GitHub Actions", "CI/CD", "AI/ML"]
     },
     {
-      layers: ["mobile"] as Layer[],
+      headline: "Led a team of 5 and architected the Flutter app from scratch",
       company: "Stashfin",
       position: "Senior Manager",
       website: "https://www.stashfin.com/",
@@ -270,7 +259,7 @@ export const resumeData = {
       technologies: ["Flutter", "Dart", "Codemagic"]
     },
     {
-      layers: ["mobile","web","api"] as Layer[],
+      headline: "Built a 3D BIM viewer for building floorplans in Flutter",
       company: "Tailorbird",
       position: "Senior Full Stack Developer",
       website: "https://www.tailorbird.com/",
@@ -287,7 +276,7 @@ export const resumeData = {
       technologies: ["Flutter", "Dart", "Bloc", "GraphQL", "Hive", "Forge Viewer", "BIM", "Python", "REST APIs", "React", "JavaScript"]
     },
     {
-      layers: ["mobile","cloud"] as Layer[],
+      headline: "Held a 99% crash-free user rate",
       company: "Tranzact",
       position: "Software Engineer",
       website: "https://letstranzact.com/",
@@ -304,7 +293,7 @@ export const resumeData = {
       technologies: ["Flutter", "Riverpod", "MoEngage", "Codemagic", "GitHub Actions", "Firebase"]
     },
     {
-      layers: ["mobile","web","api","cloud"] as Layer[],
+      headline: "Live video classes over WebSocket on a leading online learning platform",
       company: "Vedantu",
       position: "Software Engineer",
       website: "https://www.vedantu.com/",
@@ -321,7 +310,7 @@ export const resumeData = {
       technologies: ["React Native", "WebSocket", "Jenkins", "Groovy", "Docker", "React", "Next.js"]
     },
     {
-      layers: ["mobile"] as Layer[],
+      headline: "Built Bounce Hero, the fleet operations app",
       company: "Bounce",
       position: "Software Engineer",
       website: "https://play.google.com/store/apps/details?id=com.metrobikes.app",
@@ -337,7 +326,7 @@ export const resumeData = {
       technologies: ["Flutter", "Dart", "Sentry"]
     },
     {
-      layers: ["mobile"] as Layer[],
+      headline: "Took app stability from 75% to 98% in 20 days",
       company: "Leher.ai Pvt. Ltd",
       position: "SDE II",
       website: "https://play.google.com/store/apps/details?id=com.leher",
@@ -353,7 +342,7 @@ export const resumeData = {
       technologies: ["Android", "Java", "MVP", "Dagger", "Flutter", "Dart"]
     },
     {
-      layers: ["mobile"] as Layer[],
+      headline: "Shipped live streaming for Vokal Live",
       company: "Vokal",
       position: "Android Developer",
       website: "https://play.google.com/store/apps/details?id=com.oktalk.app",
@@ -369,7 +358,7 @@ export const resumeData = {
       technologies: ["Android", "Java", "MVVM", "Wowza", "Live Streaming"]
     },
     {
-      layers: ["mobile","api"] as Layer[],
+      headline: "Built real-time chat with delivered and read receipts",
       company: "STUPIDCHAT TECHNOLOGY",
       position: "Android Developer",
       website: "https://play.google.com/store/apps/details?id=chat.stupid.app",
@@ -384,7 +373,7 @@ export const resumeData = {
       technologies: ["Android", "Java", "Firebase", "Socket.io", "Real-time Communication"]
     },
     {
-      layers: ["mobile"] as Layer[],
+      headline: "Built the EXAMIN Android app from scratch",
       company: "Sitegalleria Pvt. Ltd",
       position: "Android Developer",
       website: "",
@@ -402,7 +391,6 @@ export const resumeData = {
   projects: [
     {
       name: "Pitaara",
-      layers: ["web", "ai", "api", "cloud"] as Layer[],
       description: "Send an Instagram reel to @pitaara.app and get the recipe, place, or film from it back in about a minute. Every save stays searchable in your own collection.",
       highlights: [
         "Extracts recipes (time, ingredients, steps), places, and films from reels and replies over Instagram DM",
@@ -413,7 +401,6 @@ export const resumeData = {
     },
     {
       name: "SecretRipple",
-      layers: ["web","api"] as Layer[],
       description: "Enterprise-grade secure messaging platform with React, TypeScript, and Supabase. Features end-to-end encryption and real-time messaging for financial-grade applications.",
       highlights: [
         "Built secure messaging platform with end-to-end encryption using React, TypeScript, and Supabase",
@@ -424,7 +411,6 @@ export const resumeData = {
     },
     {
       name: "SumtubeBot",
-      layers: ["web","ai","api","cloud"] as Layer[],
       description: "AI-powered Discord bot using Google Gemini API for automatic YouTube video summarization with timestamps and content categorization.",
       highlights: [
         "AI-powered video summarization using Google Gemini API with automatic YouTube link detection",
@@ -436,7 +422,6 @@ export const resumeData = {
     },
     {
       name: "Dhyanam",
-      layers: ["mobile","web"] as Layer[],
       description: "Cross-platform meditation puzzle game built with React and Capacitor, published on iOS, Android, and Web platforms.",
       highlights: [
         "Cross-platform app (iOS, Android, Web) using React and Capacitor with single codebase",
@@ -449,10 +434,9 @@ export const resumeData = {
     },
     {
       name: "suvajit.in",
-      layers: ["web"] as Layer[],
-      description: "This site. Pick what you need built and a CSS 3D stack shows where I have shipped it. Includes an ATS-friendly resume with automated PDF generation.",
+      description: "This site. My portrait drawn in 32,000 particles that scatter into a fly-through of every team I have worked on. Includes an ATS-friendly resume with automated PDF generation.",
       highlights: [
-        "Interactive 3D stack built with plain CSS transforms, no WebGL or 3D library",
+        "Particle scene written directly in WebGL with one draw call and no 3D library",
         "ATS-friendly PDF resume generated on every deploy with Playwright and GitHub Actions"
       ],
       url: "https://suvajit.in",
